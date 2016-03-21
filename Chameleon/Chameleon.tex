@@ -113,7 +113,7 @@ Visualization of structural biology data uses color to categorize or separate de
 %% Uncomment below to include a teaser figure.
   \teaser{
  \centering
- \includegraphics[width=16cm]{Picture1}
+ \includegraphics[width=16cm]{Figures/Picture1.png}
   \caption{In the Clouds: Vancouver from Cypress Mountain.}
   }
 
@@ -156,6 +156,51 @@ Level of detail and abstraction may also depend on the distance from the object.
 These kinds of visualizations have to deal with two major problems. First is when to show which level and how many levels to show at once. An example of this is [A Rendering Framework for Multiscale Views of 3D Models] by x, where they show a method of showing different levels of detail of a human body. In our case, we don’t want to allow for distortion, as most of the items are a) fairly small, b) should be comparable to other elements nearby without distortion, and c) the user does not want to see all layers at once, as the structure of a protein holds little information about the structure of a cell.
 
 \subsection{Molecular Visualization}
+
+\section{Technique}
+
+When applying a coloring scheme to data of this type, several things need to be taken into account. First, the representation should support the level the user is looking at, e.g. not show the protein domains when the user is looking at the compartment level. Second, switching from one level to another should not be confusing. Third, the user should be able to easily identify useful information at the level he is looking at. Because predetermining all the colors for each item in the scene and not allowing for view dependency will, with enough data, guarantee that data points will become indistinguishable. Fourth, the coloring must allow the user remain orientated and determine what belongs to the stuff he is interested in. For example, he needs to know where a compartment ends and the next one begins.
+Stress the fact that temporal coherence and discriminability by color are contradicting each other if we need a lot of colors (give numbers for HIV!). 
+Ware (?) points out that luminance is more useful for encoding high-frequency information, while hue is easier to interpret for encoding low-frequency information. This is also reflected in the well-known ColorBrewer color schemes, where colors of categorical palettes differ primarily by hue, while quantitative color schemes operate mostly on luminance level.  We therefore use utilize the HCL color space that separates these two properties into different dimensions (luminance is the vertical axis, while hue and chroma are represented on the perpendicular planes as polar coordinates). Another useful aspect of the HCL color space is that it is simply an alternative representation of the CIEL*a*b* color space and therefore perceptually linear. This means that we can linearly link changes in the color space to perceptual responses. 
+We start by assigning each item on the lowest LOD a distinct hue. Since the lowest hierarchy level comprises the entire model, this assignment is static and does not change with the viewing angle. Given the number of elements $n$ on the lowest LOD, the desired luminance and chroma, the hue of the i’th element is simply defined by $h_i=i*360/n$. This results in $n$ isoluminant colors with equidistant hues. 
+(Chroma is luminance-depending if we consider the sRGB boundaries, but we don’t do this now!)
+We use a hue circle here, but any parametric curve within the HCL space could be used. In this case, the colors would not be isoluminant, but still equidistant in the perceptually linear color space. 
+Each section applies force on its neighbouring section, proportional to the number of different kinds of proteins that are visible. This means that the section can grow and shrink, depending on visibility. If a compartment is not visible, then the section shrinks to a size zero. 
+
+However, a degree of consistency is still desired. It would be unwanted for a compartment to switch over to the opposite color, such as blue to yellow.  As such something needs to be in place to keep compartments from moving too far.
+The switch to the proteins color occurs when the distance is greater than 5*2.3 =5*jnd in cielab space [Mahy 94 evaluation after adoption]. This is equal to an angle of X on the hue circle.
+
+Another problem is how do we choose the colors for the domains? Their color needs to be view dependent as well as near to the color of the protein they belong to. The color of the chains does not  
+Interact with the color of the other proteins, but does if they are showing their chains. 
+Whether or not the chains are shown depends on the how close the camera is to the protein, unless the color distance would be below a certain amount (5*2.3) (8.8 degrees). The hue circle is reused to show the colors of the chains. See fig[]. The chains don’t cause any force on the proteins, and the proteins cause no force on the chains. The chains of two different proteins can cause force on one another if they are being shown. Because the chains would normally surround the entire circle, they only push each other away to a maximum distance of X. This allows for the chains to have similar colors to the proteins.
+
+
+\section{User study}
+We opted to perform a qualitative evaluation with XX biologists consisting of two blocks. In the first block, users had to identify a set of pre-defined structures across multiple levels of scale in the HIV model. In the second block, users could freely explore the scene. In both blocks, users were encouraged to “think aloud”. Sessions were observed by one to two study administrators, the screen was captured, and audio was recorded. The session was concluded by a questionnaire and an audio-recorded semi-structured interview. 
+The task was provided by a professor of molecular biology and well-known illustrator of biological models. Users were first provided by a description of the HIV capsid protein, which is the single protein building up the HIV capsid. Then they were asked to identify structures from this description in the HIV visualization, namely the capsid compartment itself, a special protein compound of the capsid, the two protein domains, secondary structures acting as binding sites, and a dedicated amino acid. 
+The study was conducted on a (laptop specification, screen, color calibration). Users were sitting approximately ... cm from the screen, but were free to move. 
+Before performing the actual study task, users were demonstrated how to navigate in the scene, and how to switch on and off certain sub-compartments. This was necessary so that all items were accessible without occlusions. 
+We decided to perform a qualitative evaluation as our visualization is new, and there is currently no visualization that allows the user to look at all levels in a similar manner, so we do not have a method of comparison. Our goal primarily was to see whether domain experts can identify the individual structures, whether this would be possible without color coding at all, and whether the view-dependent color assignment was irritating for them. 
+
+Users
+The users were molecular biology students. As such, they had some but limited knowledge of the field [tbd may be variation]. As such, there needed to be an explanation of what they were looking for. The students ranged from x to y years studying.
+
+Results
+-	How many students found the different targets
+-	Insights
+-	Probably need table of different types of insights.
+-	Insights per minute  (ipm)
+-	Answer to the questions we pose (table?)
+-	People used
+-	Number of people used
+-	Describe type of study
+-	Describe what this kind of study is.
+-	Reference other (similar) studies
+-	Argue why 
+o	No baseline
+o	No quantifiability (x in y seconds)
+o	Want to measure usability
+
 
 \section{Conclusion}
 
