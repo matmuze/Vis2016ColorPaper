@@ -184,13 +184,29 @@ In the first case X, in the second case Y.
 
 \subsection{Multi-Scale Molecular Visualization}
 
-Level of detail and abstraction may also depend on the distance from the object.
-[ View-dependent level-of-detail abstraction for interactive atomistic visualization of biological struct] [Illustrative Molecular Visualization with Continuous Abstraction] [Illustrating the Machinery of Life: Viruses Continuous Levels-of-Detail and Visual Abstraction for Seamless Molecular Visualization]. 
-These kinds of visualizations have to deal with two major problems. First is when to show which level and how many levels to show at once.
-An example of this is [A Rendering Framework for Multiscale Views of 3D Models] by x, where they show a method of showing different levels of detail of a human body. 
-In our case, we don’t want to allow for distortion, as most of the items are a) fairly small, b) should be comparable to other elements nearby without distortion, and c) the user does not want to see all layers at once, as the structure of a protein holds little information about the structure of a cell.
+The development of new modelling techniques for three dimensional molecular structures led to an rapid increase in size of the studied datasets.
+To keep up with the progress, new visualization methods were specifically developed to address this challenge.
+Ove Daae Lampe et al.\cite{lampe2007two} pioneered real-time rendering of large-scale atomic data on consumer level hardware. 
+They extended the fast billboard-based approach introduced by QuteMol \cite{tarini2006ambient}, by rendering the structures per residues rather than per atom, thus reducing the memory bandwidth usage and the GPU driver overhead. 
+Lindow et al. \cite{lindow2012interactive} followed-up by using instanced rendering to draw entire structures instead.
+For each molecule type, they generate 3D grid of the atoms which is stored on the GPU, and then ray-casted upon rendering.
+Falk et al. \cite{falk2013atomistic} further refined the method with improved depth culling and hierarchical ray casting to achieve faster rendering performance for even larger scenes. 
 
-\subsection{Molecular Visualization}
+%Parulek et al.\cite{parulek2014continuous} introduced seamless transitions between different levels of coarseness for the representation of the molecular surface based on the distance from the camera.
+%The goal was not only to reduce the computation cost, but also to utilize the shape as a mean to reduce high-level details and noise when observing the structure in its entirety.
+%Their technique is using real-time ray-tracing and offers high quality surface details, but it does not scale well in terms of performance when compared to atom-based rendering methods.
+
+A novel approach, for real-time rendering of structures with up to tens of billion atoms, was later on introduced by Le Muzic et al. \cite{le2014illustrative}. 
+Their approach, also based on level-of-detail, uses tessellation shaders to switch between different degrees of coarseness for the molecular structures, on-the-fly and upon the rendering operation.
+The entire scene is thus rendered efficiently in a single draw call, approaching zero GPU-driver overhead. 
+As a follow up, they developed and released cellVIEW \cite{muzic2015cellview}, a tool designed for rendering large-scale molecular scenes, which was implemented with Unity3D, a popular 3D engine.
+cellVIEW was primarily developed to showcase large molecular structures generated with cellPACK \cite{johnson2015cellpack}, a tool developed to procedurally generate accurate and multi-scale models of entire viruses and cells.
+
+The Chameleon is built-upon cellVIEW, and is an attempt to improve understanding upon exploration of multi-scale molecular scenes generated with cellPACK.
+cellVIEW leverages GPU computing and parallel programming to enable real-time rendering and therefore, the Chameleon was developed with the same programming paradigm.
+
+
+\section{Overview}
 
 \section{Technical Details Dump}
 
