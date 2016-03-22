@@ -157,6 +157,147 @@ These kinds of visualizations have to deal with two major problems. First is whe
 
 \subsection{Molecular Visualization}
 
+\section{Technical Details Dump}
+
+\textbf{Protein Properties Description}
+
+.The scenes that we are displaying represent meso-scale biological structures and comprise a large number of molecules (proteins or lipids).
+
+.Each protein carry essential properties that is used to convey a different information for each single scale (TODO: Do a figure to explain)
+
+.Each of these properties can be visualized and highlighted using a specific color coding.
+
+Bottom-up properties:
+
+. Molecules can be of different species or type, which characterize their structure.
+
+. A group of molecules with similar structures is referred as instances of type X.
+
+. Types are also categorized in groups, based on their location or function. 
+
+
+Top-down properties:
+
+. Each molecule comprise a set of atomic particles.
+
+. Atoms have different types, C, H, O, N,...
+
+. Atoms are assembled in groups to form the amino-acids.
+
+. Amino-acids are chained and form segments of amino-acids that are characterized by their shape such helices and sheets, this is called the secondary structure.
+
+. The secondary structures are grouped together and divide the proteins in different domains.
+
+
+\textbf{Hierarchical Color Assignments (for bottom up properties)}
+
+.We decide to chose iso-luminant colors (for aesthetic reasons)
+
+. We first assign a wedge of the color-wheel for each group.
+
+. In the initial state, the size of the wedge is proportional to the size of the group in terms of protein types.
+
+. The colors of the protein are defined accordingly to the color of their group (hierarchical).
+
+. Only the hue differs between different types of molecules
+
+. Inside a wedge each protein type of a group is assigned to a portion of the wedge with equal spacing between two protein types.
+
+. Should a wedge be enlarged or shrunken, the color assignment is set relatively to the size of wedge.
+
+
+\textbf{Problem}
+
+.The hue circle is limited (360), therefore with several groups comprising tens of individual types we will quickly run out of colors.
+
+.In the tree-color paper they solve this problem by generating more colors for each wedge using the additional channels (chroma & luminance).
+
+. This approach has a poor potential for discrimination between different properties since inside a predefined inside a wege colors will still remain rather similar. 
+
+.Rather than using different channels like luminance and chroma we want to keep discriminating colors with HUE because it is such a strong cue.
+
+. In order to keep using the hue to discriminate between colors the size of the wedges must be scale according to the zooming distance.
+
+. However as the wedges grow their is no mechanism that would prevent two neighbour wedges to overlap which could results in misleading coloring choice.
+
+\textbf{Solution}
+
+. Rather than scaling the wedges according to the zooming distance we suggest to grow or shrink the wedges according to what is currently visible in the current viewport.
+
+. For example, if all molecule groups are equally visible, the size of their wedges will be proportional to the size of the groups in terms of protein species.
+
+. If a protein group is partially visible or not-visible at all, the corresponding wedge will be scaled accordingly, thus freeing space in the color wheel for other wedges to grown
+
+. [Make figure to show example]
+
+
+\textbf{Read Visibility Information}
+
+.We use visibility information to check which molecules types are actually currently visible.
+
+.The visibility information we use is screen coverage and number of visible instances.
+
+.The number of visible protein can be low, while few molecule can have a large screen pixels coverage if located close to the camera.
+
+.Similarly the screen coverage can be low while a large number of molecules may still be visible, if camera is looking a the scene from far away.
+
+
+\textbf{Use Visibility Information}
+
+. Once we have the visibility information for each species we evaluate the weight of the species group for scaling the wedge.
+
+. We use a force based layout to arrange the wedges along the color wheel.
+
+. Each wedge comprise a centroid that can move either left of right, in one dimension.
+
+%. The position is then mapped from 1D to a 2D circle for debugging.
+
+. Each wedge acts as a circular force field centred around the centroid and which pushed the other wedges away.
+
+. The radius to force field is proportional to the size of the group, the number of visible instances, and the percentage of pixels that are occupied by instances of the group.
+
+. The radius of the force field is computed as follows: write formula here.
+
+. The integration of the forces is computed as follows: write integration formula here
+
+. To make sure that wedge centroids are not pushed away too much from their original location and are shifting in color too much we also apply attraction forces from the centroids to their original location
+
+
+
+
+\textbf{Custom Interpolation Technique Manu ?}
+
+Implementation:
+
+Upon rendering we also render an off-line texture where each pixel contains the atom and instance ID to which the rendered atoms correspond to.
+
+The ID is used to fetch atom meta-data in a post-processing shader, which is then used to keep track of visibility information.
+
+First we gather information about the visibility of the protein types:
+
+We define a number for each protein type which acts a counter to for the number of visible instances.
+
+For each pixel we first update a flag corresponding to the protein instance to specify that this element is visible.
+
+
+
+
+
+We analyse the result of the previous rendered frame and gather visibility information in real-time.
+
+Upon rendering 
+
+
+
+
+group have are assigned a centroid
+
+
+
+Each atoms carry essential informations about 
+
+The multi-scale coloring technique 
+
 \section{Technique}
 
 When applying a coloring scheme to data of this type, several things need to be taken into account. First, the representation should support the level the user is looking at, e.g. not show the protein domains when the user is looking at the compartment level. Second, switching from one level to another should not be confusing. Third, the user should be able to easily identify useful information at the level he is looking at. Because predetermining all the colors for each item in the scene and not allowing for view dependency will, with enough data, guarantee that data points will become indistinguishable. Fourth, the coloring must allow the user remain orientated and determine what belongs to the stuff he is interested in. For example, he needs to know where a compartment ends and the next one begins.
