@@ -194,7 +194,7 @@ The development of new modelling techniques for three dimensional molecular stru
 To keep up with the progress, new visualization methods were specifically developed to address this challenge.
 Ove Daae Lampe et al.\cite{lampe2007two} pioneered real-time rendering of large-scale atomic data on consumer level hardware. 
 They extended the fast billboard-based approach introduced by QuteMol \cite{tarini2006ambient}, by rendering the structures per residues rather than per atom, thus reducing the memory bandwidth usage and the GPU driver overhead. 
-Lindow et al. \cite{lindow2012interactive} followed-up by using instanced rendering to draw entire structures instead.
+Lindow et al. \cite{lindow2012interactive} followed-up by using  instanced rendering to draw entire structures instead.
 For each molecule type, they generate 3D grid of the atoms which is stored on the GPU, and then ray-casted upon rendering.
 Falk et al. \cite{falk2013atomistic} further refined the method with improved depth culling and hierarchical ray casting to achieve faster rendering performance for even larger scenes. 
 
@@ -213,6 +213,52 @@ cellVIEW leverages GPU computing and parallel programming to enable real-time re
 
 
 \section{Overview}
+
+\textbf{. Mesoscale datasets feature many interesting properties which are present at different scale levels. } \\
+
+\textbf{. We want to offer a solution that would automatically display meaningful information for the current zoom levels} \\
+
+\textbf{. This information should be coherent between levels too (smooth transition, non naive approach)} \\
+	
+\textbf{. To offer smooth transitions accross level one can think of hierarchical color coding approach} \\
+
+\textbf{. With a static hierarchical color coding approach, the hue arcs are predefined on the highest level, and multiple colors are then generated for the lower levels by manipulating channels like chroma luminance} \\
+
+\textbf{. The strictly static approach has two limitations:}
+
+\textbf{. It uses luminance variation to generate distinct colors, which is not preferable to use with a lit 3D environment} \\
+
+\textbf{. Hue arcs are statically defined, therefore, in case the entire wheel is occupied, colors generated inside the wedge do not have an optimum degree of discriminability.  } \\
+
+\textbf{. Indeed, HUE is such a stronger cue to differentiate between types** add better justification **}
+
+\textbf{. Therefore we suggest a method to define color coding hierarchically, where the initial hue value would no longer be statically defined }. \\
+
+\textbf{. The principle is to use the view information to enlarge to interact with the size of the hue arcs on the highest zoom level.} \\
+
+\textbf{. A naive approach would be to simply increase the hue arcs as the camera gets closer to an element and to interpolate between levels based on the distance. }
+
+\textbf{. However, by increasing the arc lengths arbitrarily we will inevitably run into a case where two consequent segments would overlap } \\
+
+\textbf{. This shall be avoided when possible in order to ensure a maximum level of clarity } \\
+
+
+\textbf{. We address this problem differently based on the zooming level, via two different approaches} \\
+
+\textbf{. Indeed, in mesoscale datasets, the multiple semantic levels from entire viruses or cells, down to single atoms, are not evenly spaced.} \\
+
+\textbf{ . **TODO** ruler figure with all the scales}
+
+
+\textbf{By observing the scale we realize that the size difference between levels beneath the protein levels is much lower than the levels above.} \\
+
+We dichotomize the levels according to their size.
+
+
+
+Indeed the size difference between compartments and 
+From the level of a protein and upwards the difference in scale levels are much greater than those 
+ 
 
 A kick-ass overview goes here
 
