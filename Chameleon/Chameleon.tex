@@ -162,6 +162,10 @@ For example, with constant luminance and chroma, the just noticeable distance - 
 
 
 
+We propose a semantic zooming method for visualizing color-coded a virusmulti-scale visualization based on a view- dependent hierarchical color-scheme. Starting from the highest level, we iteratively split up the available color space to the number of necessary colors defined by the current zoom level and item visibility.
+In the HIV example (refer to teaser image), the user initially sees the different compartments. 
+As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
+As the viewer zooms further in, the domains of the proteins will become distinct, then the secondary structures, and eventually even the atoms, whose colors are predefined by convention. 
 
 
 
@@ -194,22 +198,32 @@ We divide the related work in two sections...
 \subsection{Color stuffs}
 
 
-Color maps are used often in visualization. Their structure depends heavily on the application, as has been shown in [Colour for Presentation Graphics], [Color Design for Illustrative Visualization], 
+A mapping from data to color is the same as selecting a color map for the data. The structure of the color map depends heavily on the visualization goal. Not only clear visibilty, but also harmonious and appealing colors can be important[Colour for presentation graphics], as well as the assignment and mixing of colors [color desing for illustrative visualization]. There are many points to consider, and as a result guides and guidelines have been published on how to decide which color scheme is the most appropriate [a rule based took, url, choosing effective, survey and task based quality, explorative analysis]. Furthermore, several tools have been developed to assist users select appropriate color maps, such as colorbrewer, or iwanthue, [http://tools.medialab.sciences-po.fr/iwanthue/] and XCluSim, which are aimed at generating colors for clusters of data. 
 
-Color maps are used often in visualization. 
-Their structure depends heavily on the application, as has been shown in [Colour for Presentation Graphics], [Color Design for Illustrative Visualization], 
 
-A Rule-based Tool for Assisting Colormap Selection, http://ultra.sdk.free.fr/docs/Image/Colors/ARule-basedToolfo0AssistingColormapSelection.htm], [Choosing Effective Colours for Data Visualization], 
-[a survey and task-based quality assessment of static 2d colormaps], [explorative analysis of 2d color maps]. 
-Several tools have been developed to assist users select appropriate color maps, such as colorbrewer, or iwanthue, [http://tools.medialab.sciences-po.fr/iwanthue/] and XCluSim, which are aimed at generating colors for clusters of data. 
 Such clustering can, however, cause perceptual issues, either due to the large number of clusters or their layout. 
 Particular care needs to be taken when dealing with higher dimensional data [revisiting perceptually optimized color mapping for high dimensional data analysis], so the distances between the clusters do not become distorted. 
 Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas [Perceptually Driven Visibility Optimization for Categorical Data Visualization].
 Recognition may also be affected by contrast effects which may need to be dealt with [Methods for Compensating Contrast Effects in Information Visualization].
 XCluSim’s uses a tree based method [tree based method] that attempts to overcome these issues in the case of hierarchical structures. 
 The tree method uses HCL space – a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance – and gives each cluster a different hue. 
-The root of the tree has no chroma, i.e. grey, and the hue is divided up into different sections, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one section to another. 
-As the tree spreads out, the chroma of the nodes increases, and each level gets its own smaller subsection. 
+The root of the tree has no chroma, i.e. grey, and the hue is divided up into different wedges, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
+As the tree spreads out, the chroma of the nodes increases, and each level gets its own smaller wedge. Essentially, each level has its own hue circle with a defined chroma. However, this method can fall apart if the data becomes too large. Each node in the tree has it's own hue. As the tree grows, the hue of the nodes becomes more similar. Either the tree can not grow more because the minimum hue distance between nodes is reach, i.e. the distance betweeen wedges, or the nodes are so similar they become indistinguishable. 
+
+
+
+%Color maps are used often in visualization. Their structure depends heavily on the application, as has been shown in [Colour for Presentation Graphics], [Color Design for Illustrative Visualization]. Several tools have been developed 
+%
+%Color maps are used often in visualization. 
+%Their structure depends heavily on the application, as has been shown in [Colour for Presentation Graphics], [Color Design for Illustrative Visualization], 
+%
+%A Rule-based Tool for Assisting Colormap Selection, http://ultra.sdk.free.fr/docs/Image/Colors/ARule-basedToolfo0AssistingColormapSelection.htm], [Choosing Effective Colours for Data Visualization], 
+%[a survey and task-based quality assessment of static 2d colormaps], [explorative analysis of 2d color maps]. 
+%Several tools have been developed to assist users select appropriate color maps, such as colorbrewer, or iwanthue, [http://tools.medialab.sciences-po.fr/iwanthue/] and XCluSim, which are aimed at generating colors for clusters of data. 
+%However, when dealing with numerous clusters, special attention must be paid to the perceptual qualities of the color map
+
+
+
 
 \subsection{multiscale view}
 Sometimes hierarchical data can also be viewed on multiple levels at once, for example a protein can be viewed on the overall structure as well as on the atomic structure [Rendering Molecular Surfaces using Order-Independent Transparency]. 
