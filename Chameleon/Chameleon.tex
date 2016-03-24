@@ -258,53 +258,65 @@ cellVIEW leverages GPU computing and parallel programming to enable real-time re
 
 \section{Overview}
 
-\textbf{. Mesoscale datasets feature many interesting properties which are present at different scale levels. } \\
+Mesoscale datasets feature many interesting properties which are present at different scale levels.
+Our goal is to provide a solution that would automatically display meaningful information at all zoom levels.
+This information should be coherent between levels also.
+To provide smooth and logical transitions across level we use a hierarchical color coding approach.
 
-\textbf{. We want to offer a solution that would automatically display meaningful information for the current zoom levels} \\
+Based on perceptual reasoning we employ an iso-luminant color scape, and we opt to only variate the hue channel to discriminate between colors. 
+On the first level of the hierachy, we first assign portions of the hue circle to each group of protein types.
+Protein types of a given group are then given a unique hue value within located on the arc of the group.
+In the initial state, the size of the hue arcs is set according to the number of protein types contained in each group. 
+Spacing between hue values of neighbour protein types in a group is proportional to the number of type per group and the size of the arc. 
 
-\textbf{. This information should be coherent between levels too (smooth transition, non naive approach)} \\
-	
-\textbf{. To offer smooth transitions accross level one can think of hierarchical color coding approach} \\
+Due to the large difference in terms of size between compartments and protein, it is very likely that several compartments will be less or no longer be visible as we zooming-in on one single protein. 
+Based on this principle to regenerate new color palettes on-the-fly based on visibility information which we extract from the previous rendered frame.
+For each protein type we compute the percentage of visible elements, and well as the screen coverage in pixels for displayed proteins.
+We sum up those properties for all the protein types of a group to deduce a weighting coefficient which is then used to scale the size of the hue arcs of the groups.
 
-\textbf{. With a static hierarchical color coding approach, the hue arcs are predefined on the highest level, and multiple colors are then generated for the lower levels by manipulating channels like chroma luminance} \\
+When zooming further in, we progressively start to reveal colors of the underlying protein properties, such as the chains, or secondary structures.
+For coloring the subsequent levels we sample hue values around the hue of their parent as shown in figure X \ref{noref}.
+We used pre-defined distance threshold to determine when to transit to the next level.
+To ensure a smooth transitioning, the hue distance between the parent and the children is progressively scaled until reaching a pre-determined offset value.
+%In the case of protein types, the coloring mechanism allows to enlarge the size of the hue arcs while ensuring no overlap between neighbooring groups. 
+%However, when displaying other properties it would be more challenging to reuse the same principle, because of ** TODO REASONS **.
+To ensure a minimum degree of overlapping hue ranges between two neighbours, we use a focus + context approach to reduce the use of too many colors in the background.
 
-\textbf{. The strictly static approach has two limitations:}
+Atoms constitute the final level of our hierarchy.
+In molecular visualization this information is commonly associated with predefined colors called the CPK coloring.
+To transit to this final level we perform linear color interpolation in RGB space, between the color from the previous level (secondary structures) and final atom color.
+The coefficient of interpolation is defined according to the camera distance and pre-defined distance values.
 
-\textbf{. It uses luminance variation to generate distinct colors, which is not preferable to use with a lit 3D environment} \\
+%\textbf{. With a static hierarchical color coding approach, the hue arcs are predefined on the highest level, and multiple colors are then generated for the lower levels by manipulating channels like chroma luminance} \\
+%
+%\textbf{. The strictly static approach has two limitations:}
+%
+%\textbf{. It uses luminance variation to generate distinct colors, which is not preferable to use with a lit 3D environment} \\
+%
+%\textbf{. Hue arcs are statically defined, therefore, in case the entire wheel is occupied, colors generated inside the wedge do not have an optimum degree of discriminability.  } \\
+%
+%\textbf{. Indeed, HUE is such a stronger cue to differentiate between types** add better justification **}
+%
+%\textbf{. Therefore we suggest a method to define color coding hierarchically, where the initial hue value would no longer be statically defined }. \\
 
-\textbf{. Hue arcs are statically defined, therefore, in case the entire wheel is occupied, colors generated inside the wedge do not have an optimum degree of discriminability.  } \\
+%\textbf{. The principle is to use the view information to enlarge to interact with the size of the hue arcs on the highest zoom level.} \\
+%
+%\textbf{. A naive approach would be to simply increase the hue arcs as the camera gets closer to an element and to interpolate between levels based on the distance. }
+%
+%\textbf{. However, by increasing the arc lengths arbitrarily we will inevitably run into a case where two consequent segments would overlap } \\
+%
+%\textbf{. This shall be avoided when possible in order to ensure a maximum level of clarity } \\
+%
+%
+%\textbf{. We address this problem differently based on the zooming level, via two different approaches} \\
+%
+%\textbf{. Indeed, in mesoscale datasets, the multiple semantic levels from entire viruses or cells, down to single atoms, are not evenly spaced.} \\
+%
+%\textbf{ . **TODO** ruler figure with all the scales}
+%
+%
+%\textbf{By observing the scale we realize that the size difference between levels beneath the protein levels is much lower than the levels above.} \\
 
-\textbf{. Indeed, HUE is such a stronger cue to differentiate between types** add better justification **}
-
-\textbf{. Therefore we suggest a method to define color coding hierarchically, where the initial hue value would no longer be statically defined }. \\
-
-\textbf{. The principle is to use the view information to enlarge to interact with the size of the hue arcs on the highest zoom level.} \\
-
-\textbf{. A naive approach would be to simply increase the hue arcs as the camera gets closer to an element and to interpolate between levels based on the distance. }
-
-\textbf{. However, by increasing the arc lengths arbitrarily we will inevitably run into a case where two consequent segments would overlap } \\
-
-\textbf{. This shall be avoided when possible in order to ensure a maximum level of clarity } \\
-
-
-\textbf{. We address this problem differently based on the zooming level, via two different approaches} \\
-
-\textbf{. Indeed, in mesoscale datasets, the multiple semantic levels from entire viruses or cells, down to single atoms, are not evenly spaced.} \\
-
-\textbf{ . **TODO** ruler figure with all the scales}
-
-
-\textbf{By observing the scale we realize that the size difference between levels beneath the protein levels is much lower than the levels above.} \\
-
-We dichotomize the levels according to their size.
-
-
-
-Indeed the size difference between compartments and 
-From the level of a protein and upwards the difference in scale levels are much greater than those 
- 
-
-A kick-ass overview goes here
 
 \section{Details Info Dump}
 
