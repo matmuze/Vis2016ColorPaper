@@ -204,23 +204,36 @@ In the second section we cover related work about large scale molecular renderin
 
 A mapping from data to color is the same as selecting a color map for the data. 
 The structure of the color map depends heavily on the visualization goal. 
-Not only clear visibility, but also harmonious and appealing colors can be important~\cite{ihaka2003colour} [Colour for presentation graphics], as well as the assignment and mixing of colors~\cite{wang2008color} [color desing for illustrative visualization]. 
+N
+Not only clear visibility, but also harmonious and appealing colors can be important~\cite{ihaka2003colour}, as well as the assignment and mixing of colors~\cite{wang2008color}. 
 There are many points to consider, and as a result guides and guidelines have been published on how to decide which color scheme is the most appropriate~\cite{bergman1995rule}, \cite{healey1996choosing}, \cite{bernard2015survey}, \cite{steiger2015explorative}.
-Furthermore, several tools have been developed to assist users select appropriate color maps, such as colorbrewer~\cite{harrower2003colorbrewer}, or "i want hue"~\cite{iwanthue}, and XCluSim~\cite{l2015xclusim}, which are aimed at generating colors for clusters of data. 
+
+Furthermore, several tools have been developed to assist users select appropriate color maps, such as colorbrewer~\cite{harrower2003colorbrewer}, or "i want hue"~\cite{iwanthue} and XCluSim~\cite{l2015xclusim} which generate colors for clusters of data. 
 
 Such clustering can, however, cause perceptual issues, either due to the large number of clusters or their layout. 
 Particular care needs to be taken when dealing with higher dimensional data~\cite{mittelstiidt2014revisiting}, so the distances between the clusters do not become distorted. 
 Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas~\cite{lee2013perceptually}.
-Recognition may also be affected by contrast effects which may need to be dealt with~\cite{mittelstadt2014methods}.
+Visualization of information such as can be found on maps can lead to small areas being next to much larger ones. 
+In this case, it may be difficult to spot the small areas, and lowering the saturation of the larger areas allows the small ones to stand out more.
+Recognition may also be affected by contrast effects which may need to be dealt with~\cite{mittelstadt2014methods}. 
+
 
 XCluSim’s uses a tree-based method~\cite{tennekes2014tree} that attempts to overcome these issues in the case of hierarchical structures. 
 The tree method uses HCL space – a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance – and gives each cluster a different hue. 
-The root of the tree has no chroma, i.e. grey, and the hue is divided up into different wedges, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
-As the tree spreads out, the chroma of the nodes increases, and each level gets its own smaller wedge. 
-Essentially, each level has its own hue circle with a defined chroma. 
+The root of the tree has no saturation, i.e. grey, and the hue is divided up into different wedges, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
+As the tree spreads out, the saturation of the nodes increases, and each level gets its own smaller wedge. 
+Essentially, each level has its own hue circle with a defined saturation. 
 However, this method can fall apart if the data becomes too large. Each node in the tree has it's own hue. 
 As the tree grows, the hue of the nodes becomes more similar. 
 Either the tree can not grow more because the minimum hue distance between nodes is reach, i.e. the distance between wedges, or the nodes are so similar they become indistinguishable. 
+In contrast, our method allows for dynamical increasing and decreasing of wedge angles based on visibility and depth, allowing for overlap to occur at the lower levels. 
+If some of our branch's nodes are not visible, then the wedge will shrink, allowing neighbouring branches to expand. 
+This assists color discernment by the user when looking at the objects of a subset of the branches.
+As mentioned, we also allow the branch to expand at lower levels.
+Our visualization deals with numerous different low level structure. 
+Using~\cite{tennekes2014tree} results in the lower level structures being indistinguishable. 
+As such, a certain amount of overlap is allowed at certain levels, because the users focus at these levels is on an object or subsection thereof. 
+Further details can be found in Section ~\ref{Overview}.
 
 %Color maps are used often in visualization. Their structure depends heavily on the application, as has been shown in [Colour for Presentation Graphics], [Color Design for Illustrative Visualization]. Several tools have been developed 
 %
@@ -267,6 +280,7 @@ cellVIEW leverages GPU computing and parallel programming to enable real-time re
 
 
 \section{Overview}
+\label{Overview}
 
 Mesoscale datasets feature many relevant properties which are present at different scale levels.
 The molecular properties that we provide in this work are, from top to bottom: Compartment (or group), protein type, protein domain, secondary structure and atom type.
@@ -276,7 +290,7 @@ We opted for these properties because, according to domain experts, they are the
 
 Our goal is to provide a solution that would automatically display meaningful information at all zoom levels.
 This information should also be coherent between levels.
-To provide smooth and logical transitions across level we use a hierarchical color coding approach inspired from \cite.
+To provide smooth and logical transitions across level we use a hierarchical color coding approach inspired from \cite{tennekes2014tree}.
 Based on perceptual reasoning, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
 
 On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
