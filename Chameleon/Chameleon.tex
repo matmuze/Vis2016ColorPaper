@@ -197,20 +197,25 @@ We divide the related work in two sections...
 
 \subsection{Color stuffs}
 
-
-A mapping from data to color is the same as selecting a color map for the data. The structure of the color map depends heavily on the visualization goal. Not only clear visibilty, but also harmonious and appealing colors can be important~\cite{ColourpPresentationGraphics2003} [Colour for presentation graphics], as well as the assignment and mixing of colors~\cite{ColorDesignIllustrativeVisualization} [color desing for illustrative visualization]. There are many points to consider, and as a result guides and guidelines have been published on how to decide which color scheme is the most appropriate~\cite{RuleBasedTool}, \cite{ChoosingEffectiveColours}, \cite{SurveyAndTask-based}, \cite{ExplorativeAnalysis}. Furthermore, several tools have been developed to assist users select appropriate color maps, such as colorbrewer~\cite{ColorBrewer}, or "i want hue"~\cite{iwanthue}, and XCluSim~\cite{xclusim}, which are aimed at generating colors for clusters of data. 
-
+A mapping from data to color is the same as selecting a color map for the data. 
+The structure of the color map depends heavily on the visualization goal. 
+Not only clear visibility, but also harmonious and appealing colors can be important~\cite{ihaka2003colour} [Colour for presentation graphics], as well as the assignment and mixing of colors~\cite{wang2008color} [color desing for illustrative visualization]. 
+There are many points to consider, and as a result guides and guidelines have been published on how to decide which color scheme is the most appropriate~\cite{bergman1995rule}, \cite{healey1996choosing}, \cite{bernard2015survey}, \cite{steiger2015explorative}.
+Furthermore, several tools have been developed to assist users select appropriate color maps, such as colorbrewer~\cite{harrower2003colorbrewer}, or "i want hue"~\cite{iwanthue}, and XCluSim~\cite{l2015xclusim}, which are aimed at generating colors for clusters of data. 
 
 Such clustering can, however, cause perceptual issues, either due to the large number of clusters or their layout. 
-Particular care needs to be taken when dealing with higher dimensional data~\cite{RevisitingPerceptuallyOptimizedColorMapping}, so the distances between the clusters do not become distorted. 
-Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas~\cite{VisibilityOptimization}.
-Recognition may also be affected by contrast effects which may need to be dealt with~\cite{CompensatingContrastEffects}.
-XCluSim’s uses a tree based method~\cite{treecolors} that attempts to overcome these issues in the case of hierarchical structures. 
+Particular care needs to be taken when dealing with higher dimensional data~\cite{mittelstiidt2014revisiting}, so the distances between the clusters do not become distorted. 
+Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas~\cite{lee2013perceptually}.
+Recognition may also be affected by contrast effects which may need to be dealt with~\cite{mittelstadt2014methods}.
+
+XCluSim’s uses a tree-based method~\cite{tennekes2014tree} that attempts to overcome these issues in the case of hierarchical structures. 
 The tree method uses HCL space – a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance – and gives each cluster a different hue. 
 The root of the tree has no chroma, i.e. grey, and the hue is divided up into different wedges, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
-As the tree spreads out, the chroma of the nodes increases, and each level gets its own smaller wedge. Essentially, each level has its own hue circle with a defined chroma. However, this method can fall apart if the data becomes too large. Each node in the tree has it's own hue. As the tree grows, the hue of the nodes becomes more similar. Either the tree can not grow more because the minimum hue distance between nodes is reach, i.e. the distance betweeen wedges, or the nodes are so similar they become indistinguishable. 
-
-
+As the tree spreads out, the chroma of the nodes increases, and each level gets its own smaller wedge. 
+Essentially, each level has its own hue circle with a defined chroma. 
+However, this method can fall apart if the data becomes too large. Each node in the tree has it's own hue. 
+As the tree grows, the hue of the nodes becomes more similar. 
+Either the tree can not grow more because the minimum hue distance between nodes is reach, i.e. the distance between wedges, or the nodes are so similar they become indistinguishable. 
 
 %Color maps are used often in visualization. Their structure depends heavily on the application, as has been shown in [Colour for Presentation Graphics], [Color Design for Illustrative Visualization]. Several tools have been developed 
 %
@@ -221,8 +226,6 @@ As the tree spreads out, the chroma of the nodes increases, and each level gets 
 %[a survey and task-based quality assessment of static 2d colormaps], [explorative analysis of 2d color maps]. 
 %Several tools have been developed to assist users select appropriate color maps, such as colorbrewer, or iwanthue, [http://tools.medialab.sciences-po.fr/iwanthue/] and XCluSim, which are aimed at generating colors for clusters of data. 
 %However, when dealing with numerous clusters, special attention must be paid to the perceptual qualities of the color map
-
-
 
 
 \subsection{multiscale view}
@@ -242,10 +245,9 @@ Lindow et al. \cite{lindow2012interactive} followed-up by using  instanced rende
 For each molecule type, they generate 3D grid of the atoms which is stored on the GPU, and then ray-casted upon rendering.
 Falk et al. \cite{falk2013atomistic} further refined the method with improved depth culling and hierarchical ray casting to achieve faster rendering performance for even larger scenes. 
 
-%Parulek et al.\cite{parulek2014continuous} introduced seamless transitions between different levels of coarseness for the representation of the molecular surface based on the distance from the camera.
-%The goal was not only to reduce the computation cost, but also to utilize the shape as a mean to reduce high-level details and noise when observing the structure in its entirety.
-%Their technique is using real-time ray-tracing and offers high quality surface details, but it does not scale well in terms of performance when compared to atom-based rendering methods.
-
+Parulek et al.\cite{parulek2014continuous} introduced seamless transitions between different levels of coarseness for the representation of the molecular surface based on the distance from the camera.
+The goal was not only to reduce the computation cost, but also to utilize the shape as a mean to reduce high-level details and noise when observing the structure in its entirety.
+Their technique is using real-time ray-tracing and offers high quality surface details, but it does not scale well in terms of performance when compared to atom-based rendering methods.
 A novel approach, for real-time rendering of structures with up to tens of billion atoms, was later on introduced by Le Muzic et al. \cite{le2014illustrative}. 
 Their approach, also based on level-of-detail, uses tessellation shaders to switch between different degrees of coarseness for the molecular structures, on-the-fly and upon the rendering operation.
 The entire scene is thus rendered efficiently in a single draw call, approaching zero GPU-driver overhead. 
@@ -258,19 +260,24 @@ cellVIEW leverages GPU computing and parallel programming to enable real-time re
 
 \section{Overview}
 
-Mesoscale datasets feature many interesting properties which are present at different scale levels.
+Mesoscale datasets feature many relevant properties which are present at different scale levels.
+The molecular properties that we provide in this work are, from top to bottom: Compartment (or group), protein type, protein domain, secondary structure and atom type.
+We opted for these properties because, according to domain experts, they are the most relevant properties in visual analysis of three dimensional molecular structures.
+
+%This information is internally declared and accessible for each single rendered atom, which allows us to perform dynamic coloring
+
 Our goal is to provide a solution that would automatically display meaningful information at all zoom levels.
-This information should be coherent between levels also.
-To provide smooth and logical transitions across level we use a hierarchical color coding approach.
+This information should also be coherent between levels.
+To provide smooth and logical transitions across level we use a hierarchical color coding approach inspired from \cite.
+Based on perceptual reasoning, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
 
-Based on perceptual reasoning we employ an iso-luminant color scape, and we opt to only variate the hue channel to discriminate between colors. 
-On the first level of the hierachy, we first assign portions of the hue circle to each group of protein types.
-Protein types of a given group are then given a unique hue value within located on the arc of the group.
+On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
+Protein types of a given group are then given a unique hue value on corresponding arc, as shown in Figure \ref{noref}.
 In the initial state, the size of the hue arcs is set according to the number of protein types contained in each group. 
-Spacing between hue values of neighbour protein types in a group is proportional to the number of type per group and the size of the arc. 
+Spacing between hue values of neighbour protein types of the same group is proportional to the number of type per group and the size of the arc. 
 
-Due to the large difference in terms of size between compartments and protein, it is very likely that several compartments will be less or no longer be visible as we zooming-in on one single protein. 
-Based on this principle to regenerate new color palettes on-the-fly based on visibility information which we extract from the previous rendered frame.
+Due to the large difference in terms of size between compartments and protein, it is very likely that several compartments will be less or no longer be visible as we zooming-in on a single protein. 
+Based on this principle we update the color palette on-the-fly based on visibility information which we extract from the previous rendered frame.
 For each protein type we compute the percentage of visible elements, and well as the screen coverage in pixels for displayed proteins.
 We sum up those properties for all the protein types of a group to deduce a weighting coefficient which is then used to scale the size of the hue arcs of the groups.
 
@@ -318,103 +325,102 @@ The coefficient of interpolation is defined according to the camera distance and
 %\textbf{By observing the scale we realize that the size difference between levels beneath the protein levels is much lower than the levels above.} \\
 
 
-\section{Details Info Dump}
-
-full sentences are commented in the tex
-
-\textbf{. Molecules have multi-scale properties which can all be characterized by color } \\
-
-%.The scenes that we are displaying represent meso-scale biological structures and comprise a large number of molecules (proteins or lipids).
-%.Each protein carry essential properties that is used to convey a different information for each single scale (TODO: Do a figure to explain).
-%.Each of these properties can be visualized and highlighted using a specific color coding.
-
-\textbf{. Molecules have Bottom-Up properties, type and group} \\
-
-%. Molecules can be of different species or type, which characterize their structure.
-%. A group of molecules with similar structures is referred as instances of type X.
-%. Types are also categorized in groups, based on their location or function. 
-
-\textbf{. Molecules have Top-Down properties, domain, secondary structures, and atom type} \\
-
-%. Each molecule comprise a set of atomic particles.
-%. Atoms have different types, C, H, O, N,...
-%. Atoms are assembled in groups to form the amino-acids.
-%. Amino-acids are chained and form segments of amino-acids that are characterized by their shape such helices and sheets, this is called the secondary structure.
-%. The secondary structures are grouped together and divide the proteins in different domains.
-
-\textbf{. BOTTOM-UP PROPERTIES} \\
-
-\textbf{. We use hierarchical color assignments for Bottom-Up properties (we defined wedges in the color wheel for the groups and types inside a group are assigned a color in the corresponding wedge )} \\
-
-%. We decide to chose iso-luminant colors (for aesthetic reasons).
-%. We first assign a wedge of the color-wheel for each group.
-%. In the initial state, the size of the wedge is proportional to the size of the group in terms of protein types.
-%. The colors of the protein are defined accordingly to the color of their group (hierarchical).
-%. Only the hue differs between different types of molecules
-%. Inside a wedge each protein type of a group is assigned to a portion of the wedge with equal spacing between two protein types.
-%. Should a wedge be enlarged or shrunken, the color assignment is set relatively to the size of wedge.
-
-\textbf{. Static tree color maps offers limited discrimination for a large number of colors because it uses other properties to vary colors inside a wedge, HUE IS A MUCH STRONGER CUE} \\
-
-%.The hue circle is limited (360), therefore with several groups comprising tens of individual types we will quickly run out of colors.
-%.In the tree-color paper they solve this problem by generating more colors for each wedge using the additional channels (chroma \& luminance).
-%. This approach has a poor potential for discrimination between different properties since inside a predefined inside a wege colors will still remain rather similar. 
-
-\textbf{. NAIVE APPROACH: Grow the size of color wedges dynamically when zooming in to vary the hue of the colors inside a wedge} \\
-
-%. Rather than using different channels like luminance and chroma we want to keep discriminating colors with HUE because it is such a strong cue.
-%. In order to keep using the hue to discriminate between colors the size of the wedges must be scale according to the zooming distance.
-%. However as the wedges grow their is no mechanism that would prevent two neighbour wedges to overlap which could results in misleading coloring choice.
-
-\textbf{. Wedges may overlap, solution is to use visibility information to control the scaling of the wedges} \\
-
-%. Rather than scaling the wedges according to the zooming distance we suggest to grow or shrink the wedges according to what is currently visible in the current viewport.
-%. For example, if all molecule groups are equally visible, the size of their wedges will be proportional to the size of the groups in terms of protein species.
-%. If a protein group is partially visible or not-visible at all, the corresponding wedge will be scaled accordingly, thus freeing space in the color wheel for other wedges to grown
-%. [Make figure to show example]
-
-\textbf{. Read Visibility Information must be read form the current viewport} \\
-
-%.We analyse visibility information from the rendered frame to check which molecules types are actually currently visible.
-%.The visibility information we use is screen coverage and number of visible instances.
-%.The number of visible protein can be low, while few molecule can have a large screen pixels coverage if located close to the camera.
-%.Similarly the screen coverage can be low while a large number of molecules may still be visible, if camera is looking a the scene from far away.
-
-\textbf{. Use Visibility Information to control the sizes and the layout of wedges, via force fields} \\
-
-%. Once we have the visibility information for each species we evaluate the weight of the species group for scaling the wedge.
-%. We use a force based layout to arrange the wedges along the color wheel.
-%. Each wedge comprise a centroid that can move either left of right, in one dimension.
-%%. The position is then mapped from 1D to a 2D circle for debugging.
-%. Each wedge acts as a circular force field centred around the centroid and which pushed the other wedges away.
-%. The radius to force field is proportional to the size of the group, the number of visible instances, and the percentage of pixels that are occupied by instances of the group.
-%. The radius of the force field is computed as follows: write formula here.
-%. The integration of the forces is computed as follows: write integration formula here.
-%. To make sure that wedge centroids are not pushed away too much from their original location and are shifting in color too much we also apply attraction forces from the centroids to their original location
-
-
-\textbf{. TOP-DOWN PROPERTIES} \\
-
-\textbf{. To transition between two down properties we rely mostly on the camera distance rather than the visibility information} \\
-
-\textbf{. We use HUE again as a cue to discriminate between sub-domains of a protein} \\
-
-\textbf{. We chose HUE values for the chains that are located in the vicinity of the Protein HUE value} \\
-
-\textbf{. We perform smooth transition between protein HUE and terminal HUE chain as the viewer zoom-in} \\
-
-\textbf{. When focusing on proteins to observe the chains, the chain HUE values of neighbouring or likely to cross/overlap those of the focus} \\
-
-\textbf{. We came up with the idea to prioritize the display of chain properties to proteins with a high screen coverage} \\
-
-\textbf{. Additionally when zooming closely to a protein to observe bottom-up properties, we desaturate proteins with low screen coverage to reduce clutter cause by the display of too many top-down property colors for context molecules } \\ 
-
-
-\textbf{At the finest zoom-level we show the atom colours, these colors follow bio-chemical standard and are therefore predifined. } \\
-
-\textbf{We perform color smooth color interpolation between the current color of the atoms and their terminal colors. } \\
-	
-\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
+%\section{Details Info Dump}
+%
+%full sentences are commented in the tex
+%\textbf{. Molecules have multi-scale properties which can all be characterized by color } \\
+%
+%%.The scenes that we are displaying represent meso-scale biological structures and comprise a large number of molecules (proteins or lipids).
+%%.Each protein carry essential properties that is used to convey a different information for each single scale (TODO: Do a figure to explain).
+%%.Each of these properties can be visualized and highlighted using a specific color coding.
+%
+%\textbf{. Molecules have Bottom-Up properties, type and group} \\
+%
+%%. Molecules can be of different species or type, which characterize their structure.
+%%. A group of molecules with similar structures is referred as instances of type X.
+%%. Types are also categorized in groups, based on their location or function. 
+%
+%\textbf{. Molecules have Top-Down properties, domain, secondary structures, and atom type} \\
+%
+%%. Each molecule comprise a set of atomic particles.
+%%. Atoms have different types, C, H, O, N,...
+%%. Atoms are assembled in groups to form the amino-acids.
+%%. Amino-acids are chained and form segments of amino-acids that are characterized by their shape such helices and sheets, this is called the secondary structure.
+%%. The secondary structures are grouped together and divide the proteins in different domains.
+%
+%\textbf{. BOTTOM-UP PROPERTIES} \\
+%
+%\textbf{. We use hierarchical color assignments for Bottom-Up properties (we defined wedges in the color wheel for the groups and types inside a group are assigned a color in the corresponding wedge )} \\
+%
+%%. We decide to chose iso-luminant colors (for aesthetic reasons).
+%%. We first assign a wedge of the color-wheel for each group.
+%%. In the initial state, the size of the wedge is proportional to the size of the group in terms of protein types.
+%%. The colors of the protein are defined accordingly to the color of their group (hierarchical).
+%%. Only the hue differs between different types of molecules
+%%. Inside a wedge each protein type of a group is assigned to a portion of the wedge with equal spacing between two protein types.
+%%. Should a wedge be enlarged or shrunken, the color assignment is set relatively to the size of wedge.
+%
+%\textbf{. Static tree color maps offers limited discrimination for a large number of colors because it uses other properties to vary colors inside a wedge, HUE IS A MUCH STRONGER CUE} \\
+%
+%%.The hue circle is limited (360), therefore with several groups comprising tens of individual types we will quickly run out of colors.
+%%.In the tree-color paper they solve this problem by generating more colors for each wedge using the additional channels (chroma \& luminance).
+%%. This approach has a poor potential for discrimination between different properties since inside a predefined inside a wege colors will still remain rather similar. 
+%
+%\textbf{. NAIVE APPROACH: Grow the size of color wedges dynamically when zooming in to vary the hue of the colors inside a wedge} \\
+%
+%%. Rather than using different channels like luminance and chroma we want to keep discriminating colors with HUE because it is such a strong cue.
+%%. In order to keep using the hue to discriminate between colors the size of the wedges must be scale according to the zooming distance.
+%%. However as the wedges grow their is no mechanism that would prevent two neighbour wedges to overlap which could results in misleading coloring choice.
+%
+%\textbf{. Wedges may overlap, solution is to use visibility information to control the scaling of the wedges} \\
+%
+%%. Rather than scaling the wedges according to the zooming distance we suggest to grow or shrink the wedges according to what is currently visible in the current viewport.
+%%. For example, if all molecule groups are equally visible, the size of their wedges will be proportional to the size of the groups in terms of protein species.
+%%. If a protein group is partially visible or not-visible at all, the corresponding wedge will be scaled accordingly, thus freeing space in the color wheel for other wedges to grown
+%%. [Make figure to show example]
+%
+%\textbf{. Read Visibility Information must be read form the current viewport} \\
+%
+%%.We analyse visibility information from the rendered frame to check which molecules types are actually currently visible.
+%%.The visibility information we use is screen coverage and number of visible instances.
+%%.The number of visible protein can be low, while few molecule can have a large screen pixels coverage if located close to the camera.
+%%.Similarly the screen coverage can be low while a large number of molecules may still be visible, if camera is looking a the scene from far away.
+%
+%\textbf{. Use Visibility Information to control the sizes and the layout of wedges, via force fields} \\
+%
+%%. Once we have the visibility information for each species we evaluate the weight of the species group for scaling the wedge.
+%%. We use a force based layout to arrange the wedges along the color wheel.
+%%. Each wedge comprise a centroid that can move either left of right, in one dimension.
+%%%. The position is then mapped from 1D to a 2D circle for debugging.
+%%. Each wedge acts as a circular force field centred around the centroid and which pushed the other wedges away.
+%%. The radius to force field is proportional to the size of the group, the number of visible instances, and the percentage of pixels that are occupied by instances of the group.
+%%. The radius of the force field is computed as follows: write formula here.
+%%. The integration of the forces is computed as follows: write integration formula here.
+%%. To make sure that wedge centroids are not pushed away too much from their original location and are shifting in color too much we also apply attraction forces from the centroids to their original location
+%
+%
+%\textbf{. TOP-DOWN PROPERTIES} \\
+%
+%\textbf{. To transition between two down properties we rely mostly on the camera distance rather than the visibility information} \\
+%
+%\textbf{. We use HUE again as a cue to discriminate between sub-domains of a protein} \\
+%
+%\textbf{. We chose HUE values for the chains that are located in the vicinity of the Protein HUE value} \\
+%
+%\textbf{. We perform smooth transition between protein HUE and terminal HUE chain as the viewer zoom-in} \\
+%
+%\textbf{. When focusing on proteins to observe the chains, the chain HUE values of neighbouring or likely to cross/overlap those of the focus} \\
+%
+%\textbf{. We came up with the idea to prioritize the display of chain properties to proteins with a high screen coverage} \\
+%
+%\textbf{. Additionally when zooming closely to a protein to observe bottom-up properties, we desaturate proteins with low screen coverage to reduce clutter cause by the display of too many top-down property colors for context molecules } \\ 
+%
+%
+%\textbf{At the finest zoom-level we show the atom colours, these colors follow bio-chemical standard and are therefore predifined. } \\
+%
+%\textbf{We perform color smooth color interpolation between the current color of the atoms and their terminal colors. } \\
+%	
+%\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
 
 
 
@@ -438,45 +444,45 @@ Mathieu write low-level implementation details here.
 
 
 
-\section{Technique (section written by Nicholas)}
-
-When applying a coloring scheme to data of this type, several things need to be taken into account. 
-First, the representation should support the level the user is looking at, e.g. not show the protein domains when the user is looking at the compartment level. 
-Second, switching from one level to another should not be confusing.
-Third, the user should be able to easily identify useful information at the level he is looking at. 
-Because predetermining all the colors for each item in the scene and not allowing for view dependency will, with enough data, guarantee that data points will become indistinguishable. 
-Fourth, the coloring must allow the user remain orientated and determine what belongs to the stuff he is interested in. 
-For example, he needs to know where a compartment ends and the next one begins.
-Stress the fact that temporal coherence and discriminability by color are contradicting each other if we need a lot of colors (give numbers for HIV!). 
-Ware (?) points out that luminance is more useful for encoding high-frequency information, while hue is easier to interpret for encoding low-frequency information. 
-
-This is also reflected in the well-known ColorBrewer color schemes, where colors of categorical palettes differ primarily by hue, while quantitative color schemes operate mostly on luminance level.  
-We therefore use utilize the HCL color space that separates these two properties into different dimensions (luminance is the vertical axis, while hue and chroma are represented on the perpendicular planes as polar coordinates). 
-Another useful aspect of the HCL color space is that it is simply an alternative representation of the CIEL*a*b* color space and therefore perceptually linear. 
-This means that we can linearly link changes in the color space to perceptual responses. 
-We start by assigning each item on the lowest LOD a distinct hue. 
-Since the lowest hierarchy level comprises the entire model, this assignment is static and does not change with the viewing angle. 
-Given the number of elements $n$ on the lowest LOD, the desired luminance and chroma, the hue of the i’th element is simply defined by $h_i=i*360/n$. 
-This results in $n$ isoluminant colors with equidistant hues. 
-(Chroma is luminance-depending if we consider the sRGB boundaries, but we don’t do this now!)
-We use a hue circle here, but any parametric curve within the HCL space could be used. 
-In this case, the colors would not be isoluminant, but still equidistant in the perceptually linear color space. 
-Each section applies force on its neighbouring section, proportional to the number of different kinds of proteins that are visible. 
-This means that the section can grow and shrink, depending on visibility. If a compartment is not visible, then the section shrinks to a size zero. 
-
-However, a degree of consistency is still desired. It would be unwanted for a compartment to switch over to the opposite color, such as blue to yellow.  
-As such something needs to be in place to keep compartments from moving too far.
-The switch to the proteins color occurs when the distance is greater than 5*2.3 =5*jnd in cielab space [Mahy 94 evaluation after adoption]. 
-This is equal to an angle of X on the hue circle.
-
-Another problem is how do we choose the colors for the domains? Their color needs to be view dependent as well as near to the color of the protein they belong to. 
-The color of the chains does not Interact with the color of the other proteins, but does if they are showing their chains. 
-Whether or not the chains are shown depends on the how close the camera is to the protein, unless the color distance would be below a certain amount (5*2.3) ($8.8\deg$). 
-The hue circle is reused to show the colors of the chains. See fig[]. 
-The chains don’t cause any force on the proteins, and the proteins cause no force on the chains. 
-The chains of two different proteins can cause force on one another if they are being shown. 
-Because the chains would normally surround the entire circle, they only push each other away to a maximum distance of X. 
-This allows for the chains to have similar colors to the proteins.
+%\section{Technique (section written by Nicholas)}
+%
+%When applying a coloring scheme to data of this type, several things need to be taken into account. 
+%First, the representation should support the level the user is looking at, e.g. not show the protein domains when the user is looking at the compartment level. 
+%Second, switching from one level to another should not be confusing.
+%Third, the user should be able to easily identify useful information at the level he is looking at. 
+%Because predetermining all the colors for each item in the scene and not allowing for view dependency will, with enough data, guarantee that data points will become indistinguishable. 
+%Fourth, the coloring must allow the user remain orientated and determine what belongs to the stuff he is interested in. 
+%For example, he needs to know where a compartment ends and the next one begins.
+%Stress the fact that temporal coherence and discriminability by color are contradicting each other if we need a lot of colors (give numbers for HIV!). 
+%Ware (?) points out that luminance is more useful for encoding high-frequency information, while hue is easier to interpret for encoding low-frequency information. 
+%
+%This is also reflected in the well-known ColorBrewer color schemes, where colors of categorical palettes differ primarily by hue, while quantitative color schemes operate mostly on luminance level.  
+%We therefore use utilize the HCL color space that separates these two properties into different dimensions (luminance is the vertical axis, while hue and chroma are represented on the perpendicular planes as polar coordinates). 
+%Another useful aspect of the HCL color space is that it is simply an alternative representation of the CIEL*a*b* color space and therefore perceptually linear. 
+%This means that we can linearly link changes in the color space to perceptual responses. 
+%We start by assigning each item on the lowest LOD a distinct hue. 
+%Since the lowest hierarchy level comprises the entire model, this assignment is static and does not change with the viewing angle. 
+%Given the number of elements $n$ on the lowest LOD, the desired luminance and chroma, the hue of the i’th element is simply defined by $h_i=i*360/n$. 
+%This results in $n$ isoluminant colors with equidistant hues. 
+%(Chroma is luminance-depending if we consider the sRGB boundaries, but we don’t do this now!)
+%We use a hue circle here, but any parametric curve within the HCL space could be used. 
+%In this case, the colors would not be isoluminant, but still equidistant in the perceptually linear color space. 
+%Each section applies force on its neighbouring section, proportional to the number of different kinds of proteins that are visible. 
+%This means that the section can grow and shrink, depending on visibility. If a compartment is not visible, then the section shrinks to a size zero. 
+%
+%However, a degree of consistency is still desired. It would be unwanted for a compartment to switch over to the opposite color, such as blue to yellow.  
+%As such something needs to be in place to keep compartments from moving too far.
+%The switch to the proteins color occurs when the distance is greater than 5*2.3 =5*jnd in cielab space [Mahy 94 evaluation after adoption]. 
+%This is equal to an angle of X on the hue circle.
+%
+%Another problem is how do we choose the colors for the domains? Their color needs to be view dependent as well as near to the color of the protein they belong to. 
+%The color of the chains does not Interact with the color of the other proteins, but does if they are showing their chains. 
+%Whether or not the chains are shown depends on the how close the camera is to the protein, unless the color distance would be below a certain amount (5*2.3) (8.8 degrees). 
+%The hue circle is reused to show the colors of the chains. See fig[]. 
+%The chains don’t cause any force on the proteins, and the proteins cause no force on the chains. 
+%The chains of two different proteins can cause force on one another if they are being shown. 
+%Because the chains would normally surround the entire circle, they only push each other away to a maximum distance of X. 
+%This allows for the chains to have similar colors to the proteins.
 
 \section{User study}
 
