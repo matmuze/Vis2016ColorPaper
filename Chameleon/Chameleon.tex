@@ -198,14 +198,14 @@ We divide the related work in two sections...
 \subsection{Color stuffs}
 
 
-A mapping from data to color is the same as selecting a color map for the data. The structure of the color map depends heavily on the visualization goal. Not only clear visibilty, but also harmonious and appealing colors can be important[Colour for presentation graphics], as well as the assignment and mixing of colors [color desing for illustrative visualization]. There are many points to consider, and as a result guides and guidelines have been published on how to decide which color scheme is the most appropriate [a rule based took, url, choosing effective, survey and task based quality, explorative analysis]. Furthermore, several tools have been developed to assist users select appropriate color maps, such as colorbrewer, or iwanthue, [http://tools.medialab.sciences-po.fr/iwanthue/] and XCluSim, which are aimed at generating colors for clusters of data. 
+A mapping from data to color is the same as selecting a color map for the data. The structure of the color map depends heavily on the visualization goal. Not only clear visibilty, but also harmonious and appealing colors can be important~\cite{ColourpPresentationGraphics2003} [Colour for presentation graphics], as well as the assignment and mixing of colors~\cite{ColorDesignIllustrativeVisualization} [color desing for illustrative visualization]. There are many points to consider, and as a result guides and guidelines have been published on how to decide which color scheme is the most appropriate~\cite{RuleBasedTool}, \cite{ChoosingEffectiveColours}, \cite{SurveyAndTask-based}, \cite{ExplorativeAnalysis}. Furthermore, several tools have been developed to assist users select appropriate color maps, such as colorbrewer~\cite{ColorBrewer}, or "i want hue"~\cite{iwanthue}, and XCluSim~\cite{xclusim}, which are aimed at generating colors for clusters of data. 
 
 
 Such clustering can, however, cause perceptual issues, either due to the large number of clusters or their layout. 
-Particular care needs to be taken when dealing with higher dimensional data [revisiting perceptually optimized color mapping for high dimensional data analysis], so the distances between the clusters do not become distorted. 
-Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas [Perceptually Driven Visibility Optimization for Categorical Data Visualization].
-Recognition may also be affected by contrast effects which may need to be dealt with [Methods for Compensating Contrast Effects in Information Visualization].
-XCluSim’s uses a tree based method [tree based method] that attempts to overcome these issues in the case of hierarchical structures. 
+Particular care needs to be taken when dealing with higher dimensional data~\cite{RevisitingPerceptuallyOptimizedColorMapping}, so the distances between the clusters do not become distorted. 
+Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas~\cite{VisibilityOptimization}.
+Recognition may also be affected by contrast effects which may need to be dealt with~\cite{CompensatingContrastEffects}.
+XCluSim’s uses a tree based method~\cite{treecolors} that attempts to overcome these issues in the case of hierarchical structures. 
 The tree method uses HCL space – a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance – and gives each cluster a different hue. 
 The root of the tree has no chroma, i.e. grey, and the hue is divided up into different wedges, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
 As the tree spreads out, the chroma of the nodes increases, and each level gets its own smaller wedge. Essentially, each level has its own hue circle with a defined chroma. However, this method can fall apart if the data becomes too large. Each node in the tree has it's own hue. As the tree grows, the hue of the nodes becomes more similar. Either the tree can not grow more because the minimum hue distance between nodes is reach, i.e. the distance betweeen wedges, or the nodes are so similar they become indistinguishable. 
@@ -229,8 +229,8 @@ As the tree spreads out, the chroma of the nodes increases, and each level gets 
 Sometimes hierarchical data can also be viewed on multiple levels at once, for example a protein can be viewed on the overall structure as well as on the atomic structure [Rendering Molecular Surfaces using Order-Independent Transparency]. 
 Alternatively, distortions of the object or different rendering levels in different areas of the camera may be used. 
 For example, in [A Rendering Framework for Multiscale Views of 3D Models] the area in the center of the camera is rendered as closer in. 
-This is achieved through…. . Parts of the object can also be distorted, by example through widgets such as in [Non-linear perspective widgets for creating multiple-view images] or [Vessel visualization using curvicircular feature aggregation]. 
-In the first case X, in the second case Y.
+This is achieved through using non-linearly bent camera rays and multiple cameras. Parts of the object can also be distorted, for example by widgets such as in [Non-linear perspective widgets for creating multiple-view images], where local areas are distorted using non-linear perspectives. Alternatively, the user might want to zoom into a structure. An example of this is [Multiscale Visual Analysis of Lexical Networks] in which a large hierarchical graph is visualized. The graph has a large depth, and to investigate certain nodes the user must zoom in. During this, the node expands and changes color while its children become exposed. This is recursively applied down the branch, allowing for an arbitrarily deep descent.
+
 
 \subsection{Multi-Scale Molecular Visualization}
 
@@ -471,7 +471,7 @@ This is equal to an angle of X on the hue circle.
 
 Another problem is how do we choose the colors for the domains? Their color needs to be view dependent as well as near to the color of the protein they belong to. 
 The color of the chains does not Interact with the color of the other proteins, but does if they are showing their chains. 
-Whether or not the chains are shown depends on the how close the camera is to the protein, unless the color distance would be below a certain amount (5*2.3) (8.8 degrees). 
+Whether or not the chains are shown depends on the how close the camera is to the protein, unless the color distance would be below a certain amount (5*2.3) ($8.8\deg$). 
 The hue circle is reused to show the colors of the chains. See fig[]. 
 The chains don’t cause any force on the proteins, and the proteins cause no force on the chains. 
 The chains of two different proteins can cause force on one another if they are being shown. 
