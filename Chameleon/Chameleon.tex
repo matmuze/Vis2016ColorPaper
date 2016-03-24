@@ -140,28 +140,52 @@ This technique has been tested on subjects with an expertise in structural biolo
 %% the only exception to this rule is the \firstsection command
 \firstsection{Introduction}
 \maketitle
+The functions of viruses and cells occur on multiple levels, from reactions between atoms up to processes on the celular level. 
+With improving technology, more and more data across all scales is being gathered. 
+Furthermore, with improving computing technology, it is now possible to display an ever increasing amount of this data at once, up to and beyond an entire HIV virus [matmuze].
+Due to the large amount being displayed, the data must be shown in an ordered fashion. 
+However, this can not be done on just one level, as proteins, for example, can be viewed based on which compartment they belong to, but also on lower leves: a protein consists of different domains, which can, in turn consist of secondary structures such as $\alpha$-helices and $\beta$-sheets. 
+These structures can again be broken down into amino acids, which consist of atoms. 
+In the case of HIV, in order to understand its lifecycle, researchers are investigating the shape of its compartments, the role of individual proteins in viral replication, the secondary structures, as well as structural properties of binding sites on the atomic level. 
+Traditionally, researches use dedicated visual representations for each level of scale, and illustrators provide hand-crafted visualizations to communicate new findings to the general public. 
+As such, a mechanism must be developed that can span all these levels, while at the same time connecting them.
+Otherwise, a simplistic approach may lead to a researcher getting lost in the visualization, not knowing where the level he is currently looking belongs in the level above.
+This mechanism must also be capable of dealing with a complete visualization into which the researcher can zoom into, while providing more levels of detail of the structures when zooming in. 
+A hierarchical structure, similar to a tree, must be created, while still allowing for easy discriminability at the lower levels.
+ 
 
-Biological organisms can be viewed on different scales. 
-For example, the human body consists of organs, cells, proteins and molecules. 
-As more detailed data is becoming available across all levels, it is possible to combine visualizations of multiple scale levels into a single integrated visual environment. 
-This poses new challenges for visualization experts, including seamlessly adapting the levels of detail of structural representations for real-time rendering, .... (experts, please address the challenges).
 
-A challenge which has not been addressed so far is color-coding. 
-Consider, for instance, the human immunodeficiency virus (HIV).
-To understand its viral lifecycle, researchers are investigating the shape of its compartments, the role of the individual proteins in viral replication, the secondary structures, as well as structural properties of binding sites on the atomic level. 
-Traditionally, researchers use dedicated visual representations for each level of scale, and illustrators provide hand-crafted visualizations to communicate new findings to the general public. 
-Each of these scale levels uses a distinct color coding so that observers are able to distinguish and identify the structures. 
-Can we show existing examples here? 
-When integrating multiple scales into a single zoomable visualization, it is therefore necessary to not only provide a seamless structural zooming, but also a color-coding mechanism that takes the current level of detail into account. 
-While successively providing more levels of detail of the structures when zooming in, we are severely limited in the number of available colors due to perceptual constraints and limitations of the monitor hardware. 
+One realm in which this system can be supported in is color. Color has been consistently and effectively used to seperate objects and sections from each other, and can also be used to display information about the object at the same time. 
+Therefore, it would be advantageous to use these benefits in such a system. 
+However, there are significant challenges in doing so. First, there are not that many easily distinguishable hues. 
+For example, with constant luminance and chroma, the just noticeable distance - the distance between two colors where the a human can distinguish them - is equal to N degrees, based on a distance of 2.3 [reference]. However, this is of course not enough to be easily distinguishable. If 10 times the just noticeable distance were used, we would only have N colors. Furthermore, if we subdivde the colors when zooming in, similar to a tree, then the discriminability becomes worse with each leve. Certainly, it is possible to branch out into saturation and luminance as well. However, varying hue, saturation and luminance all at once can easily lead to cognitive overload, as it is difficult to operate in three dimensions at once. Lastly, in an illuminated or shaded scene, two objects with the same hue but different luminance that are next to each other might be misconstrued as just one object, with the luminance being used to indicate structure. As such, there are significant perceptual and cognitive restrictions placed on color coding. Furthermore, the kind of information which should be displayed may conflict with the visualization of nearby levels, simply by being of similar scale, such as amino acids that consist out of a handful of atoms, and the atoms themselves.
 
-We propose a semantic zooming method for visualizing color-coded a virusmulti-scale visualization based on a view- dependent hierarchical color-scheme. 
-Starting from the lowest zoom-level, we iteratively split up the available color space to the number of necessary colors defined by the current zoom level and item visibility.
- Our method thereby trades discriminability of individual elements against temporal coherence. 
-In the HIV example (refer to teaser image), the user initially sees the different compartments. 
-As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. 
-As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
-As the viewer zooms further in, the domains of the proteins will become distinct, and eventually even the atoms, whose colors are predefined by convention. 
+
+
+
+
+
+%from here old \newline
+%Biological organisms can be viewed on different scales. 
+%For example, the human body consists of organs, cells, proteins and molecules. As more detailed data is becoming available across all levels, it is possible to combine visualizations of multiple scale levels into a single integrated visual environment. 
+%This poses new challenges for visualization experts, including seamlessly adapting the levels of detail of structural representations for real-time rendering, .... (experts, please address the challenges).
+%
+%A challenge which has not been addressed so far is color-coding. Consider, for instance, the human immunodeficiency virus (HIV).
+%To understand its viral lifecycle, researchers are investigating the shape of its compartments, the role of the individual proteins in viral replication, the secondary structures, as well as structural properties of binding sites on the atomic level. 
+%Traditionally, researchers use dedicated visual representations for each level of scale, and illustrators provide hand-crafted visualizations to communicate new findings to the general public. 
+%Each of these scale levels uses a distinct color coding so that observers are able to distinguish and identify the structures. Can we show existing examples here? 
+%When integrating multiple scales into a single zoomable visualization, it is therefore necessary to not only provide a seamless structural zooming, but also a color-coding mechanism that takes the current level of detail into account. 
+%While successively providing more levels of detail of the structures when zooming in, we are severely limited in the number of available colors due to perceptual constraints and limitations of the monitor hardware. 
+%
+%We propose a semantic zooming method for visualizing color-coded a virusmulti-scale visualization based on a view- dependent hierarchical color-scheme. 
+%Starting from the lowest zoom-level, we iteratively split up the available color space to the number of necessary colors defined by the current zoom level and item visibility.
+% Our method thereby trades discriminability of individual elements against temporal coherence. 
+%In the HIV example (refer to teaser image), the user initially sees the different compartments. 
+%As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
+%As the viewer zooms further in, the domains of the proteins will become distinct, and eventually even the atoms, whose colors are predefined by convention. 
+
+
+
 
 \section{Related Work}
 
@@ -169,8 +193,12 @@ We divide the related work in two sections...
 
 \subsection{Color stuffs}
 
+
+Color maps are used often in visualization. Their structure depends heavily on the application, as has been shown in [Colour for Presentation Graphics], [Color Design for Illustrative Visualization], 
+
 Color maps are used often in visualization. 
 Their structure depends heavily on the application, as has been shown in [Colour for Presentation Graphics], [Color Design for Illustrative Visualization], 
+
 A Rule-based Tool for Assisting Colormap Selection, http://ultra.sdk.free.fr/docs/Image/Colors/ARule-basedToolfo0AssistingColormapSelection.htm], [Choosing Effective Colours for Data Visualization], 
 [a survey and task-based quality assessment of static 2d colormaps], [explorative analysis of 2d color maps]. 
 Several tools have been developed to assist users select appropriate color maps, such as colorbrewer, or iwanthue, [http://tools.medialab.sciences-po.fr/iwanthue/] and XCluSim, which are aimed at generating colors for clusters of data. 
@@ -182,6 +210,8 @@ XCluSim’s uses a tree based method [tree based method] that attempts to overco
 The tree method uses HCL space – a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance – and gives each cluster a different hue. 
 The root of the tree has no chroma, i.e. grey, and the hue is divided up into different sections, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one section to another. 
 As the tree spreads out, the chroma of the nodes increases, and each level gets its own smaller subsection. 
+
+\subsection{multiscale view}
 Sometimes hierarchical data can also be viewed on multiple levels at once, for example a protein can be viewed on the overall structure as well as on the atomic structure [Rendering Molecular Surfaces using Order-Independent Transparency]. 
 Alternatively, distortions of the object or different rendering levels in different areas of the camera may be used. 
 For example, in [A Rendering Framework for Multiscale Views of 3D Models] the area in the center of the camera is rendered as closer in. 
@@ -464,6 +494,11 @@ o	Want to measure usability
 \section{Conclusion}
 
 Conclusion goes here.
+
+\subsection{limitations}
+levels near each other (amino acids, atoms).
+some stuff are on same level (polarity, amino acids).
+
 
 %% if specified like this the section will be committed in review mode
 \acknowledgments{
