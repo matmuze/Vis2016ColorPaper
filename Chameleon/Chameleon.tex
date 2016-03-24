@@ -305,16 +305,16 @@ We sum up those properties for all the protein types of a group to deduce a weig
 
 When zooming further in, we progressively start to reveal colors of the underlying protein properties, such as the chains, or secondary structures.
 For coloring the subsequent levels we sample hue values around the hue of their parent as shown in figure X \ref{noref}.
-We used pre-defined distance threshold to determine when to transit to the next level.
-To ensure a smooth transitioning, the hue distance between the parent and the children is progressively scaled until reaching a pre-determined offset value.
+We use pre-defined camera distance thresholds to determine when to transit to the next level.
+To ensure a smooth transition, the hue distance between the parent and the children is progressively scaled until reaching a pre-determined offset value.
 %In the case of protein types, the coloring mechanism allows to enlarge the size of the hue arcs while ensuring no overlap between neighbooring groups. 
 %However, when displaying other properties it would be more challenging to reuse the same principle, because of ** TODO REASONS **.
-To ensure a minimum degree of overlapping hue ranges between two neighbours, we use a focus + context approach to reduce the use of too many colors in the background.
+To ensure a minimum degree of overlapping hue ranges between two neighbours, we use a focus + context to reduce occurence of recurrent colors in the background.
 
 Atoms constitute the final level of our hierarchy.
-In molecular visualization this information is commonly associated with predefined colors called the CPK coloring.
+In molecular visualization this information is commonly associated with predefined colors also called CPK coloring.
 To transit to this final level we perform linear color interpolation in RGB space, between the color from the previous level (secondary structures) and final atom color.
-The coefficient of interpolation is defined according to the camera distance and pre-defined distance values.
+The coefficient of interpolation is defined according to the camera distance and pre-defined distance values *** MANU'S MAGIC COLOR INTERPOLATION HERE ? ***.
 
 %\textbf{. With a static hierarchical color coding approach, the hue arcs are predefined on the highest level, and multiple colors are then generated for the lower levels by manipulating channels like chroma luminance} \\
 %
