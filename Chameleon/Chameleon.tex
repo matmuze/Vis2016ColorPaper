@@ -197,7 +197,7 @@ As the viewer zooms further in, the domains of the proteins will become distinct
 
 \section{Related Work}
 
-We divide the related work in two sections, in the first section we cover previous work on colors in visualization, and their perceptual impact on the viewer. 
+We divide the related work in two sections, in the first section we cover previous work about appropriate usage of colors in visualization, and their perceptual impact. 
 In the second section we cover related work about large scale molecular rendering, to which we build our technique upon.
 
 \subsection{Colors in Visualization}
@@ -294,13 +294,13 @@ To provide smooth and logical transitions across level we use a hierarchical col
 Based on perceptual reasoning, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
 
 On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
-Protein types of a given group are then given a unique hue value on corresponding arc, as shown in Figure \ref{noref}.
+Protein types of a given group are then given a unique hue value on the corresponding arc, as shown in Figure \ref{noref}.
 In the initial state, the size of the hue arcs is set according to the number of protein types contained in each group. 
 Spacing between hue values of neighbour protein types of the same group is proportional to the number of type per group and the size of the arc. 
 
 Due to the large difference in terms of size between compartments and protein, it is very likely that several compartments will be less or no longer be visible as we zooming-in on a single protein. 
 Based on this principle we update the color palette on-the-fly based on visibility information which we extract from the previous rendered frame.
-For each protein type we compute the percentage of visible elements, and well as the screen coverage in pixels for displayed proteins.
+For each protein type, we compute the percentage of visible elements, as well as the screen coverage in pixels for displayed proteins.
 We sum up those properties for all the protein types of a group to deduce a weighting coefficient which is then used to scale the size of the hue arcs of the groups.
 
 When zooming further in, we progressively start to reveal colors of the underlying protein properties, such as the chains, or secondary structures.
