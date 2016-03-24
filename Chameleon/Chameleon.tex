@@ -188,14 +188,12 @@ As the viewer zooms further in, the domains of the proteins will become distinct
 %As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
 %As the viewer zooms further in, the domains of the proteins will become distinct, and eventually even the atoms, whose colors are predefined by convention. 
 
-
-
-
 \section{Related Work}
 
-We divide the related work in two sections...
+We divide the related work in two sections, in the first section we cover previous work on colors in visualization, and their perceptual impact on the viewer. 
+In the second section we cover related work about large scale molecular rendering, to which we build our technique upon.
 
-\subsection{Color stuffs}
+\subsection{Colors in Visualization}
 
 A mapping from data to color is the same as selecting a color map for the data. 
 The structure of the color map depends heavily on the visualization goal. 
@@ -228,12 +226,15 @@ Either the tree can not grow more because the minimum hue distance between nodes
 %However, when dealing with numerous clusters, special attention must be paid to the perceptual qualities of the color map
 
 
-\subsection{multiscale view}
-Sometimes hierarchical data can also be viewed on multiple levels at once, for example a protein can be viewed on the overall structure as well as on the atomic structure~\cite{OrderIndependent}. 
-Alternatively, distortions of the object or different rendering levels in different areas of the camera may be used. 
-For example, in~\cite{MultiscaleViews} the area in the center of the camera is rendered as closer in. 
-This is achieved through using non-linearly bent camera rays and multiple cameras. Parts of the object can also be distorted, for example by widgets such as in~\cite{PerspectiveWidgets}, where local areas are distorted using non-linear perspectives. Alternatively, the user might want to zoom into a structure. An example of this is~\cite{LexicalNetworks} in which a large hierarchical graph is visualized. The graph has a large depth, and to investigate certain nodes the user must zoom in. During this, the node expands and changes color while its children become exposed. This is recursively applied down the branch, allowing for an arbitrarily deep descent.
-
+%\subsection{multiscale view}
+%Sometimes hierarchical data can also be viewed on multiple levels at once, for example a protein can be viewed on the overall structure as well as on the atomic structure~\cite{kauker2013rendering}. 
+%Alternatively, distortions of the object or different rendering levels in different areas of the camera may be used. 
+%For example, in~\cite{hsu2011rendering} the area in the center of the camera is rendered as closer in. 
+%This is achieved through using non-linearly bent camera rays and multiple cameras. 
+%Parts of the object can also be distorted, for example by widgets such as in~\cite{sudarsanam2008non}, where local areas are distorted using non-linear perspectives. 
+%Alternatively, the user might want to zoom into a structure. An example of this is~\cite{artignan2009multiscale} in which a large hierarchical graph is visualized.
+%The graph has a large depth, and to investigate certain nodes the user must zoom in. During this, the node expands and changes color while its children become exposed. 
+%This is recursively applied down the branch, allowing for an arbitrarily deep descent.
 
 \subsection{Multi-Scale Molecular Visualization}
 
