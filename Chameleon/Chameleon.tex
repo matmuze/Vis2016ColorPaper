@@ -29,6 +29,7 @@
 \usepackage{graphicx}
 \usepackage{times}
 \usepackage{epstopdf}
+\usepackage{amsmath}
 
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
@@ -307,14 +308,12 @@ cellVIEW leverages GPU computing and parallel programming to enable real-time re
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=0.85\linewidth]{Figures/coloroverview}
-	\caption{Overview of our dynamic and hierarchical color scheme. (1) Represent the two-first levels of the hierarchy, (2) The current viewport, (3) Visibility information is extracted from the current viewport, (4) The color palette is optimised for visible elements.}
+	\caption{Overview of our dynamic and hierarchical color scheme. (1) The first two levels of the hierarchy, in this example we have four groups and a total of 20 different protein types, (2) The current viewport, the red square represents a close-up view, (3) The visibility information is extracted from the current viewport, (4) The color palette is updated to prioritize visible elements only.}
 	\label{fig:coloroverview}
 \end{figure*}
 
 \section{Overview}
 \label{Overview}
-
-
 
 
 Mesoscale datasets feature many relevant properties which are present at different scale levels.
@@ -479,6 +478,45 @@ The coefficient of interpolation is defined according to the camera distance and
 %	
 %\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
 
+\section{Dynamic Color Palette}
+
+
+We use information about the visibility of the rendered protein to optimize the color palette for a given viewport.
+For each group of protein types, we analyse the visibility factor of their protein types and we derive a weighting coefficient which we use to scale the corresponding sections of the hue circle.
+The visibility factor of protein type is determined by two parameters.
+The first one is the screen-coverage in pixels of all the protein of the given types.
+The second parameter is the percentage of protein of a given type that are actually visible in the rendered image.
+
+It is important to take into account the screen coverage and not only the number of visible elements.
+Indeed, a given protein type may have a low number of visible proteins but the visible ones, may still occupy a large portion of the screen when closely located next to the camera.
+In this particular case we want to ensure that this element will weight equally in the computation of the overall group coefficient.
+The visibility factor of a given protein type is computed a follow:
+
+\begin{equation}
+c_{i}=\begin{cases}
+1, & \text{if $p_{i}<t_{p}$ and $v_{i}<t_{v}$}.\\
+0, & \text{otherwise}.
+\end{cases}
+\end{equation}
+
+\begin{equation}
+C = \left\lbrace c_{1}, ... , c_{n} \right\rbrace 
+\end{equation}
+
+Where $c$ corresponds to the visibility factor of a given protein type $i$, $p$ corresponds to the percentage of pixels occupied by proteins of type $i$, and $v$ is the percentage of proteins of type $i$ that are visible.
+$t_{p}$ and $t_{v}$ correspond to arbitrarily defined thresholds for the screen coverage and visibility, respectively. 
+$C$ is a set of $n$ protein types that constitute a group.
+For that given group the weight coefficient is computed as follows:
+
+\begin{equation}
+w = \frac{\sum_{i=1}^{n} c_{i}}{n} s, c_{i} \in C
+\end{equation}
+
+Where $w$ is the weight of the group, and s is a scaling factor which is proportional to the number of protein type in that group.
+
+
+
+\section{Force-Based Compartment Layout}
 
 
 \section{Implementation}
