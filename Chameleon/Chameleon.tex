@@ -140,39 +140,64 @@ This technique has been tested on subjects with an expertise in structural biolo
 %% the only exception to this rule is the \firstsection command
 \firstsection{Introduction}
 \maketitle
-The functions of viruses and cells occur on multiple levels, from reactions between atoms up to processes on the celular level. 
-With improving technology, more and more data across all scales is being gathered. 
-Furthermore, with improving computing technology, it is now possible to display an ever increasing amount of this data at once, up to and beyond an entire HIV virus~\cite{muzic2015cellview}.
-Due to the large amount being displayed, the data must be shown in an ordered fashion. 
-However, this can not be done on just one level, as proteins, for example, can be viewed based on which compartment they belong to, but also on lower levels: a protein consists of different domains, which can, in turn consist of secondary structures such as $\alpha$-helices and $\beta$-sheets. 
-These structures can again be broken down into amino acids, which consist of a few atoms. 
-In the case of HIV, in order to understand its lifecycle, researchers are investigating the shape of its compartments, the role of individual proteins in viral replication, the secondary structures, as well as structural properties of binding sites on the atomic level. 
-Traditionally, researches use dedicated visual representations for each level of scale, and illustrators provide hand-crafted visualizations to communicate new findings to the general public. 
-As such, a mechanism must be developed that can span all these levels, while at the same time connecting them.
-Otherwise, a simplistic approach may lead to a researcher getting lost in the visualization, not knowing where the level he is currently looking belongs in the level above.
-This mechanism must also be capable of dealing with a complete visualization into which the researcher can zoom into, while providing more levels of detail of the structures when zooming in. 
-A hierarchical structure, similar to a tree, must be created, while still allowing for easy discriminability at the lower levels.
 
-One realm in which this system can be supported in is color. 
-Color has been consistently and effectively used to seperate objects and sections from each other, and can also be used to display information about the object at the same time. 
-Therefore, it would be advantageous to use these benefits in such a system. 
-However, there are significant challenges in doing so. 
-First, there are not that many easily distinguishable hues. 
-For example, with constant luminance and chroma, the just noticeable distance - the distance between two colors where the a human can distinguish them - is equal to N degrees, based on a distance of 2.3~\cite{mahy1994evaluation}. 
-However, this is of course not enough to be easily distinguishable. If 10 times the just noticeable distance were used, we would only have N colors. 
-Furthermore, if we subdivde the colors when zooming in, similar to a tree, then the discriminability becomes worse with each leve. 
-Certainly, it is possible to branch out into saturation and luminance as well. 
-However, varying hue, saturation and luminance all at once can easily lead to cognitive overload, as it is difficult to operate in three dimensions at once. 
-Lastly, in an illuminated or shaded scene, two objects with the same hue but different luminance that are next to each other might be misconstrued as just one object, with the luminance being used to indicate structure. 
+With improving technology, more and more data across all levels - from atomic to compartment - is being gathered on Viruses and Cells. 
+Improving computing technology makes it possible to display an ever increasing amount of this data at once, up to and beyond an entire HI virus~\cite{muzic2015cellview}.
+This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms.
+Unfortunately, a simplistic visualization of these levels will lead either to loss or excess of information.
+For example, if we base the visualization on proteins, then the information on secondary structures and atoms is lost. 
+If we base the visualization on atoms or secondary structures, any zoomed out view will simply see salt and pepper noise. 
+A naive visualization that transitions from one level to the next as the user zooms in may at first glance seem sufficient.
+However, there are several issues that pop up.
+First, the transition may be appear chaotic, as the visualization may change quickly.
+This will not only effect the connection between two levels, but also the understanding if the user is between levels.
+Second, there is a loss of information when transitioning from one level to the next. 
+For example, if a user is looking at two compartments that are next to each other and zooms in where they meet, then the information where one compartment ends and the other starts is lost. 
+The user would be capable of comprehending the proteins individually, but not their relationship to each other.
+Furthermore, this continues through to the lower levels. 
+The reason for this loss is the inherent hierarchy of the data.
+An atom belongs to an amino acid, which in turn belongs to the domain of a protein, all the way to the top.
+Therefore, a visualization of the data must fulfill two requirements. 
+One, the transtion from one level to another must be smooth.
+Two, the inherent hierarchy of the data must be preserved.
+This hierarchy lends itself easily to a tree structure.
+One way to assign information to this tree is to place it into a color space.
+For example, a tree could be constructed where is branch has its own hue.
+As the tree goes down through the structure of the cell, the hues become subdivided.
+A compartment could be red, the proteins different shades of red, and so forth.
+However, such a simple approach scales poorly. 
+There can be dozens if not hundreds of different proteins, not to mention the amount of domains or secondary structures.
+As such, the lower levels will certainly become indistinguishable.
+It might appear to be a good idea to branch out into luminance and saturation.
+However, this means that the tree expands into three different dimensions.
+This can cause issues when understanding the data.
+Varying hue, saturation and luminance all at once can easily lead to cognitive overload, as it is difficult to operate in three dimensions at once. 
+Furthermore, in an illuminated or shaded scene, two objects with the same hue but different luminance that are next to each other might be misconstrued as just one object, with the varying luminance userstood as changing structure. 
 As such, there are significant perceptual and cognitive restrictions placed on color coding. 
-Furthermore, the kind of information which should be displayed may conflict with the visualization of nearby levels, simply by being of similar scale, such as amino acids that consist out of a handful of atoms, and the atoms themselves.
 
-We propose a semantic zooming method for visualizing color-coded a virus multi-scale visualization based on a view-dependent hierarchical color-scheme. 
+We propose a semantic zooming method for a multi-scale visualization of a cell or virus-like structure, based on a view-dependent, hierarchical color scheme.
 Starting from the highest level, we progressively free-up unused color space and redistribute it to visible elements defined by the current zoom level and item visibility.
 In the HIV example (refer to teaser image), the user initially sees the different compartments. 
 As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. 
 As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
 As the viewer zooms further in, the domains of the proteins will become distinct, then the secondary structures, and eventually even the atoms, whose colors are predefined by convention. 
+
+
+%One realm in which this system can be supported in is color. 
+%Color has been consistently and effectively used to seperate objects and sections from each other, and can also be used to display information about the object at the same time. 
+%Therefore, it would be advantageous to use these benefits in such a system. 
+%However, there are significant challenges in doing so. 
+%First, there are not that many easily distinguishable hues. 
+%For example, with constant luminance and chroma, the just noticeable distance - the distance between two colors where the a human can distinguish them - is equal to N degrees, based on a distance of 2.3~\cite{mahy1994evaluation}. 
+%However, this is of course not enough to be easily distinguishable. If 10 times the just noticeable distance were used, we would only have N colors. 
+%Furthermore, if we subdivde the colors when zooming in, similar to a tree, then the discriminability becomes worse with each leve. 
+%Certainly, it is possible to branch out into saturation and luminance as well. 
+%However, varying hue, saturation and luminance all at once can easily lead to cognitive overload, as it is difficult to operate in three dimensions at once. 
+%Lastly, in an illuminated or shaded scene, two objects with the same hue but different luminance that are next to each other might be misconstrued as just one object, with the luminance being used to indicate structure. 
+%As such, there are significant perceptual and cognitive restrictions placed on color coding. 
+
+
+
 
 
 
@@ -533,21 +558,63 @@ Rather than simply giving the user one or more simple, specific tasks and measur
 
 
 \subsection{task 1}
-- quick description of hiv virus
+The capsid of the HIV virus encloses the genome (2 strands of RNA) along with different viral proteins. The capsid protein is able to form hexamers and pentamers by shifting slightly in structure, and folds to form two domains connected by a flexible linker: the N-terminal domain and C-terminal domain. The N-terminal domain is involved in forming the hexamer - pentamer or hexamer-hexamer contacts, and the C-terminal domains are involved in dimer contacts between hexamers / pentamers. There are two alpha helices that stabilize the hexamers and pentamers. As HIV is budding from an infected cell, the cellular enzyme cyclophilin A binds to capsid. On the capsid protein there is a loop on the surface with several prolines, which is the site of binding of cyclophilin. 
+
+The users were tasked with finding the following:
+
+\begin{enumerate}
+	\item The capsid itself
+	\item A pentamer in the capsid
+	\item C and N terminals
+	\item Alpha helices
+	\item Cyclophilin binding site
+	\item The Methionine amino acid within the alpha helices 
+\end{enumerate}
+
+The users were given an in-depth description of the capsid and a structural representation of the Methionine amino acid. The task of finding the pentamer was added so the users would practice moving the camera around, as recognizing a pentamer was easier than actually finding one.  If a user was not capable of finding a pentamer, then he simply continued. 
+
 - tasks of the user study and information that was given. (list)
+
+
+
+
+
 
 \subsection{how evaluation was performed/measured}
 
+
 \subsection{perforamnce of users first iteration}
+- finding structures
+	- why
+- camera control, frustration, etc.
+- comments by users
+
+
+
 
 \subsection{feedback that was implemented into method}
+- switch to color for secondary structures
+
 
 \subsection{performance of users second iteration}
+- finding structures
+- why
+- camera control, frustration, etc.
+- comments by users
+
+
+
 
 \subsection{feedback to implement into method}
 
 
+\subsection{stuff they'd like to see}
+- obviously they'd like everything.
+- cartoon representation
+- polarity etc.
 
+
+\subsection{uses and applications}
 
 
 We opted to perform a qualitative evaluation with XX biologists consisting of two blocks.
