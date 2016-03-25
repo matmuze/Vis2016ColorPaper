@@ -328,7 +328,7 @@ To provide smooth and logical transitions across level we use a hierarchical col
 Based on perceptual reasoning, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
 
 On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
-Protein types of a given group are then given a unique hue value on the corresponding arc, as shown in Figure \ref{}.
+Protein types of a given group are then given a unique hue value on the corresponding arc, as shown in Figure \ref{fig:coloroverview}.
 In the initial state, the size of the hue arcs is set according to the number of protein types contained in each group. 
 Spacing between hue values of neighbour protein types of the same group is proportional to the number of type per group and the size of the arc. 
 
@@ -485,7 +485,7 @@ We use information about the visibility of the rendered protein to optimize the 
 For each group of protein types, we analyse the visibility factor of their protein types and we derive a weighting coefficient which we use to scale the corresponding sections of the hue circle.
 The visibility factor of protein type is determined by two parameters.
 The first one is the screen-coverage in pixels of all the protein of the given types.
-The second parameter is the percentage of protein of a given type that are actually visible in the rendered image.
+The second parameter is the percentage of protein of a given type that are actually visible in the rendered image. \\
 
 It is important to take into account the screen coverage and not only the number of visible elements.
 Indeed, a given protein type may have a low number of visible proteins but the visible ones, may still occupy a large portion of the screen when closely located next to the camera.
@@ -512,8 +512,17 @@ For that given group the weight coefficient is computed as follows:
 w = \frac{\sum_{i=1}^{n} c_{i}}{n} s, c_{i} \in C
 \end{equation}
 
-Where $w$ is the weight of the group, and s is a scaling factor which is proportional to the number of protein type in that group.
+Where $w$ is the weight of the group, and s is a scaling factor which is proportional to the number of protein type in that group. \\
 
+We leverage GPU computing in a post-processing operation in order to compute the visibility factors of each protein type efficiently.
+Upon rendering we generate two additional off-line textures which contain for each pixels the atom and protein unique identifiers, respectively.
+We priorly declare a two GPU buffers which will, for each protein type, store the occupied pixel count and the total number of visible proteins, respectively.
+Subsequently, in a dedicated compute shader, we browse through all the pixel of the protein IDs and we increment the pixel counter corresponding to the protein type stored in the video memory.
+At the same time we also flag, in a dedicated GPU buffer, the proteins are present in the generated texture.
+This information will allow us to count the visible instances of a given type.
+In a second pass and in a dedicated compute shader, we then browse through all the protein instances.
+For each protein which was flag as visible in the previous pass, we increase the number of visible instances corresponding to the protein type.
+Since the computation is done in parallel it is important to use atomic intrisinc function to increment the counters in order to avoid concurrent access to the same value from two different threads.
 
 
 \section{Force-Based Compartment Layout}
