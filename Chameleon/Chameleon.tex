@@ -279,8 +279,18 @@ The Chameleon is built-upon cellVIEW, and is an attempt to improve understanding
 cellVIEW leverages GPU computing and parallel programming to enable real-time rendering and therefore, the Chameleon was developed with the same programming paradigm.
 
 
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=0.85\linewidth]{Figures/coloroverview}
+	\caption{Overview of our dynamic and hierarchical color scheme. (1) Represent the two-first levels of the hierarchy, (2) The current viewport, (3) Visibility information is extracted from the current viewport, (4) The color palette is optimised for visible elements.}
+	\label{fig:coloroverview}
+\end{figure*}
+
 \section{Overview}
 \label{Overview}
+
+
+
 
 Mesoscale datasets feature many relevant properties which are present at different scale levels.
 The molecular properties that we provide in this work are, from top to bottom: Compartment (or group), protein type, protein domain, secondary structure and atom type.
@@ -294,7 +304,7 @@ To provide smooth and logical transitions across level we use a hierarchical col
 Based on perceptual reasoning, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
 
 On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
-Protein types of a given group are then given a unique hue value on the corresponding arc, as shown in Figure \ref{noref}.
+Protein types of a given group are then given a unique hue value on the corresponding arc, as shown in Figure \ref{}.
 In the initial state, the size of the hue arcs is set according to the number of protein types contained in each group. 
 Spacing between hue values of neighbour protein types of the same group is proportional to the number of type per group and the size of the arc. 
 
