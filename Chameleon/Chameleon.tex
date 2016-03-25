@@ -142,27 +142,27 @@ This technique has been tested on subjects with an expertise in structural biolo
 \maketitle
 
 With improving technology, more and more data across all levels - from atomic to compartment - is being gathered on Viruses and Cells. 
-Improving computing technology makes it possible to display an ever increasing amount of this data at once, up to and beyond an entire HI virus~\cite{muzic2015cellview}.
-This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms.
-Unfortunately, a simplistic visualization of these levels will lead either to loss or excess of information.
+Improving computing technology makes it possible to display an ever increasing amount of this data at once, up to and beyond an entire HI virus~\cite{muzic2015cellview}, with its complete macromolecular composition.
+This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms.
+Unfortunately, a simplistic visualization of these levels will lead either to a loss or excess of information.
 For example, if we base the visualization on proteins, then the information on secondary structures and atoms is lost. 
 If we base the visualization on atoms or secondary structures, any zoomed out view will simply see salt and pepper noise. 
 A naive visualization that transitions from one level to the next as the user zooms in may at first glance seem sufficient.
 However, there are several issues that pop up.
 First, the transition may be appear chaotic, as the visualization may change quickly.
-This will not only effect the connection between two levels, but also the understanding if the user is between levels.
+This will not only affect understanding how two levels are connected, but also the comprehension if the user is between levels.
 Second, there is a loss of information when transitioning from one level to the next. 
 For example, if a user is looking at two compartments that are next to each other and zooms in where they meet, then the information where one compartment ends and the other starts is lost. 
 The user would be capable of comprehending the proteins individually, but not their relationship to each other.
 Furthermore, this continues through to the lower levels. 
 The reason for this loss is the inherent hierarchy of the data.
-An atom belongs to an amino acid, which in turn belongs to the domain of a protein, all the way to the top.
+An atom belongs to an amino acid, which in turn belongs to a domain of a protein, all the way to the top.
 Therefore, a visualization of the data must fulfill two requirements. 
 One, the transtion from one level to another must be smooth.
 Two, the inherent hierarchy of the data must be preserved.
 This hierarchy lends itself easily to a tree structure.
 One way to assign information to this tree is to place it into a color space.
-For example, a tree could be constructed where is branch has its own hue.
+For example, a tree could be constructed where each branch has its own hue.
 As the tree goes down through the structure of the cell, the hues become subdivided.
 A compartment could be red, the proteins different shades of red, and so forth.
 However, such a simple approach scales poorly. 
