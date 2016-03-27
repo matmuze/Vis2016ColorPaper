@@ -598,14 +598,14 @@ In the first iteration the secondary structures were identifiable through lumina
 \subsection{users}
 As we wanted to evaluate the use of our visualization for research purposes, we gathered 7 domain experts. 
 6 were PhD. and postdocs, one was a master student, all in the field of molecular biology. 
-In order to conduct their work, the participants use visualizations on the protein or molecular level.
+In order to conduct their research, the participants use visualizations on the protein or molecular level.
 
 
 \subsection{how was the study designed}
 In user studies, it is common to give the user one or more simple tasks which must be solved. 
 The time it takes the user to solve this task is measured and statistically analyzed. 
 However, this doesn't function well with our study. 
-Rather than simply giving the user one or more simple, specific tasks and measuring how quickly he could solve them, we opted to use a qualitative study [probably should go find a reference or two]. 
+Rather than simply giving the user one or more simple, specific tasks and measuring how quickly he could solve them, we opted to use a qualitative study~\cite{gomez2014insight}. 
 In this kind of study, the amount and type of information the user can find out about the data set is measured. 
 The study consisted of two parts. In the first part the user was asked to complete several tasks. 
 This allowed the users to become familiar with the controls as wells as what the visualization was capable of. 
@@ -614,13 +614,13 @@ It also allows us to measure what information can be found.  In the second part 
 
 
 \subsection{task 1}
-Based on a description designed by a molecular bioligist and an illustrator, the first task was to investigate the capsid of the hiv virus.
+Based on a description designed by a molecular bioligist and an illustrator, the first task was to investigate the capsid of the HIV virus.
 The capsid encloses the genome (2 strands of RNA) along with different viral proteins. 
 The capsid protein is able to form hexamers and pentamers by shifting slightly in structure, and folds to form two domains connected by a flexible linker: the N-terminal domain and C-terminal domain. 
-The N-terminal domain is involved in forming the hexamer - pentamer or hexamer-hexamer contacts, and the C-terminal domains are involved in dimer contacts between hexamers / pentamers. 
+The N-terminal domain is involved in forming the hexamers or pentamers, and the C-terminal domains are involved in dimer contacts between hexamers / pentamers. 
 There are two $\alpha$-helices in the N-terminal that stabilize the hexamers and pentamers. 
-As HIV is budding from an infected cell, the cellular enzyme cyclophilin A binds to capsid. 
-On the capsid protein there is a loop on the surface with several prolines, which is the site of binding of cyclophilin. 
+As HIV is budding from an infected cell, the cellular enzyme cyclophilin A binds to the capsid. 
+On the surface of the capsid protein there is a loop with several prolines, which is the site of binding of cyclophilin. 
 
 The users were tasked with finding the following:
 
@@ -635,7 +635,7 @@ The users were tasked with finding the following:
 The users were given an in-depth description of the capsid and a structural representation of the Methionine amino acid. 
 The task of finding the pentamer was added so the users would practice moving the camera around, as recognizing a pentamer was easier than actually finding one. 
 If a user was not capable of finding a pentamer, then he simply continued. 
-The Cyclophilin binding site was not a $\alpha$-helix or $\beta$-sheet, and as such received no special coloring (need to check just to make sure). 
+The Cyclophilin binding site was not an $\alpha$-helix or $\beta$-sheet, and as such received no special coloring (need to check just to make sure). 
 This was to test whether or not the user could find a structure that was not explicitly marked. 
 To find the Methionine amino acid, the user had to look for a sulfur atom; there was no other amino acid with a sulfur atom near it, though there is a second one in the protein. 
 This is because the amino acids were not assigned a color. 
@@ -647,7 +647,9 @@ If the user did not find the amino acid or realize that they needed to look for 
 
 
 \subsection{how evaluation was performed/measured}
-In task 1 we were interested in whether or not they could complete the tasks, as well as what issues they ran into. Task 2 was free exploration. What is important is the degree of exploration, as well as what the users were capable of finding. As a lot of different things could be explored at different levels, this varied greatly between individuals.
+In task 1 we were interested in whether or not they could complete the tasks, as well as what issues they ran into. 
+Task 2 was a free exploration task.
+What is important is the degree of exploration, as well as what the users were capable of finding or looking at, as the users were capable of focusing on many different object as well as on different levels.
 
 
 \subsection{performance of users first iteration}
@@ -663,10 +665,10 @@ One of the participants had troubles getting the camera to point where he wanted
 \subsection{feedback that was implemented into method}
 Two issues were identified in the first iteration. 
 The first problem was camera control. 
-In order to use the camera when zoomed further in a certain degree of experience was requird, otherwise the target could be easily overshot.
+In order to use the camera when zoomed further in a certain degree of experience was required, otherwise the target could be easily overshot.
 In order to fix this, we altered the camera controls so the user could slow down the camera movement significantly.
 The other issue was the detection of the secondary structures. 
-One of the users could not detect the secondary structures, the other could, but did not use our visuallization.
+One of the users could not detect the secondary structures, the other could, but did not use our visualization.
 We noticed that there were a several helices and sheets in the protein. 
 This meant that the altering of the luminance might not seperate a helix from the surrounding area. 
 Therefore, we altered the coloring of the secondary structures to be based on hue, and each secondary structure would receive its own hue.
@@ -680,9 +682,8 @@ As such only the the results for the other 4 users are described below.
 For the other 4 users the results were as follows:
 
 \begin{enumerate}
-	\item The capsid itself
-	\item number found pentamer
-	\item All the other users could find the N and C terminals, though one mistook a subset of the C terminal as the entire C terminal. He had accidentally zoomed to far in and mistook a color of the secondary structure for the domain.
+	\item All 4 found a pentamer
+	\item All 4 users could find the N and C terminals, though one mistook a subset of the C terminal as the entire C terminal. He had accidentally zoomed to far in and mistook a color of the secondary structure for the domain.
 	\item 3 out of the 4 found the alpha helices
 	\item All found the Cyclophilin binding site
 	\item 2 found the Methionine. One of the other two found a sulfur atom, but believed it to belong to something else. The person who did not find the $\alpha$-helix was the one who also did not find the sulfur atom. He never zoomed to the atomic level.
@@ -707,9 +708,9 @@ The users had to find it based on one atom, a search for which they had to arriv
 A peculiar and interesting aspect was how little the users noticed the changing colors, yet still used the colors to identify the areas.
 Every user that found the N and C terminals referred to them by color. 
 Several referred to alpha helices by color. 
-While all users noticed the changing colors when zooming to the atomic level, only one noticed it on all levels, while a second thought something odd was occuring on the secondary structure level. 
+While all users noticed the changing colors when zooming to the atomic level, only one noticed it on all levels, while a second thought something odd was occuring on the secondary structure level, but couldn't be specific. 
 This means that the visualization succeeded in creating a smooth transtion between the levels, and was still useful, despite the users not being aware of its support. 
-Furthermore, the fact that most students were succesful at least up to the secondary structure level indicates that are visualization can be used on each level, though they did consider it to be difficult. 
+Furthermore, the fact that most students were succesful at least up to the secondary structure level indicates that our visualization can be used on each level, though they did consider it to be difficult. 
 They probably considered it to be more difficult than it actually is, because they were not aware that the visualization was supporting them.
 
 The largest difference between the iterations was the degree of exploration in the second task. In the first task, neither user explored the HIV virus extensively. In contrast, the users from the second iteration explored the virus on different levels and areas. Likely this was affected significantly by the degree of control over the movement through the visualization. In the first iteration, the users had significant control issues which were absent in the second iteration due to changes. In both iterations no users got lost or confused by the visualization.
@@ -790,6 +791,7 @@ The last problem is alternative represtations, such as cartoon representations o
 Several users expressed a desire for alternative representations that they were more familiar with. 
 However, there can be some difficulty when using them. The cartoon representation for example has a lot of area which can be seen through. 
 If two proteins are one behind the other, then they can be hard to tell apart.
+- need to ask mathieu on "overflow of compartments"
 
 
 \subsection{future work}
@@ -798,6 +800,10 @@ The users also expressed interest in interacting with the visualization.
 Structures such as the capsid are structures that consist out of numerous proteins. 
 The users wanted to be able highlight individual proteins or sections. 
 It might also be possible to couple this action with alternative representations for proteins, such as the cartoon representation.
+Finally, camera control can be adapted to the visualization. 
+Currently, the camera is controlled simply by inputing the desired direction of movement. 
+Alternate controls, such as tying the camera to a protein or structure could be added.
+This would allow the user easier inspection of proteins or protein structures by making it easier for him to rotate around or follow the surface of an object.
 
 
 
