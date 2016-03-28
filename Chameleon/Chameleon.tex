@@ -183,6 +183,12 @@ As the user zooms in, the proteins receive more distinct colors based on which c
 As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
 As the viewer zooms further in, the domains of the proteins will become distinct, then the secondary structures, and eventually even the atoms, whose colors are predefined by convention. 
 
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{Figures/Picture2_}
+	\caption{The supported zoom level. (1) Cross-section of the HIV, proteins are grouped based-on their location. (2) Zoom-in on the 1EX4 protein (3) The two-domains of the proteins are shown. (4) The secondray struture the domain, yellow is for the helices, blue is for the sheets, and green is for the remaining atoms, (5) CPK color coding based on the atom type (blue is for Nitrogen, red is for Oxygen, grey is for Carbon)}
+	\label{fig:Picture2}
+\end{figure}
 
 %One realm in which this system can be supported in is color. 
 %Color has been consistently and effectively used to seperate objects and sections from each other, and can also be used to display information about the object at the same time. 
@@ -225,6 +231,15 @@ As the viewer zooms further in, the domains of the proteins will become distinct
 
 We divide the related work in two sections, in the first section we cover previous work about appropriate usage of colors in visualization, and their perceptual impact. 
 In the second section we cover related work about large scale molecular rendering, to which we build our technique upon.
+
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=0.85\linewidth]{Figures/coloroverview}
+	\caption{Overview of our dynamic and hierarchical coloring scheme. (1) The first two levels of the hierarchy, in this example we have four groups and a total of 20 different protein types, (2) The current viewport, the red square represents a close-up view, (3) The visibility information is extracted from the current viewport, (4) The color palette is updated to prioritize visible elements only.}
+	\label{fig:coloroverview}
+\end{figure*}
+
+
 
 \subsection{Colors in Visualization}
 
@@ -282,20 +297,23 @@ Further details can be found in Section ~\ref{Overview}.
 %The graph has a large depth, and to investigate certain nodes the user must zoom in. During this, the node expands and changes color while its children become exposed. 
 %This is recursively applied down the branch, allowing for an arbitrarily deep descent.
 
+
+
+
 \subsection{Multi-Scale Molecular Visualization}
 
-The development of new modelling techniques for three dimensional molecular structures led to an rapid increase in size of the studied datasets.
+The development of new modelling techniques for three dimensional molecular structures led to a rapid increase in size of the studied datasets.
 To keep up with the progress, new visualization methods were specifically developed to address this challenge.
-Ove Daae Lampe et al.\cite{lampe2007two} pioneered real-time rendering of large-scale atomic data on consumer level hardware. 
+Lampe et al.~\cite{lampe2007two} pioneered real-time rendering of large-scale atomic data on consumer level hardware. 
 They extended the fast billboard-based approach introduced by QuteMol \cite{tarini2006ambient}, by rendering the structures per residues rather than per atom, thus reducing the memory bandwidth usage and the GPU driver overhead. 
 Lindow et al. \cite{lindow2012interactive} followed-up by using  instanced rendering to draw entire structures instead.
 For each molecule type, they generate 3D grid of the atoms which is stored on the GPU, and then ray-casted upon rendering.
 Falk et al. \cite{falk2013atomistic} further refined the method with improved depth culling and hierarchical ray casting to achieve faster rendering performance for even larger scenes. 
 
-Parulek et al.\cite{parulek2014continuous} introduced seamless transitions between different levels of coarseness for the representation of the molecular surface based on the distance from the camera.
+Parulek et al.~\cite{parulek2014continuous} introduced seamless transitions between different levels of coarseness for the representation of the molecular surface based on the distance from the camera.
 The goal was not only to reduce the computation cost, but also to utilize the shape as a mean to reduce high-level details and noise when observing the structure in its entirety.
 Their technique is using real-time ray-tracing and offers high quality surface details, but it does not scale well in terms of performance when compared to atom-based rendering methods.
-A novel approach, for real-time rendering of structures with up to tens of billion atoms, was later on introduced by Le Muzic et al. \cite{le2014illustrative}. 
+A novel approach, for real-time rendering of structures with up to tens of billion atoms, was later on introduced by Le Muzic et al.~\cite{le2014illustrative}. 
 Their approach, also based on level-of-detail, uses tessellation shaders to switch between different degrees of coarseness for the molecular structures, on-the-fly and upon the rendering operation.
 The entire scene is thus rendered efficiently in a single draw call, approaching zero GPU-driver overhead. 
 As a follow up, they developed and released cellVIEW \cite{muzic2015cellview}, a tool designed for rendering large-scale molecular scenes, which was implemented with Unity3D, a popular 3D engine.
@@ -304,41 +322,32 @@ cellVIEW was primarily developed to showcase large molecular structures generate
 The Chameleon is built-upon cellVIEW, and is an attempt to improve understanding upon exploration of multi-scale molecular scenes generated with cellPACK.
 cellVIEW leverages GPU computing and parallel programming to enable real-time rendering and therefore, the Chameleon was developed with the same programming paradigm.
 
-
-\begin{figure*}[t]
-	\centering
-	\includegraphics[width=0.85\linewidth]{Figures/coloroverview}
-	\caption{Overview of our dynamic and hierarchical color scheme. (1) The first two levels of the hierarchy, in this example we have four groups and a total of 20 different protein types, (2) The current viewport, the red square represents a close-up view, (3) The visibility information is extracted from the current viewport, (4) The color palette is updated to prioritize visible elements only.}
-	\label{fig:coloroverview}
-\end{figure*}
-
 \section{Overview}
 \label{Overview}
+
 
 
 Mesoscale datasets feature many relevant properties which are present at different scale levels.
 The molecular properties that we provide in this work are, from top to bottom: Compartment (or group), protein type, protein domain, secondary structure and atom type.
 We opted for these properties because, according to domain experts, they are the most relevant properties in visual analysis of three dimensional molecular structures.
-
-%This information is internally declared and accessible for each single rendered atom, which allows us to perform dynamic coloring
-
+%This information is internally declared and accessible for each single rendered atom, which allows us to perform dynamic coloring.
 Our goal is to provide a solution that would automatically display meaningful information at all zoom levels.
 This information should also be coherent between levels.
-To provide smooth and logical transitions across level we use a hierarchical color coding approach inspired from \cite{tennekes2014tree}.
-Based on perceptual reasoning, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
+To provide smooth and logical transitions across levels we use a hierarchical color coding approach inspired by tree-based coloring~\cite{tennekes2014tree}.
+Based on perceptual reasoning, clarified in the introduction, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
 
 On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
 Protein types of a given group are then given a unique hue value on the corresponding arc, as shown in Figure \ref{fig:coloroverview}.
 In the initial state, the size of the hue arcs is set according to the number of protein types contained in each group. 
 Spacing between hue values of neighbour protein types of the same group is proportional to the number of type per group and the size of the arc. 
 
-Due to the large difference in terms of size between compartments and protein, it is very likely that several compartments will be less or no longer be visible as we zooming-in on a single protein. 
-Based on this principle we update the color palette on-the-fly based on visibility information which we extract from the previous rendered frame.
+Due to the large difference in terms of size between groups and proteins, it is very likely that several compartments will be less or no longer visible as we zooming-in on a single protein. 
+Based on this principle we update the color palette on-the-fly using the visibility information which we extract from the previously rendered frame.
 For each protein type, we compute the percentage of visible elements, as well as the screen coverage in pixels for displayed proteins.
-We sum up those properties for all the protein types of a group to deduce a weighting coefficient which is then used to scale the size of the hue arcs of the groups.
+We sum up those properties for all the protein types of a group to deduce a weighting coefficient which is then used to scale the size of the hue arcs of the groups as shown in Figure~\ref{fig:coloroverview}.
 
 When zooming further in, we progressively start to reveal colors of the underlying protein properties, such as the chains, or secondary structures.
-For coloring the subsequent levels we sample hue values around the hue of their parent as shown in figure X \ref{noref}.
+For coloring the subsequent levels, we sample hue values around the hue of their parent as shown in Figure X~\ref{noref}.
 We use pre-defined camera distance thresholds to determine when to transit to the next level.
 To ensure a smooth transition, the hue distance between the parent and the children is progressively scaled until reaching a pre-determined offset value.
 %In the case of protein types, the coloring mechanism allows to enlarge the size of the hue arcs while ensuring no overlap between neighbooring groups. 
@@ -481,20 +490,25 @@ The coefficient of interpolation is defined according to the camera distance and
 \section{Dynamic Color Palette}
 \label{sec:dynamic_color_palette}
 
-We use information about the visibility of the rendered protein to optimize the color palette for a given viewport.
-For each group of protein types, we analyse the visibility factor of their protein types and we derive a weighting coefficient which we use to scale the corresponding sections of the hue circle.
-The visibility factor of protein type is determined by two parameters.
-The first one is the screen-coverage in pixels of all the protein of the given types.
-The second parameter is the percentage of protein of a given type that are actually visible in the rendered image. \\
+In the initial state we first generate a color palette assuming that all the compartments to be visible.
+As we zoom-in and explore the scene, large parts on the scene may not actually be invisible in the viewport.
+In this configuration the color palette is underexploited, and could be improved be in increase discriminability between proteins that are currently visible.  
+In the following section we present the key elements of our coloring scheme, which uses visiblity information to recompute the color palette on-the-fly.
 
-It is important to take into account the screen coverage and not only the number of visible elements.
-Indeed, a given protein type may have a low number of visible proteins but the visible ones, may still occupy a large portion of the screen when closely located next to the camera.
-In this particular case we want to ensure that this element will weight equally in the computation of the overall group coefficient.
-The visibility factor of a given protein type is computed a follow:
+\subsection{Principle}
+
+In order to determine which protein groups occupy unnecessary space in the color palette, we extract the visibility information by analysing the previously rendered frame.
+For each entire group of protein types, we derive a visibility coefficient which we use to scale their corresponding sections of the hue circle. 
+This coefficient is calculated based on the visibility of each protein type contained in a given group.
+The visibility of a given protein type is defined as a boolean value, which corresponds to either visible or not visible.
+We set a protein type as not visible in case the number of overall number visible elements become too low, based on an arbitrarily defined threshold.
+We must also ensure that a protein type will be set as visible, in case a few elements are located next to the camera and occupy a significant number of pixels in the viewport, even when the overall percentage of visible element is low.
+Therefore we also take the pixel occupancy of the proteins  into account.
+The visibility value of a given protein type is computed a follow:
 
 \begin{equation}
 c_{i}=\begin{cases}
-1, & \text{if $p_{i}<t_{p}$ and $v_{i}<t_{v}$}.\\
+1, & \text{if $p_{i}>t_{p}$ and $v_{i}>t_{v}$}.\\
 0, & \text{otherwise}.
 \end{cases}
 \end{equation}
@@ -506,25 +520,28 @@ C = \left\lbrace c_{1}, ... , c_{n} \right\rbrace
 Where $c$ corresponds to the visibility factor of a given protein type $i$, $p$ corresponds to the percentage of pixels occupied by proteins of type $i$, and $v$ is the percentage of proteins of type $i$ that are visible.
 $t_{p}$ and $t_{v}$ correspond to arbitrarily defined thresholds for the screen coverage and visibility, respectively. 
 $C$ is a set of $n$ protein types that constitute a group.
-For that given group the weight coefficient is computed as follows:
+For that given group the visibility coefficient is computed as follows:
 
 \begin{equation}
 w = \frac{\sum_{i=1}^{n} c_{i}}{n} s, c_{i} \in C
 \end{equation}
 
-Where $w$ is the weight of the group, and s is a scaling factor which is proportional to the number of protein type in that group. \\
+Where $w$ is the coefficient of the group, and s is a scaling factor which is proportional to the number of protein type in that group. 
+Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the coefficient to determine the size of the individual hue arcs. \\
 
-We leverage GPU computing in a post-processing operation in order to compute the visibility factors of each protein type efficiently.
-Upon rendering we generate two additional off-line textures which contain for each pixels the atom and protein unique identifiers, respectively.
-We priorly declare a two GPU buffers which will, for each protein type, store the occupied pixel count and the total number of visible proteins, respectively.
-Subsequently, in a dedicated compute shader, we browse through all the pixel of the protein IDs and we increment the pixel counter corresponding to the protein type stored in the video memory.
-At the same time we also flag, in a dedicated GPU buffer, the proteins are present in the generated texture.
-This information will allow us to count the visible instances of a given type.
-In a second pass and in a dedicated compute shader, we then browse through all the protein instances.
-For each protein which was flag as visible in the previous pass, we increase the number of visible instances corresponding to the protein type.
-Since the computation is done in parallel it is important to use atomic intrisinc function to increment the counters in order to avoid concurrent access to the same value from two different threads.
+\subsection{Extracting Visibility Information}
 
-\section{Force-Based Compartment Layout}
+We leverage GPU computing in a post-processing operation in order to compute the visibility of each protein type efficiently.
+Upon rendering we generate an additional off-line texture which contain, for each pixel, the unique identifier of the rendered protein.
+We priorly declare two GPU buffers which will, for each protein type, store the occupied pixel count and the total number of visible proteins, respectively.
+Subsequently, in a dedicated compute shader, we iterate through all the pixels, and we increment the pixel counter corresponding to the protein type stored in the video memory.
+At the same time, we also flag which proteins are present in the generated texture, in a dedicated GPU buffer.
+This information will allow us to determine the number of visible instances for each protein types.
+In a second pass and in a dedicated compute shader, we then iterate through all the protein instances.
+For each protein which was flagged as visible in the previous pass, we increase the number of visible instances corresponding to the protein type.
+Since the computation is done in parallel it is important to use atomic intrinsic functions to increment the counters in order to avoid concurrent access to the same value from two different threads.
+
+\subsection{Force-Based Group Layout}
 
 Once we determine the weight of a group, one remaining task is to position groups on the hue circle.
 A naive approach would be to start positioning a first group on the circle, and to place the remaining groups subsequently on the circle, given the size of each group.
@@ -551,9 +568,25 @@ The first part of the right side of this equation correspond to the attraction f
 The second part is the sum of repulsion forces between the given group and the other ones.
 Additionally we also include a damping value in the integration calculus to smooth-out the motion of the group centroids when the viewport and the visibility configuration is abruptly changing.
 
-\section{Implementation}
+\section{Optimizations}
 
-Mathieu write low-level implementation details here.
+\subsection{Focus + Context}
+
+The colours of the following zoom-levels (chains, secondary structures) are chosen hierarchically, based on the color of their parent in the previous level.
+For example, the hue value of a chain is sampled around the hue of its protein, with an arbitrarily defined offset, see Figure X~\ref{fig:coloroverview}.
+Our system provide optimal hue distribution of protein colors for proteins based on the visibility information, which guarantees that protein will always be assigned unique and distinct colors.
+However, this is not the case for following levels of the hierarchy, where chains colors are likely to overlap with those of neighbouring proteins.  
+This limitation is principally caused by the significant discrepancies between the different levels.
+Indeed between single proteins and protein domains the difference in term of size is much smaller than between compartments and proteins, see Figure X~\cite{noref}.
+Given such constraint, we must rapidly ensure that the color information for the next level will be available, which cannot easily be achieved based-on visibility and without dramatically reshuffling the colors.
+
+Therefore we rely on a focus+context approach instead, to optimize the view and guaranty a minimum degree or repeated colors.
+Indeed, when closely observing protein properties, it is very unlikely that the viewer will also observe properties of all the surrounding proteins, as commodity hardware does not offer enough pixels to render all the context proteins with enough details to be relevant to the viewer.
+Therefore we define a focus region outside which the colors of the proteins will be desaturated to reduce occurrence of colors used in focus region.
+
+
+\subsection{Luminance-Driven Color Interpolation}
+
 
 %.Upon rendering we also render an off-line texture where each pixel contains the atom and instance ID to which the rendered atoms correspond to.
 %
