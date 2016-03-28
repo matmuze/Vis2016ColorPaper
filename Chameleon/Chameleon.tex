@@ -479,6 +479,7 @@ The coefficient of interpolation is defined according to the camera distance and
 %\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
 
 \section{Dynamic Color Palette}
+\label{sec:dynamic_color_palette}
 
 We use information about the visibility of the rendered protein to optimize the color palette for a given viewport.
 For each group of protein types, we analyse the visibility factor of their protein types and we derive a weighting coefficient which we use to scale the corresponding sections of the hue circle.
@@ -523,9 +524,32 @@ In a second pass and in a dedicated compute shader, we then browse through all t
 For each protein which was flag as visible in the previous pass, we increase the number of visible instances corresponding to the protein type.
 Since the computation is done in parallel it is important to use atomic intrisinc function to increment the counters in order to avoid concurrent access to the same value from two different threads.
 
-
 \section{Force-Based Compartment Layout}
 
+Once we determine the weight of a group, one remaining task is to position groups on the hue circle.
+A naive approach would be to start positioning a first group on the circle, and to place the remaining groups subsequently on the circle, given the size of each group.
+While the position of the first group on the hue circle can be arbitrarily defined with this approach, the other groups are not guaranteed to be located as near as possible to their original location.
+This could lead to overly large hue shifts for the centroid of the groups.
+
+To avoid this issue we propose a force-based layout for the positioning of the group centroids on the hue circle.
+The forces are applied in a single dimension which corresponds to the hue, and include distance constraints between the groups, as well as attraction forces between groups and their original position.
+We then integrate the forces, using a Euler Integration to compute the new positions of the groups until reaching a state of equilibrium.
+For a given group $i$, the distance constraint response force with another group $j$ is computed as follows:
+
+\begin{equation}
+y(i, j) = d(g_{i},g_{j})max(|g_{i} - g_{j}| - (r_{i}+r_{j}), 0)
+\end{equation}
+
+Where $d$ corresponds to the sign, or direction of the response, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computer from the visibility information and described in Section\ref{sec:dynamic_color_palette}.
+For a single group the overall forces, comprising attraction and repulsion forces are computed as follow:
+
+\begin{equation}
+f_{i} = (g_{i} - i_{i}) + \sum_{j=1}^{n, i \neq j} y(i,j)
+\end{equation}
+
+The first part of the right side of this equation correspond to the attraction forces, where i correspond to the initial group position.
+The second part is the sum of repulsion forces between the given group and the other ones.
+Additionally we also include a damping value in the integration calculus to smooth-out the motion of the group centroids when the viewport and the visibility configuration is abruptly changing.
 
 \section{Implementation}
 
