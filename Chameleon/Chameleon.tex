@@ -349,7 +349,7 @@ For each protein type, we compute the percentage of visible elements, as well as
 We sum up those properties for all the protein types of a group to deduce a weighting coefficient which is then used to scale the size of the hue arcs of the groups as shown in Figure~\ref{fig:coloroverview}.
 
 When zooming further in, we progressively start to reveal colors of the underlying protein properties, such as the chains, or secondary structures.
-For coloring the subsequent levels, we sample hue values around the hue of their parent as shown in Figure X~\ref{noref}.
+For coloring the subsequent levels, we sample hue values around the hue of their parent as shown in Figure X~\ref{fig:coloroverview}.
 We use pre-defined camera distance thresholds to determine when to transit to the next level.
 To ensure a smooth transition, the hue distance between the parent and the children is progressively scaled until reaching a pre-determined offset value.
 %In the case of protein types, the coloring mechanism allows to enlarge the size of the hue arcs while ensuring no overlap between neighbooring groups. 
@@ -574,39 +574,37 @@ Additionally we also include a damping value in the integration calculus to smoo
 
 \subsection{Principle}
 
+Once the protein colors are defined, the colours of the following zoom-levels (chains, secondary structures) are chosen hierarchically, based on the color of their parent in the previous level.
+For example, the hue value of a chain is sampled around the hue of its protein, with an arbitrarily defined offset, see Figure~\ref{fig:coloroverview}.
+These colors are then progressively reveal as we zoom into the proteins.
+We switch between the colors of the different levels based on the distance of the proteins to the camera and user defined distance values which delimit where a levels being and ends.
+In between levels we perform linear color interpolation for smooth and logical transitions between the levels.
+This operation is performed in a post-processing operation, for each pixel we have access internally to all the necessary  information concerning an atom, (group, protein type, domain, secondary structure and atom type).
+By retrieving the world-space position of a pixel in the shader, we are able to compute the world space distance to the camera, and determine the the degree of transition between two levels.
+The color of a fragment is them computed by performing a linear interpolation of the hue value of the previous level and the next one. 
+The hue offset between two level are priorly determined based on the number of domains, or secondary structures.
+We set the minimum hue offset to be superior or equal to 20, because of ***MANU EXPLAIN REASONS HERE***.
+The maximum size in hue angle for all elements of a level, chains or secondary structures, is set to 180 to reduce the use of too many colors of a single level.
+The main different between this approach is that we do not prevent overlaps, because of limitations of orginal tree color approach ** Manu or Nik explain reasons here **.
+
+
 \subsection{Focus + Context}
 
 The colours of the following zoom-levels (chains, secondary structures) are chosen hierarchically, based on the color of their parent in the previous level.
-For example, the hue value of a chain is sampled around the hue of its protein, with an arbitrarily defined offset, see Figure X~\ref{fig:coloroverview}.
+For example, the hue value of a chain is sampled around the hue of its protein, with an arbitrarily defined offset, see Figure~\ref{fig:coloroverview}.
 Our system provide optimal hue distribution of protein colors for proteins based on the visibility information, which guarantees that protein will always be assigned unique and distinct colors.
 However, this is not the case for following levels of the hierarchy, where chains colors are likely to overlap with those of neighbouring proteins.  
 This limitation is principally caused by the significant discrepancies between the different levels.
-Indeed between single proteins and protein domains the difference in term of size is much smaller than between compartments and proteins, see Figure X~\cite{noref}.
+Indeed between single proteins and protein domains the difference in term of size is much smaller than between compartments and proteins, see Figure~\ref{fig:Picture2}.
 Given such constraint, we must rapidly ensure that the color information for the next level will be available, which cannot easily be achieved based-on visibility and without dramatically reshuffling the colors.
 
 Therefore we rely on a focus+context approach instead, to optimize the view and guaranty a minimum degree or repeated colors.
 Indeed, when closely observing protein properties, it is very unlikely that the viewer will also observe properties of all the surrounding proteins, as commodity hardware does not offer enough pixels to render all the context proteins with enough details to be relevant to the viewer.
 Therefore we define a focus region outside which the colors of the proteins will be desaturated to reduce occurrence of colors used in focus region.
 
-
 \subsection{Luminance-Driven Color Interpolation}
 
 Manu talks about interpolation here
-
-%.Upon rendering we also render an off-line texture where each pixel contains the atom and instance ID to which the rendered atoms correspond to.
-%
-%.The ID is used to fetch atom meta-data in a post-processing shader, which is then used to keep track of visibility information.
-%
-%.First we gather information about the visibility of the protein types:
-%
-%.We define a number for each protein type which acts a counter to for the number of visible instances.
-%
-%.For each pixel we first update a flag corresponding to the protein instance to specify that this element is visible.
-%
-%.We analyse the result of the previous rendered frame and gather visibility information in real-time.
-%
-%.Upon rendering 
-
 
 
 %\section{Technique (section written by Nicholas)}
