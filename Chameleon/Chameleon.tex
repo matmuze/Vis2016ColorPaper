@@ -732,17 +732,20 @@ Only one found the alpha helix and the amino acid, while the other found a diffe
 
 In task 2 neither user interacted significantly with the visualization. This was likely due camera control issues. 
 One of the participants had troubles getting the camera to point where he wanted in general, the other at the lower levels.
+This is partially due to the method of control over the camera. 
+The controls allowed panning, zooming and rotating the camera. 
+Furthermore, the movement of the camera did not take the semantic or zoom level into account.
 
 \subsection{Feedback}
 Two issues were identified in the first iteration. 
 The first problem was camera control. 
-In order to use the camera when zoomed further in a certain degree of experience was required, otherwise the target could be easily overshot.
+In order to use the camera when zoomed further in a certain degree of experience was required, otherwise the camera could easily be moved too far.
 In order to fix this, we altered the camera controls so the user could slow down the camera movement significantly.
 
 The other issue was the detection of the secondary structures. 
-One of the users could not detect the $\alpha$-helices. The other could, but did not use our visualization.
+One of the users could not detect the $\alpha$-helices. The other could, but did not use the coloring of the secondary structure.
 Instead, he looked at the correct area on the atomic level and found it based on the atomic structure.
-We noticed that there were a several helices and sheets in the protein. 
+We noticed that there were several helices and sheets in the protein. 
 This meant that the altering of the luminance might not seperate a helix from the surrounding area. 
 Therefore, we altered the coloring of the secondary structures to be based on hue, and each secondary structure would receive its own hue.
 This coloring is based on the same principle as other levels.
