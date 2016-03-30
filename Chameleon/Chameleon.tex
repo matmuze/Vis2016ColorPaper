@@ -120,7 +120,7 @@ This technique has been tested by users with an expertise in structural biology 
 %% Uncomment below to include a teaser figure.
   \teaser{
  \centering
- \includegraphics[width=16cm]{Figures/Picture1.png}
+ \includegraphics[width=1\linewidth]{Figures/Teaser2}
   \caption{In the Clouds: Vancouver from Cypress Mountain.}
   \label{teaserImage}
   }
@@ -203,7 +203,7 @@ We will present the method, implementation details for real-time rendering in a 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\linewidth]{Figures/Picture2_}
-	\caption{The supported zoom level. (1) Cross-section of the HIV, proteins are grouped based-on their location. (2) Zoom-in on the 1EX4 protein (3) The two-domains of the proteins are shown. (4) The secondray struture the domain, yellow is for the helices, blue is for the sheets, and green is for the remaining atoms, (5) CPK color coding based on the atom type (blue is for Nitrogen, red is for Oxygen, grey is for Carbon)}
+	\caption{Multi-scale visualization of HIV. (1) Cross-section of the virus, proteins are grouped based-on their compartments, and can be distinguished by their colors. (2) Zoom-in on the 1EX4 protein (3) The two domains of the protein are shown. (4) The secondary structures are show for first domain: yellow is for the helices, blue is for the sheets, and green is for the remaining atoms, (5) CPK color coding based on the atom type (blue is for Nitrogen, red is for Oxygen, grey is for Carbon)}
 	\label{fig:Picture2}
 \end{figure}
 
@@ -251,7 +251,7 @@ In the second section we cover related work about large scale molecular renderin
 
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=0.85\linewidth]{Figures/coloroverview}
+	\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
 	\caption{Overview of our dynamic and hierarchical coloring scheme. (1) The first two levels of the hierarchy, in this example we have four groups and a total of 20 different protein types, (2) The current viewport, the red square represents a close-up view, (3) The visibility information is extracted from the current viewport, (4) The color palette is updated to prioritize visible elements only.}
 	\label{fig:coloroverview}
 \end{figure*}
@@ -327,21 +327,19 @@ The entire scene is thus rendered efficiently in a single draw call, approaching
 As a follow up, they developed and released cellVIEW \cite{muzic2015cellview}, a tool designed for rendering large-scale molecular scenes, which was implemented with Unity3D, a popular 3D engine.
 cellVIEW was primarily developed to showcase large molecular structures generated with cellPACK \cite{johnson2015cellpack}, a tool developed to procedurally generate accurate and multi-scale models of entire viruses and cells.
 
-The Chameleon is built-upon cellVIEW, and is an attempt to improve understanding upon exploration of multi-scale molecular scenes generated with cellPACK.
-cellVIEW leverages GPU computing and parallel programming to enable real-time rendering and therefore, the Chameleon was developed with the same programming paradigm.
+The Chameleon is built upon cellVIEW, and is an attempt to improve understanding during exploration of multi-scale molecular scenes generated with cellPACK.
+cellVIEW leverages GPU computing and parallel programming to enable real-time rendering, Chameleon was developed with the same programming paradigm.
 
 \section{Overview}
 \label{Overview}
 
-
-
 Mesoscale datasets feature many relevant properties which are present at different scale levels.
-The molecular properties that we provide in this work are, from top to bottom: Compartment (or group), protein type, protein domain, secondary structure and atom type.
+The molecular properties that we provide in this work are, from large to small scale: Compartment (or group), protein type, protein domain, secondary structure and atom type.
 We opted for these properties because, according to domain experts, they are the most relevant properties in visual analysis of three dimensional molecular structures.
 %This information is internally declared and accessible for each single rendered atom, which allows us to perform dynamic coloring.
-Our goal is to provide a solution that would automatically display meaningful information at all zoom levels.
+Our goal is to provide a coloe scheme that would automatically display meaningful information at all zoom levels.
 This information should also be coherent between levels.
-To provide smooth and logical transitions across levels we use a hierarchical color coding approach inspired by tree-based coloring~\cite{tennekes2014tree}.
+To provide smooth and logical transitions across levels, we use a hierarchical color coding approach inspired by a tree-based coloring method~\cite{tennekes2014tree}.
 Based on perceptual reasoning, clarified in the introduction, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
 
 On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
@@ -515,7 +513,7 @@ In an offline procedure, we picked eight extreme a* and b* values in with equal 
 The smallest vector magnitude of $\vec{a^*b^*}$ thereby defined the radius and chroma for the given luminance, respectively. 
 We found that a luminance of 75 represents a good value, leading to a maximum chroma of 40 (see Figure \ref{fig:colorComparison}(b)). 
 
-To distribute hues from the hue ring to the proteins, we sample the hues with respect to four parameters: 1) the number of compartments $n$, 2) the number of proteins $m$ within each compartment $1 \leq i \leq n$, 3) the optimal color distance between structures $d$, and 4) the minimum color spacing $s$ between compartments. 
+To distribute hues from the hue ring to the proteins, we sample the hues with respect to four parameters: 1) the number of compartments $n$, 2) the number of protein types $m$ within each compartment $1 \leq i \leq n$, 3) the optimal color distance between structures $d$, and 4) the minimum color spacing $s$ between compartments. 
 The first parameter defines the number of ``wedges'' that are overlaid on the hue ring. 
 The second parameter controls the relative angular width of the wedges. 
 The third and fourth parameter control the actual angular width of the wedges: 
@@ -572,10 +570,10 @@ $C$ is a set of $n$ protein types that constitute a group.
 For that given group the visibility coefficient is computed as follows:
 
 \begin{equation}
-w = \frac{\sum_{i=1}^{n} c_{i}}{n} s, c_{i} \in C
+w = s\sum_{i=1}^{n} c_{i}, c_{i} \in C
 \end{equation}
 
-Where $w$ is the coefficient of the group, and s is a scaling factor which is proportional to the number of protein type in that group. 
+Where $w$ is the coefficient of the group, and $s$ is a scaling factor which is proportional to the number of protein type in that group. 
 Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the coefficient to determine the size of the individual hue arcs. \\
 
 \subsubsection{Extracting Visibility Information}
@@ -590,12 +588,21 @@ In a second pass and in a dedicated compute shader, we then iterate through all 
 For each protein which was flagged as visible in the previous pass, we increase the number of visible instances corresponding to the protein type.
 Since the computation is done in parallel it is important to use atomic intrinsic functions to increment the counters in order to avoid concurrent access to the same value from two different threads.
 
-\subsubsection{Force-Based Group Layout}
+\begin{figure}
+\centering
+\includegraphics[width=0.8\linewidth]{"Figures/force-based layout"}
+\caption{The force based hue assignment mecanism. a) The groups are positioned with a naive approach non-iterative approach, b) the group are attracted towards their default hue value, until the system reached a state of equilibriu.}
+\label{fig:force-basedlayout}
+\end{figure}
 
-Once we determine the weight of a group, one remaining task is to position groups on the hue circle.
-A naive approach would be to start positioning a first group on the circle, and to place the remaining groups subsequently on the circle, given the size of each group.
-While the position of the first group on the hue circle can be arbitrarily defined with this approach, the other groups are not guaranteed to be located as near as possible to their original location.
-This could lead to overly large hue shifts for the centroid of the groups.
+\subsubsection{Force-Based Hue Assignment}
+
+By default, each group is assigned a centroid hue value, which we refer to as default hue centroid.
+As we move the camera and affect the visibility of the protein, we modulate the size of the groups on the hue ring.
+Upon modulation of the group sizes we must also reposition the centroid group positions on that ring.
+A naive non-iterative approach would be to start positioning a first group on the circle, and to place the remaining groups subsequently on the circle, given the size of each group.
+While the position of the first group on the hue circle can be arbitrarily defined with this approach, the other groups are not guaranteed to be located as near as possible to their default hue value.
+This could lead to overly large hue shifts for the centroid of the groups as show in Figure~\ref{fig:force-basedlayout}
 
 To avoid this issue we propose a force-based layout for the positioning of the group centroids on the hue circle.
 The forces are applied in a single dimension which corresponds to the hue, and include distance constraints between the groups, as well as attraction forces between groups and their original position.
@@ -606,7 +613,7 @@ For a given group $i$, the distance constraint response force with another group
 y(i, j) = d(g_{i},g_{j})max(|g_{i} - g_{j}| - (r_{i}+r_{j}), 0)
 \end{equation}
 
-Where $d$ corresponds to the sign, or direction of the response, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computer from the visibility information and described in Section\ref{sec:dynamic_color_palette}.
+Where $d$ corresponds to the direction of the response, i.e., whether the hue angle should be increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computer from the visibility information and described in Section\ref{sec:dynamic_color_palette}.
 For a single group the overall forces, comprising attraction and repulsion forces are computed as follow:
 
 \begin{equation}
@@ -668,6 +675,13 @@ The hue offset between two level are priorly determined based on the number of d
 We set the minimum hue offset to be superior or equal to 20, because of ***MANU EXPLAIN REASONS HERE***.
 The maximum size in hue angle for all elements of a level, chains or secondary structures, is set to 180 to reduce the use of too many colors of a single level.
 The main different between this approach is that we do not prevent overlaps, because of limitations of orginal tree color approach ** Manu or Nik explain reasons here **.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.4\linewidth]{Figures/overlap}
+\caption{}
+\label{fig:overlap}
+\end{figure}
 
 
 \section{Context Desaturation}
