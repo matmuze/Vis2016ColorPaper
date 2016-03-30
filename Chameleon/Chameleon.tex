@@ -333,6 +333,8 @@ cellVIEW leverages GPU computing and parallel programming to enable real-time re
 \section{Overview}
 \label{Overview}
 
+\textbf{MWA TODO: please help us writing a better overview}
+
 Mesoscale datasets feature many relevant properties which are present at different scale levels.
 The molecular properties that we provide in this work are, from large to small scale: Compartment (or group), protein type, protein domain, secondary structure and atom type.
 We opted for these properties because, according to domain experts, they are the most relevant properties in visual analysis of three dimensional molecular structures.
@@ -496,8 +498,6 @@ The coefficient of interpolation is defined according to the camera distance and
 \section{Dynamic Hue Palette}
 \label{sec:dynamic_color_palette}
 
-\textbf{MWA BEGIN: This is repetitive now with Section 3, which we will rework later!}
-
 In the highest hierarchy level, our task is to find colors for each individual protein type that allow users to discriminate the proteins, but at the same time understand their hierarchical grouping into the compartments. 
 Also, aesthetics are important, as we target our work at interested users from a broader audience. 
 
@@ -535,15 +535,13 @@ In this overview zoom level, this effect is actually desirable to avoid salt and
 However, as we zoom in, we want increasing discriminability, as defined by parameter $d$. 
 We therefore introduce a dynamic, view-dependent color adaptation approach. 
   
-\textbf{MWA END: my suggestion is to remove the next paragraph}
-
-In the initial state we first generate a color palette assuming that all the compartments to be visible.
-As we zoom-in and explore the scene, large parts on the scene may not actually be invisible in the viewport.
-In this configuration the color palette is underexploited, and could be improved be in increase discriminability between proteins that are currently visible.  
-In the following section we present the key elements of our coloring scheme, which uses visiblity information to recompute the color palette on-the-fly.
+%\textbf{MWA END: my suggestion is to remove the next paragraph}
 
 \subsection{View-Dependent Color Adjustment}
 
+In the initial state, we first generate a color palette assuming that all the compartments are visible.
+As we zoom-in and explore the scene, large parts on the scene may not actually be invisible in the viewport.
+In this configuration the color palette would become underexploited, and could be improved to increase discriminability between proteins that are currently visible.  
 In order to determine which protein groups occupy unnecessary space in the color palette, we extract the visibility information by analysing the previously rendered frame.
 For each entire group of protein types, we derive a visibility coefficient which we use to scale their corresponding sections of the hue circle. 
 This coefficient is calculated based on the visibility of each protein type contained in a given group.
@@ -574,7 +572,7 @@ w = s\sum_{i=1}^{n} c_{i}, c_{i} \in C
 \end{equation}
 
 Where $w$ is the coefficient of the group, and $s$ is a scaling factor which is proportional to the number of protein type in that group. 
-Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the coefficient to determine the size of the individual hue arcs. \\
+Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the group coefficient to determine the size of the individual hue sections. \\
 
 \subsubsection{Extracting Visibility Information}
 
@@ -591,7 +589,7 @@ Since the computation is done in parallel it is important to use atomic intrinsi
 \begin{figure}
 \centering
 \includegraphics[width=0.8\linewidth]{"Figures/force-based layout"}
-\caption{The force based hue assignment mecanism. a) The groups are positioned with a naive approach non-iterative approach, b) the group are attracted towards their default hue value, until the system reached a state of equilibriu.}
+\caption{The force based hue assignment mecanism. a) The groups are positioned with a naive approach non-iterative approach, b) the group are attracted towards their default hue value, until the system reached a state of equilibrium.}
 \label{fig:force-basedlayout}
 \end{figure}
 
@@ -599,7 +597,7 @@ Since the computation is done in parallel it is important to use atomic intrinsi
 
 By default, each group is assigned a centroid hue value, which we refer to as default hue centroid.
 As we move the camera and affect the visibility of the protein, we modulate the size of the groups on the hue ring.
-Upon modulation of the group sizes we must also reposition the centroid group positions on that ring.
+Upon modulation of the group sizes we must also reposition the centroid group positions on the ring.
 A naive non-iterative approach would be to start positioning a first group on the circle, and to place the remaining groups subsequently on the circle, given the size of each group.
 While the position of the first group on the hue circle can be arbitrarily defined with this approach, the other groups are not guaranteed to be located as near as possible to their default hue value.
 This could lead to overly large hue shifts for the centroid of the groups as show in Figure~\ref{fig:force-basedlayout}
@@ -628,7 +626,7 @@ Additionally we also include a damping value in the integration calculus to smoo
 
 %\subsection{Principle}
 
-\textbf{MWa rewrite BEGIN}
+%\textbf{MWa rewrite BEGIN}
 
 Once the protein colors on the highest hierarchy level are defined, the colors of the following zoom-levels (chains, secondary structures) need to be selected. 
 To ensure smooth transitions and to maintain hierarchical information, we introduce a hierarchical hue picking method. 
@@ -640,11 +638,8 @@ For example, to select hues for $m$ protein domains, the angular distances betwe
 where $\beta$ is the maximum size of the domain wedge. 
 We set $\beta$ to 180 so that a single protein would not cover more than half of the hues, which would lead to a loss of hierarchical information. 
 Choosing a lower $\beta$ may cause domains within a single protein to be hardly distinguishable.  
-Given the hue of the protein and the angular distances between the $m$ domains $\alpha$, the domain hue wedge with an angle of $m \cdot \alpha$ is centered around the protein hue value, as illustrated in Figure \ref{fig:hueHierarchy}. 
-
-\textbf{TODO sketch}
-
-Mind that domain hue wedges can overlap across proteins, as indicated in Figure \ref{fig:hueHierarchy}. 
+Given the hue of the protein and the angular distances between the $m$ domains $\alpha$, the domain hue wedge with an angle of $m \cdot \alpha$ is centered around the protein hue value.
+Mind that domain hue wedges can overlap across proteins, as indicated in Figure \ref{fig:overlap}. 
 This is a major difference to the hierarchical coloring technique introduced by Tennekes and de Jonge \cite{tennekes2014tree}, who assigned unique, yet hardly distinguishable colors on each zoom levels for static tree visualizations. 
 In our case, being able to clearly distinguish domains is an important task in structural biology. 
 Distinguishing the proteins, however, is facilitated by structural properties as well. 
@@ -661,25 +656,28 @@ The color of a fragment is them computed by performing a linear interpolation of
 
 \textbf{TODO zoom continuum sketch}
 
-\textbf{MWa rewrite END -- remove next paragraph in case of acceptance}
-
-Once the protein colors are defined, the colours of the following zoom-levels (chains, secondary structures) are chosen hierarchically, based on the color of their parent in the previous level.
-For example, the hue value of a chain is sampled around the hue of its protein, with an arbitrarily defined offset, see Figure~\ref{fig:coloroverview}.
-These colors are then progressively reveal as we zoom into the proteins.
-We switch between the colors of the different levels based on the distance of the proteins to the camera and user defined distance values which delimit where a levels being and ends.
-In between levels we perform linear color interpolation for smooth and logical transitions between the levels.
-This operation is performed in a post-processing operation, for each pixel we have access internally to all the necessary  information concerning an atom, (group, protein type, domain, secondary structure and atom type).
-By retrieving the world-space position of a pixel in the shader, we are able to compute the world space distance to the camera, and determine the the degree of transition between two levels.
-The color of a fragment is them computed by performing a linear interpolation of the hue value of the previous level and the next one. 
-The hue offset between two level are priorly determined based on the number of domains, or secondary structures.
-We set the minimum hue offset to be superior or equal to 20, because of ***MANU EXPLAIN REASONS HERE***.
-The maximum size in hue angle for all elements of a level, chains or secondary structures, is set to 180 to reduce the use of too many colors of a single level.
-The main different between this approach is that we do not prevent overlaps, because of limitations of orginal tree color approach ** Manu or Nik explain reasons here **.
+%\textbf{MWa rewrite END -- remove next paragraph in case of acceptance}
+%
+%Once the protein colors are defined, the colours of the following zoom-levels (chains, secondary structures) are chosen hierarchically, based on the color of their parent in the previous level.
+%For example, the hue value of a chain is sampled around the hue of its protein, with an arbitrarily defined offset, see Figure~\ref{fig:coloroverview}.
+%These colors are then progressively reveal as we zoom into the proteins.
+%We switch between the colors of the different levels based on the distance of the proteins to the camera and user defined distance values which delimit where a levels being and ends.
+%In between levels we perform linear color interpolation for smooth and logical transitions between the levels.
+%This operation is performed in a post-processing operation, for each pixel we have access internally to all the necessary  information concerning an atom, (group, protein type, domain, secondary structure and atom type).
+%By retrieving the world-space position of a pixel in the shader, we are able to compute the world space distance to the camera, and determine the the degree of transition between two levels.
+%The color of a fragment is them computed by performing a linear interpolation of the hue value of the previous level and the next one. 
+%The hue offset between two level are priorly determined based on the number of domains, or secondary structures.
+%We set the minimum hue offset to be superior or equal to 20, because of ***MANU EXPLAIN REASONS HERE***.
+%The maximum size in hue angle for all elements of a level, chains or secondary structures, is set to 180 to reduce the use of too many colors of a single level.
+%The main different between this approach is that we do not prevent overlaps, because of limitations of orginal tree color approach ** Manu or Nik explain reasons here **.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.4\linewidth]{Figures/overlap}
-\caption{}
+\caption{The hierarchical color assignment for the protein chains. 
+The spacing between the protein domains (x,y,z) and (x',y',z',w') is predetermined based on the number of domains. 
+Unlike the tree-based coloring approach~\cite{tennekes2014tree} we allow colors to be reused, across domains of different protein types (see 10 and 12) to offer more discriminability.
+}
 \label{fig:overlap}
 \end{figure}
 
@@ -690,7 +688,7 @@ The main different between this approach is that we do not prevent overlaps, bec
 
 Due to our hierarchical color assignment, domain colors of neighboring proteins or secondary structures of neighboring domains may be assigned identical colors. 
 To increase color discriminability, we use the chroma to generate a focus+context effect. 
-We select the protein with the highest number of visible screen pixels \textbf{?} as focus elements and label the remaining proteins as context. 
+We select the protein with the highest screen coverage in the central region the screen as focus element and label the remaining proteins as context. 
 For the context proteins, we reduce the chroma by $d$ \textbf{?} to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
 Figure \ref{fig:focusContext} shows a single focus protein with XX domains. 
 
