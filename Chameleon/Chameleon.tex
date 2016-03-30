@@ -575,7 +575,7 @@ Where $w$ is the coefficient of the group, and $s$ is a scaling factor which is 
 Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the group coefficient to determine the size of the individual hue sections. \\
 
 \subsubsection{Extracting Visibility Information}
-
+\label{sssec:extracting}
 We leverage GPU computing in a post-processing operation in order to compute the visibility of each protein type efficiently.
 Upon rendering we generate an additional off-line texture which contain, for each pixel, the unique identifier of the rendered protein.
 We priorly declare two GPU buffers which will, for each protein type, store the occupied pixel count and the total number of visible proteins, respectively.
@@ -648,9 +648,15 @@ The same principle is applied to the subsequent levels as well.
 In our examples, we apply colors for protein domains and the secondary structures in this manner. 
 On the final atomic level, however, we use an established pre-defined color palette. 
 
-We switch between the colors of the different levels based on the distance of the proteins to the camera and user defined distance values which delimit where a levels being and ends.
+We switch between the colors of the different levels based on the distance of the proteins to the camera and user defined distance values which delimit where the levels being and ends.
 In between levels we perform linear color interpolation for smooth and logical transitions between the levels.
-This operation is performed in a post-processing operation, for each pixel we have access internally to all the necessary  information concerning an atom, (group, protein type, domain, secondary structure and atom type).
+
+\subsection{Interpolating Between Levels}
+
+The transition between the colors of the levels is performed in a post-processing operation in a dedicated shader program.
+We addition to the instance unique ID texture mentioned in Section~\ref{sssec:extracting}, we also generate an additional off-line texture upon rendering, which contains the unique atom ID of each rendered atom.
+Together, the unique atom and protein ID will allow us to access directly from the shader program, all the needed information concerning the rendered atoms, and which is priorly stored on the video memory.
+We also use the depth information of the rendered 
 By retrieving the world-space position of a pixel in the shader, we are able to compute the world space distance to the camera, and determine the the degree of transition between two levels.
 The color of a fragment is them computed by performing a linear interpolation of the hue value of the previous level and the next one. 
 
