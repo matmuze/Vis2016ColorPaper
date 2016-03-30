@@ -51,6 +51,8 @@
   linktocpage
 }
 
+
+
 %% If you are submitting a paper to a conference for review with a double
 %% blind reviewing process, please replace the value ``0'' below with your
 %% OnlineID. Otherwise, you may safely leave it at ``0''.
@@ -489,15 +491,56 @@ The coefficient of interpolation is defined according to the camera distance and
 %	
 %\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
 
-\section{Dynamic Color Palette}
+\section{Dynamic Hue Palette}
 \label{sec:dynamic_color_palette}
+
+\textbf{MWA BEGIN: This is repetitive now with Section 3, which we will rework later!}
+
+In the highest hierarchy level, our task is to find colors for each individual protein type that allow users to discriminate the proteins, but at the same time understand their hierarchical grouping into the compartments. 
+Also, aesthetics are important, as we target our work at interested users from a broader audience. 
+
+Due to aesthetic reasons, we opted to choose only saturated and iso-luminant colors, resulting in a pastel color palette. 
+Figure \ref{fig:colorComparison} shows a comparison between an iso-luminant and non-iso-luminant color palette for our visualization, illustrating our design choice. 
+We therefore keep the chroma and luminance constant and code the proteins by hue only. 
+To have better control over color discriminability, we work use CIEL*a*b* and HCL color palettes, respectively, which are perceptually linear. 
+This means, we can quantify the dissimilarity between colors by their Euclidean distance in color space. 
+With constant chroma and luminance, hues are selected from a iso-luminant hue ring with uniform chroma. 
+
+To select suitable chroma and luminance values, we investigated which luminance values result in the largest possible hue ring when converting colors from CIEL*a*b* space back to sRGB. 
+In an offline procedure, we picked eight extreme a* and b* values in with equal distance from the non-chromatic center with a given L* value and iteratively moved them towards the center until the resulting L*a*b* color was lying within the sRGB gamut. 
+The smallest vector magnitude of $\vec{a^*b^*}$ thereby defined the radius and chroma for the given luminance, respectively. 
+We found that a luminance of 75 represents a good value, leading to a maximum chroma of 40 (see Figure \ref{fig:colorComparison}(b)). 
+
+To distribute hues from the hue ring to the proteins, we sample the hues with respect to four parameters: 1) the number of compartments $n$, 2) the number of proteins $m$ within each compartment $1 \leq i \leq n$, 3) the optimal color distance between structures $d$, and 4) the minimum color spacing $s$ between compartments. 
+The first parameter defines the number of ``wedges'' that are overlaid on the hue ring. 
+The second parameter controls the relative angular width of the wedges. 
+The third and fourth parameter control the actual angular width of the wedges: 
+Given the chroma (i.e.\, radius) of the hue ring and the optimal Euclidean color distance, the angular distance between neighboring proteins within the same compartment is defined as: 
+	\[
+	\alpha = sin^{-1}\frac{d}{C^*}. 
+\]
+Empirically, we found that $d$ around 11 delivers visually pleasing results, which corresponds to around 5 \textit{``just noticeably different''} steps of 2.3 in CIEL*a*b* color space \cite{lee2013perceptually}. 
+Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins we have in the HIV model. 
+The angular distance between proteins will therefore be below the optimal $d$ and defined by 
+
+	\[
+	\alpha = \frac{360}{\sum_{i} m_i - n \cdot s}. 
+\]
+
+In Figure \ref{fig:comparison}(b)), we use a spacing of XX with XX different protein types. 
+Thus, the colors become very similar and hard to distinguish. 
+In this overview zoom level, this effect is actually desirable to avoid salt and pepper noise. 
+However, as we zoom in, we want increasing discriminability, as defined by parameter $d$. 
+We therefore introduce a dynamic, view-dependent color adaptation approach. 
+  
+\textbf{MWA END: my suggestion is to remove the next paragraph}
 
 In the initial state we first generate a color palette assuming that all the compartments to be visible.
 As we zoom-in and explore the scene, large parts on the scene may not actually be invisible in the viewport.
 In this configuration the color palette is underexploited, and could be improved be in increase discriminability between proteins that are currently visible.  
 In the following section we present the key elements of our coloring scheme, which uses visiblity information to recompute the color palette on-the-fly.
 
-\subsection{Principle}
+\subsection{View-Dependent Color Adjustment}
 
 In order to determine which protein groups occupy unnecessary space in the color palette, we extract the visibility information by analysing the previously rendered frame.
 For each entire group of protein types, we derive a visibility coefficient which we use to scale their corresponding sections of the hue circle. 
@@ -531,7 +574,7 @@ w = \frac{\sum_{i=1}^{n} c_{i}}{n} s, c_{i} \in C
 Where $w$ is the coefficient of the group, and s is a scaling factor which is proportional to the number of protein type in that group. 
 Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the coefficient to determine the size of the individual hue arcs. \\
 
-\subsection{Extracting Visibility Information}
+\subsubsection{Extracting Visibility Information}
 
 We leverage GPU computing in a post-processing operation in order to compute the visibility of each protein type efficiently.
 Upon rendering we generate an additional off-line texture which contain, for each pixel, the unique identifier of the rendered protein.
@@ -543,7 +586,7 @@ In a second pass and in a dedicated compute shader, we then iterate through all 
 For each protein which was flagged as visible in the previous pass, we increase the number of visible instances corresponding to the protein type.
 Since the computation is done in parallel it is important to use atomic intrinsic functions to increment the counters in order to avoid concurrent access to the same value from two different threads.
 
-\subsection{Force-Based Group Layout}
+\subsubsection{Force-Based Group Layout}
 
 Once we determine the weight of a group, one remaining task is to position groups on the hue circle.
 A naive approach would be to start positioning a first group on the circle, and to place the remaining groups subsequently on the circle, given the size of each group.
@@ -570,9 +613,44 @@ The first part of the right side of this equation correspond to the attraction f
 The second part is the sum of repulsion forces between the given group and the other ones.
 Additionally we also include a damping value in the integration calculus to smooth-out the motion of the group centroids when the viewport and the visibility configuration is abruptly changing.
 
-\section{Hierarchical Tree Colors}
+\subsection{Hierarchical Colors}
 
-\subsection{Principle}
+%\subsection{Principle}
+
+\textbf{MWa rewrite BEGIN}
+
+Once the protein colors on the highest hierarchy level are defined, the colors of the following zoom-levels (chains, secondary structures) need to be selected. 
+To ensure smooth transitions and to maintain hierarchical information, we introduce a hierarchical hue picking method. 
+For example, to select hues for $m$ protein domains, the angular distances between the domain hues are calculated as follows: 
+
+	\[
+	\alpha = min(d, \beta / m),
+\]
+where $\beta$ is the maximum size of the domain wedge. 
+We set $\beta$ to 180 so that a single protein would not cover more than half of the hues, which would lead to a loss of hierarchical information. 
+Choosing a lower $\beta$ may cause domains within a single protein to be hardly distinguishable.  
+Given the hue of the protein and the angular distances between the $m$ domains $\alpha$, the domain hue wedge with an angle of $m \cdot \alpha$ is centered around the protein hue value, as illustrated in Figure \ref{fig:hueHierarchy}. 
+
+\textbf{TODO sketch}
+
+Mind that domain hue wedges can overlap across proteins, as indicated in Figure \ref{fig:hueHierarchy}. 
+This is a major difference to the hierarchical coloring technique introduced by Tennekes and de Jonge \cite{tennekes2014tree}, who assigned unique, yet hardly distinguishable colors on each zoom levels for static tree visualizations. 
+In our case, being able to clearly distinguish domains is an important task in structural biology. 
+Distinguishing the proteins, however, is facilitated by structural properties as well. 
+
+The same principle is applied to the subsequent levels as well. 
+In our examples, we apply colors for protein domains and the secondary structures in this manner. 
+On the final atomic level, however, we use an established pre-defined color palette. 
+
+We switch between the colors of the different levels based on the distance of the proteins to the camera and user defined distance values which delimit where a levels being and ends.
+In between levels we perform linear color interpolation for smooth and logical transitions between the levels.
+This operation is performed in a post-processing operation, for each pixel we have access internally to all the necessary  information concerning an atom, (group, protein type, domain, secondary structure and atom type).
+By retrieving the world-space position of a pixel in the shader, we are able to compute the world space distance to the camera, and determine the the degree of transition between two levels.
+The color of a fragment is them computed by performing a linear interpolation of the hue value of the previous level and the next one. 
+
+\textbf{TODO zoom continuum sketch}
+
+\textbf{MWa rewrite END -- remove next paragraph in case of acceptance}
 
 Once the protein colors are defined, the colours of the following zoom-levels (chains, secondary structures) are chosen hierarchically, based on the color of their parent in the previous level.
 For example, the hue value of a chain is sampled around the hue of its protein, with an arbitrarily defined offset, see Figure~\ref{fig:coloroverview}.
@@ -588,9 +666,21 @@ The maximum size in hue angle for all elements of a level, chains or secondary s
 The main different between this approach is that we do not prevent overlaps, because of limitations of orginal tree color approach ** Manu or Nik explain reasons here **.
 
 
-\subsection{Focus + Context}
+\section{Context Desaturation}
 
-The colours of the following zoom-levels (chains, secondary structures) are chosen hierarchically, based on the color of their parent in the previous level.
+\textbf{MWa rewrite BEGIN}
+
+Due to our hierarchical color assignment, domain colors of neighboring proteins or secondary structures of neighboring domains may be assigned identical colors. 
+To increase color discriminability, we use the chroma to generate a focus+context effect. 
+We select the protein with the highest number of visible screen pixels \textbf{?} as focus elements and label the remaining proteins as context. 
+For the context proteins, we reduce the chroma by $d$ \textbf{?} to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
+Figure \ref{fig:focusContext} shows a single focus protein with XX domains. 
+
+\textbf{Just to be sure: this does not solve the problem of similar colors of secondary structures of different domains on the same protein?}
+
+\textbf{MWa rewrite END -- remove next 2 paragraphs in case of acceptance}
+
+The colors of the lower hierarchy-levels (chains, secondary structures) are chosen hierarchically, based on the color of their parent in the previous level.
 For example, the hue value of a chain is sampled around the hue of its protein, with an arbitrarily defined offset, see Figure~\ref{fig:coloroverview}.
 Our system provide optimal hue distribution of protein colors for proteins based on the visibility information, which guarantees that protein will always be assigned unique and distinct colors.
 However, this is not the case for following levels of the hierarchy, where chains colors are likely to overlap with those of neighbouring proteins.  
@@ -602,9 +692,25 @@ Therefore we rely on a focus+context approach instead, to optimize the view and 
 Indeed, when closely observing protein properties, it is very unlikely that the viewer will also observe properties of all the surrounding proteins, as commodity hardware does not offer enough pixels to render all the context proteins with enough details to be relevant to the viewer.
 Therefore we define a focus region outside which the colors of the proteins will be desaturated to reduce occurrence of colors used in focus region.
 
-\subsection{Luminance-Driven Color Interpolation}
+\section{Luminance Modulation}
 
-Manu talks about interpolation here
+So far, we used the hue channel to discriminate structures on different zoom levels and the chroma to distinguish focus proteins from the context. 
+The final color channel we can manipulate is luminance. 
+Illustrators sometimes use the luminance channel to indicate structural properties in lower hierarchy levels, as shown in Figure \ref{fig:goodsellLayer}. 
+This is a reasonable choice, given that hue is known to be an effective channel to encode low-frequency information, while luminance is more effective to encode high-frequency information~\cite{bergman1995rule}. 
+
+\textbf{Figure goodsell layer by goodsell himself}
+
+For each hierarchy level, we therefore not only assign unique hues, but also unique luminance values. 
+We modulate the pre-defined luminance value by a small range to avoid extensive visual clutter. 
+In the example of Figure \ref{fig:zoomLevels}, we use a luminance range of 20 to distinguish the sub-elements. 
+Thus, this luminance modulation does not help to clearly discriminate or identify structures on a lower hierarchy level, but it is a subtle indication of lower-level structural properties. 
+
+Like the hue, the luminance value is defined by the distance of the camera to the respective structures. 
+Given pre-defined distances for distinct hierarchy levels, the colors are interpolated linearly between two neighboring levels. 
+However, unlike the hue, we do not interpolate between the actual hierarchy levels, but interpolate between the next two hierarchy levels with the current interpolation factor instead, as illustrated in Figure \ref{fig:zoomLevels}. 
+This way, the hue and the luminance encode different hierarchy levels, yet both color channels are seamlessly interpolated for smooth transitions. 
+ 
 
 
 %\section{Technique (section written by Nicholas)}
