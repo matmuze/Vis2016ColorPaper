@@ -232,7 +232,15 @@
 	%As such, there are significant perceptual and cognitive restrictions placed on color coding. 
 	
 	
-	
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{Figures/motivation}
+		\caption{Motivation: Multi-scale Illustration of the HIV virus from David Goodsell. 
+			The left part shows a close up on the protein which is indicated on the right part via the black line.
+			In the close-up illustration the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
+			Differentiation is also made between carbon atoms and the remaining ones by shifting the luminance slightly.}
+		\label{fig:motivation}
+	\end{figure}
 	
 	
 	
@@ -335,15 +343,7 @@
 %	
 
 
-\begin{figure}
-\centering
-\includegraphics[width=1\linewidth]{Figures/motivation}
-\caption{Motivation: Multi-scale Illustration of the HIV virus from David Goodsell. 
-The left part shows a close up on the protein which is indicated on the right part via the black line.
-In the close-up illustration the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
-Differentiation is also made between carbon atoms and the remaining ones by shifting the luminance slightly.}
-\label{fig:motivation}
-\end{figure}	
+	
 
 		
 	\section{Chameleon Overview}
@@ -539,7 +539,12 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 		\label{fig:hslvshcl}
 	\end{figure}
 	
-	
+		\begin{figure*}[t]
+			\centering
+			\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
+			\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) Shows the first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with an overall number of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom in on a protein of type 10, which features 3 different domains (x,y,z).}
+			\label{fig:coloroverview}
+		\end{figure*}
 	
 	\section{Dynamic Hue Palette}
 	\label{sec:hue}
@@ -587,12 +592,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	%\textbf{MWA END: my suggestion is to remove the next paragraph}
 	
 	
-	\begin{figure*}[t]
-		\centering
-		\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
-		\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) Shows the first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with an overall number of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom in on a protein of type 10, which features 3 different domains (x,y,z).}
-		\label{fig:coloroverview}
-	\end{figure*}
+
 	
 	\subsection{View-Dependent Color Adjustment}
 	\label{sec:dynamic}
@@ -649,7 +649,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.9\linewidth]{"Figures/force-based layout"}
+		\includegraphics[width=0.85\linewidth]{"Figures/force-based layout"}
 		\caption{The force-based hue assignment mecanism, the red arrows indicate the default hue for the centroid of a group. a) The groups are positioned with a naive and non-iterative approach, the black arrows represent the forces that we apply to reposition the groups, b) the groups are attracted towards their default hue value, until the system reaches a state of equilibrium.}
 		\label{fig:force-basedlayout}
 	\end{figure}
@@ -707,13 +707,11 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	This is another major difference to the hierarchical coloring technique introduced by Tennekes and de Jonge \cite{tennekes2014tree}, who assigned unique, yet hardly distinguishable colors on each zoom levels for static tree visualizations. 
 	In our case, being able to clearly distinguish domains is an important task in structural biology, which is also facilitated by structural properties as well. 
 	
-	\begin{figure}
-		\centering
-		\includegraphics[width=1\linewidth]{Figures/zoomfigure}
-		\caption{Interpolation of hue and luminance depends on the position of the view. The black camera in the top line shows the position of the viewer with respect to the different levels. The grey crosses show the corresponding positions for interpolating hue and luminance.
-		The hue is equal to a linear interpolation of the two neighbouring levels shown in the middle line, here compartment and protein. Luminance is equal to a linear interpoation of the next two levels, here protein and domain, visible on the bottom line. The interpolation is based on the ratio of the distance to the neighbouring levels, here 0.3 and 0.7. }
-		\label{fig:zoom_continuum}
-	\end{figure}
+	
+	
+	
+	
+
 	
 	\subsubsection{Interpolating Between Levels}
 	
@@ -752,6 +750,14 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 			Unlike the tree-based coloring approach~\cite{tennekes2014tree} we allow colors to be reused across domains of different protein types (see 10 and 12) to offer more discriminability.
 		}
 		\label{fig:overlap}
+	\end{figure}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{Figures/zoomfigure}
+		\caption{Interpolation of hue and luminance depends on the position of the view. The black camera in the top line shows the position of the viewer with respect to the different levels. The grey crosses show the corresponding positions for interpolating hue and luminance.
+			The hue is equal to a linear interpolation of the two neighbouring levels shown in the middle line, here compartment and protein. Luminance is equal to a linear interpoation of the next two levels, here protein and domain, visible on the bottom line. The interpolation is based on the ratio of the distance to the neighbouring levels, here 0.3 and 0.7. }
+		\label{fig:zoom_continuum}
 	\end{figure}
 	
 	
@@ -793,6 +799,25 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 %	\end{figure}
 	
 	
+	
+		\begin{figure*}[t]
+			\centering
+			\includegraphics[width=1\linewidth]{Figures/results_4}
+			\caption{Various snapshots from the Chameleon system.
+				As the camera position changes, the discriminability between protein types is optimized.
+				The color palette widget at the bottom left allows us to visualize the distribution of the groups along the hue circle.}
+			\label{fig:results_1}
+		\end{figure*}
+		
+		\begin{figure*}[t]
+			\centering
+			\includegraphics[width=1\linewidth]{Figures/results}
+			\caption{The hue, chroma, luminance modulation in sequential steps.
+				(a) only the protein colors are show, (b) protein domains are show via hue modulation, (c) secondary structures are shown via luminance modulation, (d) secondary structures are shown via hue modulation
+				(e) atom types are shown via luminance modulation, (f) focus is highlighted via chroma modulation, (g) atom types are shown via hue modulation}
+			\label{fig:results_2}
+		\end{figure*}
+	
 	\section{Luminance Modulation}
 	\label{sec:luminance}
 	
@@ -812,6 +837,9 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	Given pre-defined distances for distinct hierarchy levels, the colors are interpolated linearly between two neighboring levels. 
 	However, unlike the hue, we do not interpolate between the actual hierarchy levels, but interpolate between the next two hierarchy levels with the current interpolation factor instead, as illustrated in Figure \ref{fig:zoom_continuum}. 
 	This way, the hue and the luminance encode different hierarchy levels, yet both color channels are seamlessly interpolated for smooth transitions. 
+				
+	
+	
 		
 	\section{Results}
 	\label{sec:results}
@@ -1150,6 +1178,13 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	%o	No quantifiability (x in y seconds)
 	%o	Want to measure usability
 	
+		\begin{figure}
+			\centering
+			\includegraphics[width=1\linewidth]{Figures/hivscale}
+			\caption{Illustration of the scale of the size of different objects. Note that amino acids and atoms are almost the same size. This indicates that a user will be equally far from a molecule when he wants to see the amino acids or the atoms.}
+			\label{fig:hivScale}
+		\end{figure}
+		
 	\section{Limitations}
 	There are still two basic limitations to our coloring scheme. 
 	The first is information on two different levels that are very close to each other, for example the amino acids and atoms. 
@@ -1169,12 +1204,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	However, there can be some difficulty when using them. The cartoon representation for example has a lot of area which can be seen through. 
 	If two proteins are one behind the other, then they can be hard to tell apart.
 	
-	\begin{figure}
-		\centering
-		\includegraphics[width=1\linewidth]{Figures/hivscale}
-		\caption{Illustration of the scale of the size of different objects. Note that amino acids and atoms are almost the same size. This indicates that a user will be equally far from a molecule when he wants to see the amino acids or the atoms.}
-		\label{fig:hivScale}
-	\end{figure}
+
 	
 	
 	
