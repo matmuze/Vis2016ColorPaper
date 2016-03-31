@@ -545,12 +545,12 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	
 	In order to calculate the color of the compartments and their proteins, we can distribute the hues of the hue ring to the different proteins.
 	The color of the compartment will then simply be at the center of the proteins that belong to it.
-	To distribute hues from the hue ring to the proteins, we sample the hues with respect to four parameters: 1) the number of compartments $n$, 2) the number of protein types $m$ within each compartment $1 \leq i \leq n$, 3) the optimal color distance between structures $d$, which will be elaborated below, and 4) the minimum color spacing $s$ between compartments. 
+	To distribute hues from the hue ring to the proteins, we sample the hues with respect to four parameters: 1) the number of compartments $n$, 2) the number of protein types $m_i$ within each compartment $1 \leq i \leq n$, 3) the optimal color distance between structures $d$, which will be elaborated below, and 4) the minimum color spacing $s$ between compartments. 
 	This corresponds to the top row of (b),(c) and (d) in Figure~\ref{fig:coloroverview}.
 	The first parameter defines the number of ``wedges'' that are overlaid on the hue ring. 
 	The second parameter controls the relative angular width of the wedges. 
 	The third and fourth parameter control the actual angular width of the wedges: 
-	Given the chroma (i.e.\, radius) of the hue ring and the optimal Euclidean color distance $d$, the angular distance between neighboring proteins within the same compartment is defined as: 
+	Given the chroma $C^*$ (i.e.\, radius) of the hue ring and the optimal Euclidean color distance $d$, the angular distance between neighboring proteins within the same compartment is defined as: 
 	\[
 	\alpha = arcsin\frac{d}{C^*}. 
 	\]
@@ -693,8 +693,8 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	
 	\begin{figure}
 		\centering
-		\includegraphics[width=1\linewidth]{Figures/placeholder}
-		\caption{Zoom continuum description goes here}
+		\includegraphics[width=1\linewidth]{Figures/zoomfigure}
+		\caption{Interpolation of hue and luminance depends on the position of the view. The grey cross is the position of the view, shown as the grey cross in the top line. The hue is equal to a linear interpolation of the two neighbouring levels shown in the middle line, here compartment and protein. Luminance is equal to a linear interpoation of the next two levels, here protein and domain, visible on the bottom line. The interpolation is based on the ratio of the distance to the neighbouring levels $a$ times the previous level, $1-a$ times the next level.  }
 		\label{fig:zoom_continuum}
 	\end{figure}
 	
@@ -1020,7 +1020,6 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 		\end{tabular}
 		\caption{Results of Task One in Second Study Run}
 	\end{table}
-	[tbd, i'm quite sure that there were issues in one case]
 	Apart from user 3, users could identify structures across all levels fairly well. 
 	Users 2 and 4 found a Methionine, but not the correct one. 
 	This is because they didn't notice the colors, so they didn't know exactly where to restrict their search.
@@ -1156,7 +1155,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\begin{figure}
 		\centering
 		\includegraphics[width=1\linewidth]{Figures/hivscale}
-		\caption{tbd Illustration of the scale of the size of different objects. Note that amino acids and atoms are almost the same size. This indicates that a user will be equally far from a molecule when he wants to see the amino acids or the atoms.}
+		\caption{Illustration of the scale of the size of different objects. Note that amino acids and atoms are almost the same size. This indicates that a user will be equally far from a molecule when he wants to see the amino acids or the atoms.}
 		\label{fig:hivScale}
 	\end{figure}
 	
