@@ -120,8 +120,17 @@
 %% Uncomment below to include a teaser figure.
 \teaser{
 	\centering
-	\includegraphics[width=1\linewidth]{Figures/Teaser2}
-	\caption{Lorem ipsum dolor sit amet, ut eos nihil everti utroque, cu has diam dicat, ne vel wisi dicunt noluisse. No eam odio legendos, est sumo legere mnesarchum ea. In suavitate aliquando cum, usu ut accusata iracundia, duo ne facer quaerendum mediocritatem. Vis habeo quaerendum liberavisse at, decore invidunt instructior est ne. Ut usu clita voluptua, an nec ullum graecis. Mea ut tamquam accumsan.}
+	\includegraphics[width=1\linewidth]{Figures/teaser_new}
+	\caption{Mutli-scale visualization of the HIV virus in real-time, using cellVIEW~\cite{muzic2015cellview} for the rendering, together with the presented technique "Chameleon" for dynamic color coding of protein and atom properties.
+		The series of vignettes represent, from left to right, a zooming operation from the entire virus down to single atoms.
+		Along the way, we modulate the colors to provide relevant information based on the current zoom level.
+		(a) At the highest zoom level the orange protein located inside the capsid are hardly distinguishable, as surrounding compartments which contain more various protein types (green, and purple) are prioritized on the color palette. 
+		(b) As we zoom-in on the capsid proteins, other compartments are become less visible, which allows the capsid protein ensemble to occupy more space in the color palette.
+		(c) As we continue zooming we reveal the domain of the protein by shifting the hue value progressively, simultaneous we also shift the luminance to hit the presence of underlying structures in the next levels.
+		(d) The secondary structures are differentiated with the hue, and the atom types by luminance, analogously to the previous levels.
+		At the same time we progressively desaturate the context proteins to reduce the number of colors and improve clarity.
+		(e) The atom colors are progressively shown as we reach the final zoom level.}
+		
 	\label{teaserImage}
 }
 
@@ -524,8 +533,10 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.85\linewidth]{Figures/hslvshcl}
-		\caption{Comparaison between the isoluminant color palette which we employ (left) and HSL (right) with the similar hue values. Mind how the dark colors in the virus matrix make it hard to distinguish individual proteins.}
+		\includegraphics[width=0.75\linewidth]{Figures/hslvshcl}
+		\caption{Comparaison between two color palettes with varying hues and constant saturation/lightness using HSL (left), and constant chroma/luminance using HCL (right). 
+		Unlike HSL, the HCL color space provide true isoluminant colors when varying the hue with constant chroma/luminance values.
+		 Mind how the dark blue colors, inside the virus and next to the membrane, make it hard to distinguish individual proteins in a lit environment.}
 		\label{fig:hslvshcl}
 	\end{figure}
 	
@@ -580,7 +591,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\begin{figure*}[t]
 		\centering
 		\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
-		\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) The first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with a total of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom on a protein of type 10, which features 3 different domains(x,y,z).}
+		\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) Shows the first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with an overall number of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom on a protein of type 10, which features 3 different domains (x,y,z).}
 		\label{fig:coloroverview}
 	\end{figure*}
 	
