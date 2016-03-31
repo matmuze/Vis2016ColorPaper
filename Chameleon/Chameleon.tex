@@ -341,7 +341,7 @@
 \includegraphics[width=1\linewidth]{Figures/motivation}
 \caption{Motivation: Multi-scale Illustration of the HIV virus from David Goodsell. 
 The left part shows a close up on the protein which is indicated on the right part via the black line.
-In the close-up illustration the illustrator used several shades of blue to distinguish between the different parts of the proteins which as not distinguishable in the wide view on the right side.
+In the close-up illustration the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
 Differentiation is also made between carbon atoms and the remaining ones by shifting the luminance slightly.}
 \label{fig:motivation}
 \end{figure}	
@@ -534,8 +534,8 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.75\linewidth]{Figures/hslvshcl}
-		\caption{Comparaison between two color palettes with varying hues and constant saturation/lightness using HSL (left), and constant chroma/luminance using HCL (right). 
-		Unlike HSL, the HCL color space provide true isoluminant colors when varying the hue with constant chroma/luminance values.
+		\caption{Comparison between two color palettes with varying hues and constant saturation/lightness using HSL (left), and constant chroma/luminance using HCL (right). 
+		Unlike HSL, the HCL color space provides true isoluminant colors when varying the hue with constant chroma/luminance values.
 		 Mind how the dark blue colors, inside the virus and next to the membrane, make it hard to distinguish individual proteins in a lit environment.}
 		\label{fig:hslvshcl}
 	\end{figure}
@@ -591,7 +591,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\begin{figure*}[t]
 		\centering
 		\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
-		\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) Shows the first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with an overall number of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom on a protein of type 10, which features 3 different domains (x,y,z).}
+		\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) Shows the first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with an overall number of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom in on a protein of type 10, which features 3 different domains (x,y,z).}
 		\label{fig:coloroverview}
 	\end{figure*}
 	
@@ -651,7 +651,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.9\linewidth]{"Figures/force-based layout"}
-		\caption{The force-based hue assignment mecanism, the red arrows are indicating the default hue for the centroid of a group. a) The groups are positioned with a naive and non-iterative approach, the black arrows represent the forces that we apply to reposition the groups, b) the group are attracted towards their default hue value, until the system reached a state of equilibrium.}
+		\caption{The force-based hue assignment mecanism, the red arrows indicate the default hue for the centroid of a group. a) The groups are positioned with a naive and non-iterative approach, the black arrows represent the forces that we apply to reposition the groups, b) the groups are attracted towards their default hue value, until the system reaches a state of equilibrium.}
 		\label{fig:force-basedlayout}
 	\end{figure}
 	
@@ -711,7 +711,8 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\begin{figure}
 		\centering
 		\includegraphics[width=1\linewidth]{Figures/zoomfigure}
-		\caption{Interpolation of hue and luminance depends on the position of the view. The grey cross is the position of the view, shown as the grey cross in the top line. The hue is equal to a linear interpolation of the two neighbouring levels shown in the middle line, here compartment and protein. Luminance is equal to a linear interpoation of the next two levels, here protein and domain, visible on the bottom line. The interpolation is based on the ratio of the distance to the neighbouring levels $a$ times the previous level, $1-a$ times the next level.  }
+		\caption{Interpolation of hue and luminance depends on the position of the view. The black camera in the top line shows the position of the viewer with respect to the different levels. The grey crosses show the corresponding positions for interpolating hue and luminance.
+		The hue is equal to a linear interpolation of the two neighbouring levels shown in the middle line, here compartment and protein. Luminance is equal to a linear interpoation of the next two levels, here protein and domain, visible on the bottom line. The interpolation is based on the ratio of the distance to the neighbouring levels, here 0.3 and 0.7. }
 		\label{fig:zoom_continuum}
 	\end{figure}
 	
@@ -749,7 +750,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 		\includegraphics[width=0.4\linewidth]{Figures/overlap}
 		\caption{The hierarchical color assignment for the protein chains. 
 			The spacing between the protein domains (x,y,z) and (x',y',z',w') is predetermined based on the number of domains. 
-			Unlike the tree-based coloring approach~\cite{tennekes2014tree} we allow colors to be reused, across domains of different protein types (see 10 and 12) to offer more discriminability.
+			Unlike the tree-based coloring approach~\cite{tennekes2014tree} we allow colors to be reused across domains of different protein types (see 10 and 12) to offer more discriminability.
 		}
 		\label{fig:overlap}
 	\end{figure}
