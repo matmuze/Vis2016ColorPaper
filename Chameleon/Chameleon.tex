@@ -514,7 +514,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	\begin{figure}
 \centering
 \includegraphics[width=0.7\linewidth]{Figures/hslvshcl}
-\caption{Comparaison between the isoluminant color palette which we employ (left) and HSL (right) with the similar hue values. Mind how the blue proteins next to the membrane are much darker than the rest on the right side.}
+\caption{Comparison between the isoluminant color palette which we employ (left) and HSL (right) with the similar hue values. Mind how the blue proteins next to the membrane are much darker than the rest on the right side.}
 \label{fig:hslvshcl}
 \end{figure}
 
@@ -526,14 +526,14 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	Also, aesthetics are important, as we target our work at interested users from a broader audience. 
 	
 	Due to aesthetic reasons, we opted to choose only saturated and iso-luminant colors, resulting in a pastel color palette. 
-	Figure \ref{fig:hslvshcl} shows a comparison between an iso-luminant and non-iso-luminant color palette for our visualization, illustrating our design choice. 
-	We therefore keep the chroma and luminance constant and code the proteins by hue only. 
-	To have better control over color discriminability, we work use CIEL*a*b* and HCL color palettes, respectively, which are perceptually linear. 
+	Figure \ref{fig:hslvshcl} shows a comparison between an iso-luminant and non-iso-luminant color palette for our visualization. This and the use of chroma and luminance described in Section~\ref{Overview} illustrate our design choice. 
+	We therefore keep the chroma and luminance constant and color the proteins by hue only. 
+	To have better control over color discriminability, we work use CIELab and HCL color palettes, respectively, which are perceptually linear. 
 	This means, we can quantify the dissimilarity between colors by their Euclidean distance in color space. 
 	With constant chroma and luminance, hues are selected from a iso-luminant hue ring with uniform chroma. 
 	
-	To select suitable chroma and luminance values, we investigated which luminance values result in the largest possible hue ring when converting colors from CIEL*a*b* space back to sRGB. 
-	In an offline procedure, we picked eight extreme a* and b* values in with equal distance from the non-chromatic center with a given L* value and iteratively moved them towards the center until the resulting L*a*b* color was lying within the sRGB gamut. 
+	To select suitable chroma and luminance values, we investigated which luminance values result in the largest possible hue ring when converting colors from CIELab space back to sRGB. 
+	In an offline procedure, we picked eight extreme a and b values in with equal distance from the non-chromatic center with a given L value and iteratively moved them towards the center until the resulting CIELab color was lying within the sRGB gamut. 
 	The smallest vector magnitude of $\vec{a^*b^*}$ thereby defined the radius and chroma for the given luminance, respectively. 
 	We found that a luminance of 75 represents a good value, leading to a maximum chroma of 40 (see Figure \ref{fig:hslvshcl}). 
 	
@@ -541,11 +541,11 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	The first parameter defines the number of ``wedges'' that are overlaid on the hue ring. 
 	The second parameter controls the relative angular width of the wedges. 
 	The third and fourth parameter control the actual angular width of the wedges: 
-	Given the chroma (i.e.\, radius) of the hue ring and the optimal Euclidean color distance, the angular distance between neighboring proteins within the same compartment is defined as: 
+	Given the chroma (i.e.\, radius) of the hue ring and the optimal Euclidean color distance, the angular distance $\alpha$ between neighboring proteins within the same compartment is defined as: 
 	\[
-	\alpha = sin^{-1}\frac{d}{C^*}. 
+	\alpha = arcsin\frac{d}{C^*}. 
 	\]
-	Empirically, we found that $d$ around 11 delivers visually pleasing results, which corresponds to around 5 \textit{``just noticeably different''} steps of 2.3 in CIEL*a*b* color space \cite{lee2013perceptually}. 
+	Empirically, we found that $d$ around 11 delivers visually pleasing results, which corresponds to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}. 
 	Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins we have in the HIV model. 
 	The angular distance between proteins will therefore be below the optimal $d$ and defined by 
 	
@@ -567,16 +567,16 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	In the initial state, we first generate a color palette assuming that all the compartments are visible.
 	As we zoom-in and explore the scene, large parts on the scene may not actually be visible in the current viewport.
 	In this configuration the color palette would become underexploited, and could be improved to increase discriminability between proteins that are currently visible. 
-	We therefore re-compute and optimize the color palette on-the-fly, as protein appear and disappear.
+	We therefore re-compute and optimize the color palette on-the-fly, as proteins appear and disappear.
 			 
 	In order to determine which protein groups occupy unnecessary space in the color palette, we extract the visibility information by analysing the previously rendered frame.
 	For each entire group of protein types, we derive a visibility coefficient which we use to scale their corresponding sections on the hue circle. 
 	This coefficient is calculated based on the visibility of each protein type contained in a given group.
 	The visibility of a given protein type is defined as a boolean value, which corresponds to either visible or not visible.
-	We set a protein type as not visible in case the number of overall number visible elements become too low, based on an arbitrarily defined threshold.
-	We also ensure that a protein type will be set as visible, in case some elements are located next to the camera and occupy a significant number of pixels in the viewport, even when the overall percentage of visible element is low.
+	We set a protein type as not visible in case the ratio of elements that are visible to all element of that group becomes too low, based on an arbitrarily defined threshold $t_v$.
+	We also ensure that a protein type will be set as visible, in case some elements are located close to the camera and occupy a significant number of pixels in the viewport, even when the overall percentage of visible elements is low.
 	Therefore we also take the pixel occupancy of the proteins into account.
-	The visibility value of a given protein type is computed a follow:
+	The visibility value of a given protein type is computed as follows:
 	
 	\begin{equation}
 	c_{i}=\begin{cases}
@@ -589,17 +589,17 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	C = \left\lbrace c_{1}, ... , c_{n} \right\rbrace 
 	\end{equation}
 	
-	Where $c$ corresponds to the visibility factor of a given protein type $i$, $p$ corresponds to the percentage of pixels occupied by proteins of type $i$, and $v$ is the percentage of proteins of type $i$ that are visible.
+	Where $c_i$ corresponds to the visibility factor of a given protein type $i$, $p$ corresponds to the ratio of pixels occupied by proteins of type $i$, and $v$ is the ratio of proteins of type $i$ that are visible.
 	$t_{p}$ and $t_{v}$ correspond to arbitrarily defined thresholds for the screen coverage and visibility, respectively. 
 	$C$ is a set of $n$ protein types that constitute a group.
-	For that given group the visibility coefficient is computed as follows:
+	For that given group the visibility coefficient $w$ is computed as follows:
 	
 	\begin{equation}
 	w = s\sum_{i=1}^{n} c_{i}, c_{i} \in C
 	\end{equation}
 	
-	Where $w$ is the coefficient of the group, and $s$ is a scaling factor which is proportional to the number of protein type in that group. 
-	Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the group coefficient to determine the size of the individual hue sections. \\
+	Where $s$ is a scaling factor which is proportional to the number of protein type in that group. 
+	Once we compute the coefficient of each protein group (compartment), we divide the hue circle proportionally to the group coefficient to determine the size of the individual hue sections. \\
 	
 	\subsubsection{Extracting Visibility Information}
 	\label{sssec:extracting}
@@ -608,7 +608,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	We priorly declare two GPU buffers which will, for each protein type, store the occupied pixel count and the total number of visible proteins, respectively.
 	Subsequently, in a dedicated compute shader, we iterate through all the pixels, and we increment the pixel counter corresponding to the protein type stored in the video memory.
 	At the same time, we also flag in a dedicated GPU buffer, the proteins whose unique IDs are present in the generated texture.
-	This information will allow us to determine the number of visible instances for each protein types.
+	This information will allow us to determine the number of visible instances for each protein type.
 	In a second pass and in a dedicated compute shader, we then iterate through all the protein instances.
 	For each protein which was flagged as visible in the previous pass, we increase the number of visible instances corresponding to the protein type.
 	Since the computation is done in parallel it is important to use atomic intrinsic functions to increment the counters, in order to avoid concurrent access to the same value from two different threads.
@@ -616,7 +616,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.9\linewidth]{"Figures/force-based layout"}
-		\caption{The force based hue assignment mecanism. a) The groups are positioned with a naive approach non-iterative approach, b) the group are attracted towards their default hue value, until the system reached a state of equilibrium.}
+		\caption{The force based hue assignment. a) The groups are positioned with a naive approach non-iterative approach, b) the group are attracted towards their default hue value, until the system reached a state of equilibrium.}
 		\label{fig:force-basedlayout}
 	\end{figure}
 	
@@ -627,11 +627,11 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	Upon modulation of the group sizes, we must also reposition the group centroids on the ring.
 	A naive and non-iterative approach would be to start positioning a first group on the circle, and to place the remaining groups subsequently on the circle, given the size of each group.
 	While the position of the first group on the hue circle can be arbitrarily defined with this approach, the other groups are not guaranteed to be located as near as possible to their default hue value.
-	This could lead to overly large hue shifts for the centroid of the groups as show in Figure~\ref{fig:force-basedlayout}
+	This could lead to overly large hue shifts for the centroid of the groups as show in Figure~\ref{fig:force-basedlayout}.
 	
 	To avoid this issue we propose a force-based layout for the positioning of the group centroids on the hue circle.
 	The forces are applied in a single dimension which corresponds to the hue, and include distance constraints between the groups, as well as attraction forces between groups and their default position.
-	We then integrate the forces, using a Euler Integration to compute the new positions of the groups until reaching a state of equilibrium.
+	We then integrate the forces, using Euler Integration to compute the new positions of the groups until reaching a state of equilibrium.
 	For a given group $i$, the distance constraint response force with another group $j$ is computed as follows:
 	
 	\begin{equation}
