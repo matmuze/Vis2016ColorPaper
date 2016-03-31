@@ -69,7 +69,7 @@
 
 %% Paper title.
 
-\title{Chameleon: Dynamic Color Mapping	for Multi-Scale Structural Biology Models}
+\title{------------ Chameleon ------------ \\ Dynamic Color Mapping	for Multi-Scale Structural Biology Models}
 
 %% This is how authors are specified in the journal style
 
@@ -148,7 +148,7 @@
 	
 	With improving technology, more and more data across all levels---from atomic to compartment---is being gathered on viruses and cells. 
 	Improving computing technology makes it possible to display an ever increasing amount of this data at once, up to and beyond an entire human immunodeficiency virus (HIV)~\cite{muzic2015cellview}, with its complete macromolecular composition.
-	This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms. Visualization of HIV are not only used for research purposes. Illstrative multi-scale visualization of HIV have also been used to communicate basic properties of the virus to a broader audience [tb ref goodsell flash], which is the usage scenario we are interested in.
+	This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms. Visualization of HIV are not only used for research purposes. Illstrative multi-scale visualization of HIV have also been used to communicate basic properties of the virus to a broader audience, as in Figure~\ref{fig:motivation}, which is the usage scenario we are interested in.
 	
 	For each described scale, color contrast is used to distinguish elements on that scale. 
 	In interactive visualizations, the color assignment is usually static. 
@@ -613,10 +613,10 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	For that given group the visibility coefficient $w$ is computed as follows:
 	
 	\begin{equation}
-	w = s\sum_{i=1}^{n} c_{i}, c_{i} \in C
+	w = q\sum_{i=1}^{n} c_{i}, c_{i} \in C
 	\end{equation}
 	
-	Where $s$ is a scaling factor which is proportional to the number of protein type in that group. 
+	Where $q$ is a scaling factor which is proportional to the number of protein type in that group. 
 	Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the group coefficient to determine the size of the individual hue sections. \\
 	
 	\subsubsection{Extracting Visibility Information}
@@ -889,12 +889,12 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	In the second part the users explored the HIV virus freely and we observed what they discovered.
 	
 	\subsection{Structure Identification Task}
-	\begin{figure}
-		\centering
-		\includegraphics[width=1\linewidth]{Figures/pentamerStudy}
-		\caption{Rendering of Capsid during the second user study. In the center there is a pentamer, and to the left of it a hexamer.}
-		\label{fig:pentamerStudy}
-	\end{figure}
+%	\begin{figure}
+%		\centering
+%		\includegraphics[width=1\linewidth]{Figures/pentamerStudy}
+%		\caption{Rendering of Capsid during the second user study. In the center there is a pentamer, and to the left of it a hexamer.}
+%		\label{fig:pentamerStudy}
+%	\end{figure}
 	Based on a description designed by a molecular bioligist and an illustrator, the first task was to investigate the capsid of the HIV. 
 	The following is a shortened version of the description: \\
 	
