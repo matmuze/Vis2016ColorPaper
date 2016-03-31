@@ -249,7 +249,7 @@
 	\begin{figure*}[t]
 		\centering
 		\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
-		\caption{Overview of our dynamic and hierarchical coloring scheme. (1) The first two levels of the hierarchy, in this example we have four groups and a total of 20 different protein types, (2) The current viewport, the red square represents a close-up view, (3) The visibility information is extracted from the current viewport, (4) The color palette is updated to prioritize visible elements only.}
+		\caption{Overview of our dynamic and hierarchical coloring scheme. (a) The first two levels of the hierarchy, in this example we have four groups and a total of 20 different protein types, (b) The current viewport, the red square represents a close-up view, (c) The visibility information is extracted from the current viewport, (d) The color palette is updated to prioritize visible elements only. (e) coloring lower level structures when zoomed in.}
 		\label{fig:coloroverview}
 	\end{figure*}
 	
@@ -534,10 +534,13 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	
 	To select suitable chroma and luminance values, we investigated which luminance values result in the largest possible hue ring when converting colors from CIELab space back to sRGB. 
 	In an offline procedure, we picked eight extreme a and b values in with equal distance from the non-chromatic center with a given L value and iteratively moved them towards the center until the resulting CIELab color was lying within the sRGB gamut. 
-	The smallest vector magnitude of $\vec{a^*b^*}$ thereby defined the radius and chroma for the given luminance, respectively. 
+	The smallest vector magnitude of $\vec{ab}$ thereby defined the radius and chroma for the given luminance, respectively. 
 	We found that a luminance of 75 represents a good value, leading to a maximum chroma of 40 (see Figure \ref{fig:hslvshcl}). 
 	
-	To distribute hues from the hue ring to the proteins, we sample the hues with respect to four parameters: 1) the number of compartments $n$, 2) the number of protein types $m$ within each compartment $1 \leq i \leq n$, 3) the optimal color distance between structures $d$, and 4) the minimum color spacing $s$ between compartments. 
+	In order to calculate the color of the compartments and their proteins, we can distribute the hues of the hue ring to the different proteins.
+	The color of the compartment will then simply be at the center of the proteins that belong to it.
+	To distribute hues from the hue ring to the proteins, we sample the hues with respect to four parameters: 1) the number of compartments $n$, 2) the number of protein types $m$ within each compartment $1 \leq i \leq n$, 3) the optimal color distance between structures $d$, which will be elaborated below, and 4) the minimum color spacing $s$ between compartments. 
+	This corresponds to the top row of (b),(c) and (d) in Figure~\ref{fig:coloroverview}.
 	The first parameter defines the number of ``wedges'' that are overlaid on the hue ring. 
 	The second parameter controls the relative angular width of the wedges. 
 	The third and fourth parameter control the actual angular width of the wedges: 
@@ -547,10 +550,10 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	\]
 	Empirically, we found that $d$ around 11 delivers results which corresponds to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, allowing for easy discrimination and pleasing results. 
 	Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins we have in the HIV model. 
-	The angular distance between proteins will therefore be below the optimal $d$ and defined by 
+	The angular distance  $\alpha$ between proteins will therefore be below the optimal $d$ and defined by 
 	
 	\[
-	\alpha_{compartment} = \frac{360}{\sum_{i} m_i - n \cdot s}. 
+	\alpha= \frac{360}{\sum_{i} m_i - n \cdot s}. 
 	\]
 	
 	In Figure \ref{fig:comparison}(b)), we use a spacing of XX with XX different protein types. 
@@ -565,7 +568,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	\label{sec:dynamic}
 	
 	In the initial state, we first generate a color palette assuming that all the compartments are visible.
-	As we zoom-in and explore the scene, large parts on the scene may not actually be visible in the current viewport.
+	As we zoom-in and explore the scene, large parts on the scene may not actually be visible in the current viewport, as is illustrated in the lower row of Figure~\ref{fig:coloroverview}.
 	In this configuration the color palette would become underexploited, and could be improved to increase discriminability between proteins that are currently visible. 
 	We therefore re-compute and optimize the color palette on-the-fly, as proteins appear and disappear.
 			 
