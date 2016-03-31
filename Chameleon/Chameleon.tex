@@ -661,12 +661,12 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	For example, to select hues for $m$ protein domains, the angular distances between the domain hues are calculated as follows: 
 	
 	\[
-	\alpha = min(d, \beta / m),
+	\gamma = min(d, \beta / m),
 	\]
 	where $\beta$ is the maximum size of the domain wedge. 
 	We set $\beta$ to 180 so that a single protein would not cover more than half of the hues, which would lead to a loss of hierarchical information. 
 	Choosing a lower $\beta$ may cause domains within a single protein to be hardly distinguishable.  
-	Given the hue of the protein and the angular distances between the $m$ domains $\alpha$, the domain hue wedge with an angle of $m \cdot \alpha$ is centered around the protein hue value.
+	Given the hue of the protein and the angular distances between the $m$ domains $\gamma$, the domain hue wedge with an angle of $m \cdot \gamma$ is centered around the protein hue value.
 	Mind that domain hue wedges can overlap across proteins, as indicated in Figure \ref{fig:overlap}. 
 	This is a major difference to the hierarchical coloring technique introduced by Tennekes and de Jonge \cite{tennekes2014tree}, who assigned unique, yet hardly distinguishable colors on each zoom levels for static tree visualizations. 
 	In our case, being able to clearly distinguish domains is an important task in structural biology, which is also facilitated by structural properties as well. 
