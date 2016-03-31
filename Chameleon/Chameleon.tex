@@ -672,8 +672,8 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	y(i, j) = l(g_{i},g_{j})max(|g_{i} - g_{j}| - (r_{i}+r_{j}), 0)
 	\end{equation}
 	
-	Where $l$ corresponds to the direction of the response, i.e., whether the hue angle should increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic_color_palette}.
-	For a single group the overall forces, comprising attraction and repulsion forces are computed as follow:
+	Where $l$ corresponds to the direction of the response, i.e., whether the hue angle should increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic}.
+	For a single group the overall forces, comprising of attraction and repulsion forces, are computed as follow:
 	
 	\begin{equation}
 	f_{i} = (g_{i} - I_{i}) + \sum_{j=1}^{n, i \neq j} y(i,j)
