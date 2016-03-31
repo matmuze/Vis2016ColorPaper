@@ -752,6 +752,26 @@
 		\label{fig:overlap}
 	\end{figure}
 	
+		\begin{figure*}[t]
+			\centering
+			\includegraphics[width=1\linewidth]{Figures/results_4}
+			\caption{Various snapshots from the Chameleon system.
+				As the camera position changes, the discriminability between protein types is optimized.
+				The color palette widget at the bottom left allows us to visualize the distribution of the groups along the hue circle.}
+			\label{fig:results_1}
+		\end{figure*}
+		
+		\begin{figure*}[t]
+			\centering
+			\includegraphics[width=1\linewidth]{Figures/results}
+			\caption{The hue, chroma, luminance modulation in sequential steps.
+				(a) only the protein colors are show, (b) protein domains are show via hue modulation, (c) secondary structures are shown via luminance modulation, (d) secondary structures are shown via hue modulation
+				(e) atom types are shown via luminance modulation, (f) focus is highlighted via chroma modulation, (g) atom types are shown via hue modulation}
+			\label{fig:results_2}
+		\end{figure*}
+	
+	
+	
 	\begin{figure}
 		\centering
 		\includegraphics[width=1\linewidth]{Figures/zoomfigure}
@@ -800,23 +820,7 @@
 	
 	
 	
-		\begin{figure*}[t]
-			\centering
-			\includegraphics[width=1\linewidth]{Figures/results_4}
-			\caption{Various snapshots from the Chameleon system.
-				As the camera position changes, the discriminability between protein types is optimized.
-				The color palette widget at the bottom left allows us to visualize the distribution of the groups along the hue circle.}
-			\label{fig:results_1}
-		\end{figure*}
-		
-		\begin{figure*}[t]
-			\centering
-			\includegraphics[width=1\linewidth]{Figures/results}
-			\caption{The hue, chroma, luminance modulation in sequential steps.
-				(a) only the protein colors are show, (b) protein domains are show via hue modulation, (c) secondary structures are shown via luminance modulation, (d) secondary structures are shown via hue modulation
-				(e) atom types are shown via luminance modulation, (f) focus is highlighted via chroma modulation, (g) atom types are shown via hue modulation}
-			\label{fig:results_2}
-		\end{figure*}
+	
 	
 	\section{Luminance Modulation}
 	\label{sec:luminance}
@@ -853,12 +857,14 @@
 	The dataset which we showcase is a model of an HIV particle in blood serum which contains 20502 instances of 46 different protein types including two lipid membrane layers.
 	The protein types are grouped together based on their location.
 	There are 6 different protein groups in the dataset; the blood plasma proteins (18 types), the lipids (2 types), the envelope surface (5 types) and interior proteins (15 types), the capsid surface (1 type) and interior proteins (5 types).
-	Figure \ref{teaserImage} shows progressive zooming from the entire virus to single atoms.
+	Figure \ref{teaserImage} shows progressive zooming from the entire virus to single atoms.	
 	Initially the blood plasma proteins in green, and the matrix protein in purple, dominate the color palette simply because they have more protein types than other compartments, like the capsid proteins in orange.	
-	As we get closer to the capsid proteins in orange, we can observe that the colors become more distinguishable.\\
+	As we get closer to the capsid proteins in orange, we can observe that the colors become more distinguishable.	
+	To visualize the results of the view-dependent color palette optimization more precisely, we also developed a custom palette widget, results are show in Figure~\ref{fig:results_1}.
+	Figure~\ref{fig:results_2} shows all the sequential steps we take to progressively reveal the protein properties as we zoom in.\\
 	%The second dataset, shown in Figure \ref{fig:nofig} is a model of an immature HIV which contains 1081 instances of 13 different protein types, and one bi-lipid membrane. \\
 	
-	The Chameleon relies on GPU computing to be smooth and responsive, which is initially offered by cellVIEW.
+	The Chameleon relies on GPU computing to provide a smooth and responsive user experience.
 	Since we perform the all the coloring operations in post-processing, the size of the dataset has only little impact on the performance. 
 	We benchmarked the computation speed at HD resolution (1920$\times$1080) on a machine equipped with an Intel Core i7-3930 CPU 3.20 GHz machine coupled with a GeForce GTX Titan X graphics card with 12GB of video RAM.
 	We measured \textbf{0.5 ms} on average to count the visible instances when zooming out on the entire dataset, which in the most extreme case since a very large number of proteins are visible.	
