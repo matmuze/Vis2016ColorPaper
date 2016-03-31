@@ -545,7 +545,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\section{Dynamic Hue Palette}
 	\label{sec:hue}
 	
-	In the highest hierarchy level, our task is to find colors for each individual protein type that allow users to discriminate the proteins, but at the same time understand their hierarchical grouping into the compartments. 
+	In the highest hierarchy levels (protein and compartment), our task is to find colors for each individual protein type that allow users to discriminate the proteins, but at the same time understand their hierarchical grouping into the compartments. 
 	Also, aesthetics are important, as we target our work at interested users from a broader audience. 
 	
 	Due to aesthetic reasons, we opted to choose only saturated and iso-luminant colors, resulting in a pastel color palette. 
@@ -805,7 +805,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	
 	For each hierarchy level, we therefore not only assign unique hues, but also unique luminance values. 
 	We modulate the pre-defined luminance value by a small range to avoid extensive visual clutter. 
-	In the example of Figure \ref{fig:zoomLevels}, we use a luminance range of 20 to distinguish the sub-elements. 
+%	In the example of Figure \ref{fig:zoomLevels}, we use a luminance range of 20 to distinguish the sub-elements. 
 	Thus, this luminance modulation does not help to clearly discriminate or identify structures on a lower hierarchy level, but it is a subtle indication of lower-level structural properties. 
 	
 	Like the hue, the luminance value is defined by the distance of the camera to the respective structures. 
@@ -877,9 +877,9 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	%Because the chains would normally surround the entire circle, they only push each other away to a maximum distance of X. 
 	%This allows for the chains to have similar colors to the proteins.
 	
-	\section{User study}
+	\section{User Study}
 	\label{sec:study}
-	We conducted a user study with domain experts of biology in order to evaluate our visualization and to improve it based on the feedback.
+	We conducted a user study with domain experts in biology in order to evaluate our visualization and to improve it based on the feedback.
 	We wanted to know whether the colors helped to solve the tasks.
 	Furthermore, we wanted to know how disruptive the changing colors are, so we did not inform the users about their dynamic behaviour. 
 	Instead, we tested whether they would notice the change.
@@ -901,10 +901,10 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	There are two reasons for this choice.
 	First, the task is too complex to be captured well by these simple measurements. 
 	Second, there is no established baseline condition.
-	Without means to distinguish structures on different search levels, the task would not be solvable and therefore either create a bias towards our technique or not fully demonstrate its potential.
+	Without means to distinguish structures on different search levels, the task would not be solvable and therefore either create a bias towards our technique or not fully demonstrate its potential.\\
 	The study consisted of two parts. In the first part the user was asked to identify structures on different levels. 
 	It also allows us to measure what information can be found.  
-	In the second part the users explored the HIV virus freely and we observed what they discovered.
+	In the second part the users explored the HIV virus freely, and we observed what they discovered.
 	
 	\subsection{Structure Identification Task}
 %	\begin{figure}
@@ -919,10 +919,10 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\textit{
 		The capsid encloses the genome (2 strands of RNA) along with different viral proteins. 
 		The capsid protein is able to form hexamers and pentamers by shifting slightly in structure, and folds to form two domains connected by a flexible linker: the N-terminal domain and C-terminal domain. 
-		The N-terminal domain is involved in forming the hexamers or pentamers, and the C-terminal domains are involved in dimer contacts between hexamers / pentamers. 
+		The N-terminal domain is involved in forming the hexamers or pentamers, and the C-terminal domain is involved in dimer contacts between hexamers / pentamers. 
 		There are two $\alpha$-helices in the N-terminal that stabilize the hexamers and pentamers. 
 		As HIV is budding from an infected cell, the cellular enzyme cyclophilin A binds to the capsid. 
-		On the surface of the capsid protein there is a loop with several proline amino acids, which is the site of binding of cyclophilin.}\\
+		On the surface of the capsid protein there is a loop with several proline amino acids, which is the bonding of cyclophilin.}\\
 	
 	The task which we gave to the users was to locate the following elements:
 	
@@ -935,18 +935,17 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 		\item Methionine amino acid within the alpha helix.
 	\end{enumerate}
 	
-	In the last task they were asked to find a Methionine amino acid molecule, for which they were given the chemical formula and a structural description.
 	Each structure was located on a different scale. 
-	The users were given an in-depth description of the capsid and a structural representation of the Methionine amino acid. 
-	The task of finding the pentamer was added so the users would practice moving the camera around,  finding one. 
-	Pentamers and Hexamers shared the same structure, they simply had 5 or 6 capsid proteins respectively. 
+	In the last task they were asked to find a Methionine amino acid molecule, for which they were given the chemical formula and a structural description.
+	The task of finding the pentamer was added so the users would practice moving the camera around. 
+	Pentamers and Hexamers share the same structure, they simply have 5 or 6 capsid proteins respectively. 
 	However, there are only 12 pentamers in the capsid.
 	Therefore, recognizing a pentamer was easier than actually finding one, because their sparcity was the largest obstacle in finding them.
 	
-	All capsid protieins, i.e., both hexamers and pentamers had the same color at the protein level. They could be distinguished only by shape. By zooming to the domain level, the N- and C-terminals are assigned different colors. At the secondary structure level, $\alpha$-helices and $\beta$-sheets received different colors. In the first study run, the helices had lower luminance than the domain they belonged to, and the sheets had higher luminance. In the second study run, each secondary structure received its own color. 
+	All capsid proteins, i.e., both hexamers and pentamers had the same color at the protein level. They could be distinguished only by shape. By zooming to the domain level, the N- and C-terminals are assigned different colors. At the secondary structure level, $\alpha$-helices and $\beta$-sheets received different colors. In the first study run, the helices had lower luminance than the domain they belonged to, and the sheets had higher luminance. In the second study run, each secondary structure received its own color. 
 	The cyclophiline binding site was not part of an $\alpha$-helix or $\beta$-sheet.
 	This was to test whether or not the user could find a structure that was not explicitly marked. 
-	We did not show the amino acid level
+	We did not show the amino acid level.
 	To find the Methionine amino acid, the user had to look for a sulfur atom; there was no other amino acid with a sulfur atom near it, though there is a second one in the protein. 
 	If the user did not find the amino acid or realize that they needed to look for a sulfur atom, they were asked to find a sulfur atom instead.
 	
@@ -956,8 +955,8 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	
 	\subsection{Free Exploration}
 	In the structure identification task, we were interested in whether or not users could complete the tasks, as well as reasons for potential failures. 
-	In the exploration part, useres could freely navigate through the visualization while thinking aloud. We were interested in the insights users would gain while exploring the model.
-	Most important is the degree of exploration, as well as what the users were capable of finding or looking at, as the users were capable of focusing on many different object as well as on different levels.
+	In the exploration part, users could freely navigate through the visualization while thinking aloud. We were interested in the insights users would gain while exploring the model.
+	Most important is the degree of exploration, as well as what the users were capable of finding or looking at, as the users were capable of focusing on many different objects as well as on different levels.
 	
 	\subsection{Results of First Study Run}
 	\begin{table}
@@ -993,7 +992,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	See Table~\ref{tableIterationOne}.
 	
 	In task 2 neither user interacted significantly with the visualization. This was likely due camera control issues. 
-	One of the participants had troubles getting the camera to point where he wanted in general, the other at the lower levels.
+	One of the participants had trouble getting the camera to point where he wanted in general, the other at the lower levels.
 	This is partially due to the method of control over the camera. 
 	The controls allowed panning, zooming and rotating the camera. 
 	Furthermore, the movement of the camera did not take the semantic or zoom level into account.
@@ -1015,7 +1014,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	
 	\subsection{Results of Identification Task Second Study Run}
 	In the second study run, none of the users had significant issues with the camera, though some controlled it better than others.
-	For the 5 users, the results are as follows:
+	For the 5 users, as shown in Table~\ref{table:seconrund}, the results are as follows:
 	\begin{table}
 		
 		\centering
@@ -1037,6 +1036,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 			\hline
 		\end{tabular}
 		\caption{Results of Task One in Second Study Run}
+		\label{table:seconrund}
 	\end{table}
 	Apart from user 3, users could identify structures across all levels fairly well. 
 	Users 2 and 4 found a Methionine, but not the correct one. 
@@ -1049,7 +1049,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	In the capsid, there is some space between the hexamers. 
 	From the users description of the pentamer and of the capsid structure, he mixed up the interior and exterior of the hexamers. 
 	The user who considered a subset of the C-terminal as the entire domain had zoomed past the domain level to the secondary structure level.
-	The user in the second study run who did not find the $alpha$-helix also did not find a sulfur atom. He never zoomed in closely enough to the proteins to change the colors to the atom colors. It is likely that he became discouraged to his failure to find the helix, as well as believing there was no way to identify the sulfur atom.
+	The user in the second study run who did not find the $alpha$-helix also did not find a sulfur atom. He never zoomed in closely enough to the proteins to change the colors to the atom colors. It is likely that he became discouraged due to his failure to find the helix, as well as believing there was no way to identify the sulfur atom.
 	
 	With the exception of one user, the only problems with identifying structures came at the secondary structure and amino acid level. 
 	The amino acid level was significantly more difficult, as the amino acids were not explicitly visually represented. 
@@ -1090,14 +1090,14 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	Overall, users liked the study and visualization, but thought the tasks were very difficult.
 	
 	
-	The largest difference between the study runs was the degree of exploration in the second task. In the first task, neither user explored the HIV extensively. In contrast, the users from the second study rund explored the virus on different levels and areas. Likely this was affected significantly by the degree of control over the movement through the visualization. In the first study run, the users had significant control issues which were absent in the second study due to changes. In both study runs no users reported that they got lost or confused by the visualization.
+	The largest difference between the study runs was the degree of exploration in the second task. In the first task, neither user explored the HIV extensively. In contrast, the users from the second study run explored the virus on different levels and areas. Likely this was affected significantly by the degree of control over the movement through the visualization. In the first study run, the users had significant control issues which were absent in the second study due to changes. In both study runs no users reported that they got lost or confused by the visualization.
 	
-	The users were also asked how useful they considered the visualization to be for their research, or what they could use it for. The users considered it useful for presenting their research and educating students, which is in line with our goal as is mentioned at the end of Section~\ref{introduction}. However, only one user from the first study run considered it useful for his research. This is in a sense not surprising. Most users worked on the level of molecular structure or protein interactions. Furthermore, while it may be possible to visualize an entire virus, a physical simulation of one is a different problem. 
+	The users were also asked how useful they considered the visualization to be for their research, or what they could use it for. The users considered it useful for presenting their research and educating students, which is in line with our goal as mentioned in the beginning. However, only one user from the first study run considered it useful for his research. This is in a sense not surprising. Most users worked on the level of molecular structure or protein interactions. Furthermore, while it may be possible to visualize an entire virus, a physical simulation of one is a different problem. 
 	
 	
 	Several users expressed a desire for alternative representations that they were more familiar with, such as cartoon representation for secondary structures.
 	
-	POSSIBLY REMOVE: WE EXTENDED LEVELS OF DETAIL VISUALIZATION: NOT ONLY STEPS, BUT ALSO COLOR CODING. REMOVE IF NOT IMPLEMENTED [Tbd].
+	
 	
 	
 	
@@ -1157,18 +1157,17 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	Serine for example has only of 4 carbon atoms. This means the user will be approximately as far away from a molecule when he wants to see the atoms or amino acid information. 
 	So the semantic scales reside on the same metric scale.
 	Our visualization strategy is designed for distinguishing structures where each semantic level is assigned a unique metric level.
-	In other words, on the their semantic scales reside on the same metric level, as shown in Figure~\ref{fig:hivScale}.
+	In other words, their semantic scales reside on the same metric level, as shown in Figure~\ref{fig:hivScale}.
 	The second problem is the variety of information. 
 	For example, due to polarity, the electric charge may vary across a molecule. 
 	Another interesting aspect of a protein might be hydrophobicity.
-	A researcher may want to see specify what kind of information he can see. 
+	A researcher may want to specify what kind of information he can see. 
 	This means there are several paths that can be taken when zooming in.
 	
-	The last problem is alternative representations, such as cartoon representations of the secondary structure of proteins. 
-	Several users expressed a desire for alternative gemetric representations that they were more familiar with.
+	Another problem is alternative representations, such as cartoon representations of the secondary structure of proteins. 
+	Several users expressed a desire for alternative representations that they were more familiar with.
 	However, there can be some difficulty when using them. The cartoon representation for example has a lot of area which can be seen through. 
 	If two proteins are one behind the other, then they can be hard to tell apart.
-	- need to ask mathieu on "overflow of compartments".
 	
 	\begin{figure}
 		\centering
@@ -1197,12 +1196,12 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	%\subsection{future work}
 	There are several points that can be addressed in the future. The most obvious is to overcome the two basic limitations mentioned above. 
 	The users also expressed interest in interacting with the visualization. 
-	Structures such as the capsid are structures that consist out of numerous proteins. 
+	Structures such as the capsid consist out of numerous proteins. 
 	The users wanted to be able highlight individual proteins or sections. 
 	It might also be possible to couple this action with alternative representations for proteins, such as the cartoon representation.
 	Finally, camera control can be adapted to the visualization. 
 	Currently, the camera is controlled simply by inputing the desired direction of movement. 
-	Alternate controls, such as tying the camera to a protein or structure could be added.
+	Alternate controls, such as tying the camera to a protein or structure, could be added.
 	This would allow the user easier inspection of proteins or protein structures by making it easier for him to rotate around or follow the surface of an object.
 	
 	
@@ -1215,6 +1214,6 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\bibliographystyle{abbrv}
 	%%use following if all content of bibtex file should be shown
 	%\no
-	{*}
+	{}
 	\bibliography{Chameleon}
 \end{document}
