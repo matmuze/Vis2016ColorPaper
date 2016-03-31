@@ -332,41 +332,60 @@
 	
 	\section{Overview}
 	\label{Overview}
-	
-	\textbf{MWA TODO: please help us writing a better overview}
+
 	
 	Mesoscale datasets feature many relevant properties which are present at different scale levels.
-	The molecular properties that we provide in this work are, from large to small scale: Compartment (or group), protein type, protein domain, secondary structure and atom type.
-	We opted for these properties because, according to domain experts, they are the most relevant properties in visual analysis of three dimensional molecular structures.
+	The molecular properties that we provide in this work are, from large to small scale: Compartment (or group), protein type, protein domain, secondary structure and atom type. \textbf{TODO: make a sketch!!}
+	According to domain experts, these are the most relevant properties in visual analysis of three dimensional molecular structures.
+	%We opted for these properties because, according to domain experts, they are the most relevant properties in visual analysis of three dimensional molecular structures.
 	%This information is internally declared and accessible for each single rendered atom, which allows us to perform dynamic coloring.
-	Our goal is to provide a coloe scheme that would automatically display meaningful information at all zoom levels.
-	This information should also be coherent between levels.
-	To provide smooth and logical transitions across levels, we use a hierarchical color coding approach inspired by a tree-based coloring method~\cite{tennekes2014tree}.
-	Based on perceptual reasoning, clarified in the introduction, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
+	Our goal is to provide a color scheme that would automatically display meaningful information at all zoom levels, thereby fulfilling the requirements stated in the introduction: 
 	
-	On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
-	Protein types of a given group are then given a unique hue value on the corresponding arc, as shown in Figure \ref{fig:coloroverview}.
-	In the initial state, the size of the hue arcs is set according to the number of protein types contained in each group. 
-	Spacing between hue values of neighbour protein types of the same group is proportional to the number of type per group and the size of the arc. 
+
+\begin{enumerate}
+	\item On each zoom level, associated main structures (i.e., those structures that result in the best visibility in terms of screen size) should be clearly discriminable from each other. 
+	\item When navigating, the transitions between the zoom levels should be smooth to avoid abrupt appearance changes of visualization or orientation loss. 
+	\item The inherent hierarchy of the structures should be reflected in the color coding. 
+	\item The visualization should be aesthetically pleasing to engage a broad audience. 
+\end{enumerate}
+
+We manipulate all three color components to fulfill these requirements: 
+We use the \textbf{hue} to distinguish between structures at the respective zoom levels, as described in Section \ref{sec:hue}. 
+The \textbf{chroma} is used to increase color discriminability for elements in the focus against the context (Section \ref{sec:chroma}). 
+Finally, we indicate structures from lower hierarchy in the \textbf{luminance} channel to mimic illustrator techniques (Section \ref{sec:luminance}). 
+We describe how we dynamically adapt the hues as the user navigates the scene to ensure color discriminability even in a scene with dozens \textbf{TODO: more?} of different entities (Section \ref{sec:dynamic}), and how hues are sub-divided hierarchically as the user zooms further into the scene (Section \ref{sec:hierarchy}). 
+Finally, we demonstrate the effectiveness of our technique in a user study with domain experts from the field of molecular biology (Section \ref{sec:study}). 
+
+
 	
-	Due to the large difference in terms of size between groups and proteins, it is very likely that several compartments will be less or no longer visible as we zooming-in on a single protein. 
-	Based on this principle we update the color palette on-the-fly using the visibility information which we extract from the previously rendered frame.
-	For each protein type, we compute the percentage of visible elements, as well as the screen coverage in pixels for displayed proteins.
-	We sum up those properties for all the protein types of a group to deduce a weighting coefficient which is then used to scale the size of the hue arcs of the groups as shown in Figure~\ref{fig:coloroverview}.
 	
-	When zooming further in, we progressively start to reveal colors of the underlying protein properties, such as the chains, or secondary structures.
-	For coloring the subsequent levels, we sample hue values around the hue of their parent as shown in Figure~\ref{fig:coloroverview}.
-	We use pre-defined camera distance thresholds to determine when to transit to the next level.
-	To ensure a smooth transition, the hue distance between the parent and the children is progressively scaled until reaching a pre-determined offset value.
-	%In the case of protein types, the coloring mechanism allows to enlarge the size of the hue arcs while ensuring no overlap between neighbooring groups. 
-	%However, when displaying other properties it would be more challenging to reuse the same principle, because of ** TODO REASONS **.
-	To ensure a minimum degree of overlapping hue ranges between two neighbours, we use a focus + context to reduce occurence of recurrent colors in the background.
-	
-	Atoms constitute the final level of our hierarchy.
-	In molecular visualization this information is commonly associated with predefined colors also called CPK coloring.
-	To transit to this final level we perform linear color interpolation in RGB space, between the color from the previous level (secondary structures) and final atom color.
-	The coefficient of interpolation is defined according to the camera distance and pre-defined distance values *** MANU'S MAGIC COLOR INTERPOLATION HERE ? ***.
-	
+	%This information should also be coherent between levels.
+	%To provide smooth and logical transitions across levels, we use a hierarchical color coding approach inspired by a tree-based coloring method~\cite{tennekes2014tree}.
+	%Based on perceptual reasoning, clarified in the introduction, we use isoluminant colors, and we choose to only vary the hue channel to generate the color palette. 
+	%
+	%On the first level of the hierarchy, we first assign portions of the hue circle to each group of protein types.
+	%Protein types of a given group are then given a unique hue value on the corresponding arc, as shown in Figure \ref{fig:coloroverview}.
+	%In the initial state, the size of the hue arcs is set according to the number of protein types contained in each group. 
+	%Spacing between hue values of neighbour protein types of the same group is proportional to the number of type per group and the size of the arc. 
+	%
+	%Due to the large difference in terms of size between groups and proteins, it is very likely that several compartments will be less or no longer visible as we zooming-in on a single protein. 
+	%Based on this principle we update the color palette on-the-fly using the visibility information which we extract from the previously rendered frame.
+	%For each protein type, we compute the percentage of visible elements, as well as the screen coverage in pixels for displayed proteins.
+	%We sum up those properties for all the protein types of a group to deduce a weighting coefficient which is then used to scale the size of the hue arcs of the groups as shown in Figure~\ref{fig:coloroverview}.
+	%
+	%When zooming further in, we progressively start to reveal colors of the underlying protein properties, such as the chains, or secondary structures.
+	%For coloring the subsequent levels, we sample hue values around the hue of their parent as shown in Figure~\ref{fig:coloroverview}.
+	%We use pre-defined camera distance thresholds to determine when to transit to the next level.
+	%To ensure a smooth transition, the hue distance between the parent and the children is progressively scaled until reaching a pre-determined offset value.
+	%%In the case of protein types, the coloring mechanism allows to enlarge the size of the hue arcs while ensuring no overlap between neighbooring groups. 
+	%%However, when displaying other properties it would be more challenging to reuse the same principle, because of ** TODO REASONS **.
+	%To ensure a minimum degree of overlapping hue ranges between two neighbours, we use a focus + context to reduce occurence of recurrent colors in the background.
+	%
+	%Atoms constitute the final level of our hierarchy.
+	%In molecular visualization this information is commonly associated with predefined colors also called CPK coloring.
+	%To transit to this final level we perform linear color interpolation in RGB space, between the color from the previous level (secondary structures) and final atom color.
+	%The coefficient of interpolation is defined according to the camera distance and pre-defined distance values *** MANU'S MAGIC COLOR INTERPOLATION HERE ? ***.
+	%
 	%\textbf{. With a static hierarchical color coding approach, the hue arcs are predefined on the highest level, and multiple colors are then generated for the lower levels by manipulating channels like chroma luminance} \\
 	%
 	%\textbf{. The strictly static approach has two limitations:}
@@ -504,7 +523,7 @@
 
 	
 	\section{Dynamic Hue Palette}
-	\label{sec:dynamic_color_palette}
+	\label{sec:hue}
 	
 	In the highest hierarchy level, our task is to find colors for each individual protein type that allow users to discriminate the proteins, but at the same time understand their hierarchical grouping into the compartments. 
 	Also, aesthetics are important, as we target our work at interested users from a broader audience. 
@@ -546,6 +565,7 @@
 	%\textbf{MWA END: my suggestion is to remove the next paragraph}
 	
 	\subsection{View-Dependent Color Adjustment}
+	\label{sec:dynamic}
 	
 	In the initial state, we first generate a color palette assuming that all the compartments are visible.
 	As we zoom-in and explore the scene, large parts on the scene may not actually be visible in the current viewport.
@@ -633,6 +653,7 @@
 	Additionally we also include a damping value in the integration calculus to smooth-out the motion of the group centroids when the viewport and the visibility configuration is abruptly changing.
 	
 	\subsection{Hierarchical Colors}
+	\label{sec:hierarchy}
 	
 	%\subsection{Principle}
 	
@@ -701,6 +722,7 @@
 	
 	
 	\section{Context Desaturation}
+	\label{sec:chroma}
 	
 %	\textbf{MWa rewrite BEGIN}
 	
@@ -739,6 +761,7 @@
 
 	
 	\section{Luminance Modulation}
+	\label{sec:luminance}
 	
 	So far, we used the hue channel to discriminate structures on different zoom levels and the chroma to distinguish focus proteins from the context. 
 	The final color channel we can manipulate is luminance. 
@@ -800,6 +823,7 @@
 	%This allows for the chains to have similar colors to the proteins.
 	
 	\section{User study}
+	\label{sec:study}
 	We conducted a user study domain experts of biology in order to evaluate our visualization and to improve it based on the feedback.
 	We wanted to know whether the colors helpsed to solve the tasks.
 	Furthermore, we wanted to know how disruptive the changing colors are, so we did not inform the users about them. 
@@ -1073,11 +1097,11 @@
 	Our visualization 
 	The second problem is the variety of information. 
 	For example, due to polarity, the electric charge may vary across a molecule. 
-	Another intersting aspect of a protein might be hydrophobicity.
+	Another interesting aspect of a protein might be hydrophobicity.
 	A researcher may want to see specify what kind of information he can see. 
 	This means there are several paths that can be taken when zooming in.
 	
-	The last problem is alternative represtations, such as cartoon representations of the secondary structure of proteins. 
+	The last problem is alternative representations, such as cartoon representations of the secondary structure of proteins. 
 	Several users expressed a desire for alternative gemetric representations that they were more familiar with.
 	However, there can be some difficulty when using them. The cartoon representation for example has a lot of area which can be seen through. 
 	If two proteins are one behind the other, then they can be hard to tell apart.
