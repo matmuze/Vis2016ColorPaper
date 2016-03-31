@@ -189,7 +189,7 @@
 	
 	We propose a semantic zooming method for a multi-scale visualization of a cell or virus-like structure, based on a view-dependent, hierarchical color scheme.
 	Starting from the highest hierarchy level, we progressively free-up unused color space and redistribute it to visible elements defined by the current zoom level and item visibility.
-	In the HIV as show in Figure~\ref{fig:Picture2}, the user initially sees the different compartments. 
+	In the HIV as show in Figure~\ref{teaserImage}, the user initially sees the different compartments. 
 	As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. 
 	As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
 	As the viewer zooms further in, the domains of the proteins will become distinct, then the secondary structures, and eventually even the atoms, whose colors are predefined by convention.
@@ -312,27 +312,38 @@
 	The Chameleon is built upon cellVIEW, and is an attempt to improve understanding during exploration of multi-scale molecular scenes generated with cellPACK.
 	cellVIEW leverages GPU computing and parallel programming to provide a fluid user experience, Chameleon was developed with the same programming paradigm.
 	
-	\begin{figure}[t]
-		\centering
-		\includegraphics[width=1\linewidth]{Figures/Picture2_.jpg}
-		\caption{Multi-scale visualization of HIV. (1) Cross-section of the virus, proteins are grouped based-on their compartments, and can be distinguished by their colors. (2) Zoom-in on the 1EX4 protein (3) The two domains of the protein are shown. (4) The secondary structures are show for first domain: yellow is for the helices, blue is for the sheets, and green is for the remaining atoms, (5) CPK color coding based on the atom type (blue is for Nitrogen, red is for Oxygen, grey is for Carbon)}
-		\label{fig:Picture2}
-	\end{figure}
-	
-	
+%	\begin{figure}[t]
+%		\centering
+%		\includegraphics[width=1\linewidth]{Figures/Picture2_.jpg}
+%		\caption{Multi-scale visualization of HIV. (1) Cross-section of the virus, proteins are grouped based-on their compartments, and can be distinguished by their colors. (2) Zoom-in on the 1EX4 protein (3) The two domains of the protein are shown. (4) The secondary structures are show for first domain: yellow is for the helices, blue is for the sheets, and green is for the remaining atoms, (5) CPK color coding based on the atom type (blue is for Nitrogen, red is for Oxygen, grey is for Carbon)}
+%		\label{fig:Picture2}
+%	\end{figure}
+%	
+
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{Figures/motivation}
+\caption{Motivation: Multi-scale Illustration of the HIV virus from David Goodsell. 
+The left part shows a close up on the protein which is indicated on the right part via the black line.
+In the close-up illustration the illustrator used several shades of blue to distinguish between the different parts of the proteins which as not distinguishable in the wide view on the right side.
+Differentiation is also made between carbon atoms and the remaining ones by shifting the luminance slightly.}
+\label{fig:motivation}
+\end{figure}	
 
 		
 	\section{Chameleon Overview}
 	\label{Overview}
 	
 	Mesoscale datasets feature many relevant properties which are present at different scale levels.
-	The molecular properties that we provide in this work are shown in Figure~\ref{fig:Picture2}, they comprise, from the largest to the smallest scale level: Compartment (or group), protein type, protein domain, secondary structure and atom type, .
+	The molecular properties that we provide are, from the largest to the smallest scale level: compartment (which we refer as group), protein type, protein domain, secondary structure and atom type.
 	According to domain experts, these are the most relevant properties in visual analysis of three dimensional molecular structures.
 	%We opted for these properties because, according to domain experts, they are the most relevant properties in visual analysis of three dimensional molecular structures.
 	%This information is internally declared and accessible for each single rendered atom, which allows us to perform dynamic coloring.
-	Our goal is to provide a color scheme that would automatically display the most relevant information for any given zoom levels, thereby fulfilling the requirements stated in the introduction: 
-	
-	
+	Scientific illustrators are using these properties to modulate the color palette when showing proteins at different levels, as shown in Figure~\ref{fig:motivation}.
+	However, this require to manually setup the colors palette for each level, which can be cumbersome when dealing with a multitude of large datasets.
+	Our goal is to provide a dynamic coloring mecanism that would automatically assign and display the most relevant information for any given zoom levels, thereby fulfilling the requirements stated in the introduction: 
+		
 	\begin{enumerate}
 		\item On each zoom level, associated main structures (i.e., those structures that result in the best visibility in terms of screen size) should be clearly discriminable from each other. 
 		\item When navigating, the transitions between the zoom levels should be smooth to avoid abrupt appearance changes of visualization or orientation loss. 
@@ -505,9 +516,9 @@
 	%\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
 	
 	
-	\begin{figure}[b]
+	\begin{figure}
 		\centering
-		\includegraphics[width=0.7\linewidth]{Figures/hslvshcl}
+		\includegraphics[width=0.85\linewidth]{Figures/hslvshcl}
 		\caption{Comparaison between the isoluminant color palette which we employ (left) and HSL (right) with the similar hue values. Mind how the dark colors in the virus matrix make it hard to distinguish individual proteins.}
 		\label{fig:hslvshcl}
 	\end{figure}
@@ -587,7 +598,7 @@
 	
 	\begin{equation}
 	c_{i}=\begin{cases}
-	1, & \text{if $p_{i}>t_{p}$ and $v_{i}>t_{v}$}.\\
+	1, & \text{if $p_{i}>t_{p}$ or $v_{i}>t_{v}$}.\\
 	0, & \text{otherwise}.
 	\end{cases}
 	\end{equation}
@@ -638,7 +649,7 @@
 	
 	To avoid this issue we propose a force-based layout for the positioning of the group centroids on the hue circle.
 	The forces are applied in a single dimension which corresponds to the hue, and include distance constraints between the groups, as well as attraction forces between groups and their default position.
-	We then integrate the forces, using Euler Integration to compute the new positions of the groups until reaching a state of equilibrium.
+	We then integrate the forces, using Euler Integration on the CPU to compute the new positions of the groups until reaching a state of equilibrium.
 	For a given group $i$, the distance constraint response force with another group $j$ is computed as follows:
 	
 	\begin{equation}
@@ -757,13 +768,12 @@
 	%	Indeed, when closely observing protein properties, it is very unlikely that the viewer will also observe properties of all the surrounding proteins, as commodity hardware does not offer enough pixels to render all the context proteins with enough details to be relevant to the viewer.
 	%	Therefore we define a focus region outside which the colors of the proteins will be desaturated to reduce occurrence of colors used in focus region.
 	
-	\begin{figure}
-		
-		\centering
-		\includegraphics[width=0.5\linewidth]{Figures/goodsell_protein}
-		\caption{An illustration of a protein using a popular color scheme from David Goodsell. The hue is used to discriminate between the protein domains, while the luminance is used to differentiate carbon atoms from the rest.}
-		\label{fig:goodsell_protein}
-	\end{figure}
+%	\begin{figure}		
+%		\centering
+%		\includegraphics[width=0.5\linewidth]{Figures/goodsell_protein}
+%		\caption{An illustration of a protein using a popular color scheme from David Goodsell. The hue is used to discriminate between the protein domains, while the luminance is used to differentiate carbon atoms from the rest.}
+%		\label{fig:goodsell_protein}
+%	\end{figure}
 	
 	
 	\section{Luminance Modulation}
@@ -771,7 +781,7 @@
 	
 	So far, we used the hue channel to discriminate structures on different zoom levels and the chroma to distinguish focus proteins from the context. 
 	The final color channel we can manipulate is luminance. 
-	Illustrators sometimes use the luminance channel to indicate structural properties in lower hierarchy levels, as shown in Figure \ref{fig:goodsell_protein}. 
+	Illustrators sometimes use the luminance channel to indicate structural properties in lower hierarchy levels, as shown in Figure \ref{fig:motivation}. 
 	This is a reasonable choice, given that hue is known to be an effective channel to encode low-frequency information, while luminance is more effective to encode high-frequency information~\cite{bergman1995rule}. 
 	
 	%	\textbf{Figure goodsell layer by goodsell himself}
@@ -799,16 +809,16 @@
 	There are 6 different protein groups in the dataset; the blood plasma proteins (18 types), the lipids (2 types), the envelope surface (5 types) and interior proteins (15 types), the capsid surface (1 type) and interior proteins (5 types).
 	Figure \ref{teaserImage} shows progressive zooming from the entire virus to single atoms.
 	Initially the blood plasma proteins in green, and the matrix protein in purple, dominate the color palette simply because the comprise more protein types that other compartments, like the capsid proteins in orange.	
-	As we get closer the capsid proteins in orange, we can observe that the colors are getting more distinguishable.
+	As we get closer the capsid proteins in orange, we can observe that the colors are getting more distinguishable.\\
 	%The second dataset, shown in Figure \ref{fig:nofig} is a model of an immature HIV which contains 1081 instances of 13 different protein types, and one bi-lipid membrane. \\
 	
 	The Chameleon relies on GPU computing to preserve the smooth and responsive, which is initially offered by cellVIEW.
 	Since we are performing the all the coloring operations in post-processing, the size of the dataset has only little impact of the performance. 
-	We benchmarked the computation speed on a machine equipped with an Intel Core i7-3930 CPU 3.20 GHz machine coupled with a GeForce GTX Titan X graphics card with 12GB of video RAM.
-	We measured 0.5 ms on average to count the visible instances when zooming out on the entire dataset, which the most extreme case since a very large number of proteins are visible.	
-	It took 1.2 ms to compute the screen pixel coverage of the protein types with the same configuration., nad XX ms for the final composition.
-	
-	
+	We benchmarked the computation speed at HD resolution (1920 × 1080) on a machine equipped with an Intel Core i7-3930 CPU 3.20 GHz machine coupled with a GeForce GTX Titan X graphics card with 12GB of video RAM.
+	We measured \textbf{0.5 ms} on average to count the visible instances when zooming out on the entire dataset, which the most extreme case since a very large number of proteins are visible.	
+	It took \textbf{1.2 ms} to compute the screen pixel coverage of the protein types with the same configuration.
+	The last stage of the pipeline in which we assign the final hue, chroma, and saturation values to each pixel took \textbf{1.3 ms} on average, this also includes the cost of reading back the visibility information to the CPU for the force-based hue assignment.
+		
 	%\section{Technique (section written by Nicholas)}
 	%
 	%When applying a coloring scheme to data of this type, several things need to be taken into account. 
