@@ -146,13 +146,13 @@
 	\label{introduction}
 	\maketitle
 	
-	With improving technology, more and more data across all levels --- from atomic to compartment --- is being gathered on viruses and cells. 
-	Improving computing technology makes it possible to display an ever increasing amount of this data at once, up to and beyond an entire HIV virus~\cite{muzic2015cellview}, with its complete macromolecular composition.
-	This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms.
+	With improving technology, more and more data across all levels---from atomic to compartment---is being gathered on viruses and cells. 
+	Improving computing technology makes it possible to display an ever increasing amount of this data at once, up to and beyond an entire human immunodeficiency virus (HIV)~\cite{muzic2015cellview}, with its complete macromolecular composition.
+	This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms. Visualization of HIV are not only used for research purposes. Illstrative multi-scale visualization of HIV have also been used to communicate basic properties of the virus to a broader audience [tb ref goodsell flash], which is the usage scenario we are interested in.
 	
 	For each described scale, color contrast is used to distinguish elements on that scale. 
 	In interactive visualizations, the color assignment is usually static. 
-	At best, users can select their preferred color scheme form a GUI. 
+	At best, users can select their preferred color scheme. 
 	Unfortunately, single-scale color mapping will lead either to a loss or an excess of information.
 	For example, if we apply color mapping to proteins, then proteins are well conveyed, but the distinction of secondary structures or atoms through color is not possible.
 	This is impractical for zoomable visualizations, where a fixed color scheme will either lead to information loss due to uniform colours when zooming in, or salt and pepper noise when zooming out.
@@ -161,19 +161,17 @@
 	However, several issues can occur.
 	First, colors may change significantly between zoom levels.
 	This can either cause blending through intermediate hues or through gray.
-	
 	This will not only affect understanding how two levels are connected, but also the comprehension if the user is between levels.
 	Second, there is a loss of information when transitioning from one level to the next. 
 	For example, if a user is looking at two compartments that are next to each other and zooms in where they meet, then the information where one compartment ends and the other starts is lost, as the compartment level color coding is already blended away. 
-	This may cause orientation problems.
+	This may also cause orientation problems.
 	The reason for this orientation loss is the inherent hierarchy of the data.
 	An atom belongs to an amino acid, which in turn belongs to a domain of a protein, all the way to the top.
 	
 	Therefore, a visualization of the data must fulfill two requirements. 
-	One, the transtion from one level to another must be smooth.
-	Two, structures should be distinguishable.
+	One, structures should be distinguishable.
+	Two, the transtion from one level to another must be smooth.
 	Three, the inherent hierarchy of the data must be preserved.
-	This hierarchy lends itself easily to a tree structure.
 	
 	There are several possiblities how to fulfill these requirements. 
 	Tenneken and de Jonge~\cite{tennekes2014tree} sub-divide the color space hierarchically so that each branch has its own hue.
@@ -181,7 +179,6 @@
 	A compartment could be red, the proteins of that compartment different shades of red, and so forth.
 	However, this approach scales poorly with respect to color distinguishability. At smaller scales, colors can become indiscriminable.
 	Inherent brightness variations due to shading can additionally influence color perception and limit the number of distinguishable colors.
-	It is important to note that the main goal of CellView is to convey information to the public, though there may be applications in research.
 	
 	
 	
@@ -193,12 +190,12 @@
 	%As such, there are significant perceptual and cognitive restrictions placed on color coding. 
 	
 	We propose a semantic zooming method for a multi-scale visualization of a cell or virus-like structure, based on a view-dependent, hierarchical color scheme.
-	Starting from the highest level, we progressively free-up unused color space and redistribute it to visible elements defined by the current zoom level and item visibility.
-	In the HIV example~\ref{fig:Picture2}, the user initially sees the different compartments. 
+	Starting from the highest hierarchy level, we progressively free-up unused color space and redistribute it to visible elements defined by the current zoom level and item visibility.
+	In the HIV as show in Figure~\ref{fig:Picture2}, the user initially sees the different compartments. 
 	As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. 
 	As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
 	As the viewer zooms further in, the domains of the proteins will become distinct, then the secondary structures, and eventually even the atoms, whose colors are predefined by convention. 
-	We will present the method, implementation details for real-time rendering in a large scene, and results of a user study.
+	We will present the concept of our hierarchical color palette, implementation details for real-time rendering in a large scene, and results of a user study.
 	
 	\begin{figure}
 		\centering
@@ -824,28 +821,32 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	
 	\section{User study}
 	\label{sec:study}
-	We conducted a user study domain experts of biology in order to evaluate our visualization and to improve it based on the feedback.
-	We wanted to know whether the colors helpsed to solve the tasks.
-	Furthermore, we wanted to know how disruptive the changing colors are, so we did not inform the users about them. 
-	Instead, we tested whether they would notice them on their own.
-	The user study was conducted in two iterations. 
-	In the first iteration, two domain experts tested the software. 
+	We conducted a user study with domain experts of biology in order to evaluate our visualization and to improve it based on the feedback.
+	We wanted to know whether the colors helped to solve the tasks.
+	Furthermore, we wanted to know how disruptive the changing colors are, so we did not inform the users about their dynamic behaviour. 
+	Instead, we tested whether they would notice the change.
+	The user study was conducted in two study runs. 
+	In the first run, two domain experts tested the software. 
 	Their feedback was used to adapt the software, which was then tested by five domain experts.
 	
 	%In the first iteration the secondary structures were identifiable through luminance, not color. They had the same hue as the domain they belonged to, simply lighter ($\beta$-sheets) or darker ($\alpha$-helices);
 	
 	\subsection{Users}
-	We gathered 7 domain experts. 6 were PhDs. and PostDocs, one was a master student, all in the field of molecular biology. 
-	In order to conduct their research, the participants use visualizations on the protein or molecular level.
+	We gathered 7 domain experts. 6 were PhDs. and PostDocs, and one was a master student. All users were experts in the field of molecular biology. 
+	To conduct their research, the participants use visualizations on the protein or molecular level.
 	
 	
 	\subsection{Study Design}
-	We performed a qualitative study instead of a quantitative lab experiment, where task completion times and errors across multiple conditions are compared, due to two reasons: First, the task is too complex to be captured well by these simple measurements. 
+	We performed a qualitative study instead of a quantitative lab experiment.
+	In a qualitative study, the user is given a visualization and is tasked with solving some questions. 
+	In contrast to a quantitative user study, where task completion times and errors across multiple conditions are compared, the goal is to measure what the user can discover about the dataset.
+	There are two reasons for this choice.
+	First, the task is too complex to be captured well by these simple measurements. 
 	Second, there is no established baseline condition.
-	Without means to distinguish structures or different search levels, the task would not be solvable and therefore either create a bias towards our technique or not fully demonstrate its potential.
+	Without means to distinguish structures on different search levels, the task would not be solvable and therefore either create a bias towards our technique or not fully demonstrate its potential.
 	The study consisted of two parts. In the first part the user was asked to identify structures on different levels. 
 	It also allows us to measure what information can be found.  
-	In the second part the users explored the HIV virus freely and we observed which observations they had.
+	In the second part the users explored the HIV virus freely and we observed what they discovered.
 	
 	
 	
@@ -865,9 +866,11 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 		There are two $\alpha$-helices in the N-terminal that stabilize the hexamers and pentamers. 
 		As HIV is budding from an infected cell, the cellular enzyme cyclophilin A binds to the capsid. 
 		On the surface of the capsid protein there is a loop with several proline amino acids, which is the site of binding of cyclophilin.}
+	
 	The users had to locate the following:
 	
 	\begin{enumerate}
+		\itemsep0em 
 		\item Capsid pentamer.
 		\item N-terminal and C-terminal domain of capsid protein.
 		\item Alpha helix in the N-terminal domain stabilizing the hexamers and pentamers.
@@ -883,7 +886,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	However, there are only 12 pentamers in the capsid.
 	Therefore, recognizing a pentamer was easier than actually finding one, because their sparcity was the largest obstacle in finding them.
 	
-	All capsid protieins, i.e., both hexamers and pentamers had the same color at the protein level. They could be distinguished only by shape. By zooming to the domain level, the N- and C-terminals are assigned different colors. At the secondary structure level, $\alpha$-helices and $\beta$-sheets received different colors. In the first iteration, the helices had lower luminance than the domain they belonged to, and the sheets had higher luminance. In the second iteration, each secondary structure received its own color. 
+	All capsid protieins, i.e., both hexamers and pentamers had the same color at the protein level. They could be distinguished only by shape. By zooming to the domain level, the N- and C-terminals are assigned different colors. At the secondary structure level, $\alpha$-helices and $\beta$-sheets received different colors. In the first study run, the helices had lower luminance than the domain they belonged to, and the sheets had higher luminance. In the second study run, each secondary structure received its own color. 
 	The cyclophiline binding site was not part of an $\alpha$-helix or $\beta$-sheet.
 	This was to test whether or not the user could find a structure that was not explicitly marked. 
 	We did not show the amino acid level
@@ -899,9 +902,10 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	In the exploration part, useres could freely navigate through the visualization while thinking aloud. We were interested in the insights users would gain while exploring the model.
 	Most important is the degree of exploration, as well as what the users were capable of finding or looking at, as the users were capable of focusing on many different object as well as on different levels.
 	
+	\subsection{Results of First Study Run}
 	\begin{table}
-		\caption{tbd, check position and text}
-		\subsection{Results of First Iteration}
+		\caption{Results of Task One in First Study Run}
+		
 		\centering
 		\begin{tabular}{| c | c | c |}
 			\hline
@@ -920,13 +924,16 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 			Methionine      & partially & y \\
 			\hline
 		\end{tabular}
+		\label{tableIterationOne}
 	\end{table}
 	
-	Two users participated in the first iteration. 
+	
+	Two users participated in the first study run. 
 	In the first task neither found the pentamer. 
 	Both found the N and C terminals. 
 	Both found the Cyclophilin binding site. 
 	Only one found the alpha helix and the amino acid, while the other found a different sulfur atom.
+	See Table~\ref{tableIterationOne}.
 	
 	In task 2 neither user interacted significantly with the visualization. This was likely due camera control issues. 
 	One of the participants had troubles getting the camera to point where he wanted in general, the other at the lower levels.
@@ -935,7 +942,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	Furthermore, the movement of the camera did not take the semantic or zoom level into account.
 	
 	\subsection{Feedback}
-	Two issues were identified in the first iteration. 
+	Two issues were identified in the first study run. 
 	The first problem was camera control. 
 	In order to use the camera when zoomed further in a certain degree of experience was required, otherwise the camera could easily be moved too far.
 	In order to fix this, we altered the camera controls so the user could slow down the camera movement significantly.
@@ -949,11 +956,11 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	This coloring is based on the same principle as other levels.
 	
 	
-	\subsection{Structural Identifaction Task of Second Iteration}
-	In the second iteration, none of the users had significant issues with the camera, though some controlled it better than others.
+	\subsection{Results of Identification Task Second Study Run}
+	In the second study run, none of the users had significant issues with the camera, though some controlled it better than others.
 	For the 5 users, the results are as follows:
 	\begin{table}
-		\caption{tbd, check position and text}
+		\caption{Results of Task One in Second Study Run}
 		\centering
 		\begin{tabular}{| c | c | c | c | c | c |}
 			\hline
@@ -985,18 +992,18 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	In the capsid, there is some space between the hexamers. 
 	From the users description of the pentamer and of the capsid structure, he mixed up the interior and exterior of the hexamers. 
 	The user who considered a subset of the C-terminal as the entire domain had zoomed past the domain level to the secondary structure level.
-	The user in the second iteration who did not find the $alpha$-helix also did not find a sulfur atom. He never zoomed in closely enough to the proteins to change the colors to the atom colors. It is likely that he became discourage to his failure to find the helix, as well as believing there was no way to identify the sulfur atom.
+	The user in the second study run who did not find the $alpha$-helix also did not find a sulfur atom. He never zoomed in closely enough to the proteins to change the colors to the atom colors. It is likely that he became discouraged to his failure to find the helix, as well as believing there was no way to identify the sulfur atom.
 	
 	With the exception of one user, the only problems with identifying structures came at the secondary structure and amino acid level. 
-	The amino acid level was significantly more difficult, as the amino acids were not visually represented. 
-	The users had to find it based on one atom, a search for which they had to arrive at themselves. 
+	The amino acid level was significantly more difficult, as the amino acids were not explicitly visually represented. 
+	The users had to find it based on one atom, a strategy which they had to arrive at themselves. 
 	
 	
 	
-	\subsection{Free Exploration Task of Second Iteration}
+	\subsection{Results of Exploration Task Second Study Run}
 	
 	The actions of the users in the second task were extremely varied. 
-	Unlike the first iteration, 4 of the 5 users spent time exploring the virus. 
+	Unlike the first study run, 4 of the 5 users spent time exploring the virus. 
 	However, the parts they explored varied significantly. 
 	
 	User 1 looked at the membrane and the proteins in the matrix. 
@@ -1009,8 +1016,8 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	However he did not explore any protein in detail. 
 	Instead, he was more interested in the variety of proteins in the HIV.
 	The last user took interest in the membrane and the proteins near it.
-	He was interested in the structure of the protein and in the area where it met the membrane
-	Of those who explored the virus, the users spent just short of 10 minutes on average exploring.
+	He was interested in the structure of the protein and in the area where it met the membrane.
+	Of those who explored the virus, the users spent just short of 10 minutes on average for exploration.
 	
 	
 	
@@ -1021,17 +1028,17 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	
 	Still, every user that found the N and C terminals referred to them by their color. 
 	Several referred to alpha helices by color. 
-	This means that the visualization succeeded in creating a smooth transtion between the levels, and was still useful, despite the users not being aware of its support. 
-	Furthermore, the fact that most students were succesful at least up to the secondary structure level indicates that our visualization can be used on each level. 
+	This means that the visualization succeeded in creating a smooth transition between the levels, and was still useful, despite the users not being aware of its support. 
+	Furthermore, the fact that most students were succesful at least up to the secondary structure level indicates that our multiscale visualization technique can be used on each level. 
 	Overall, users liked the study and visualization, but thought the tasks were very difficult.
 	
 	
-	The largest difference between the iterations was the degree of exploration in the second task. In the first task, neither user explored the HIV extensively. In contrast, the users from the second iteration explored the virus on different levels and areas. Likely this was affected significantly by the degree of control over the movement through the visualization. In the first iteration, the users had significant control issues which were absent in the second iteration due to changes. In both iterations no users reported that they got lost or confused by the visualization.
+	The largest difference between the study runs was the degree of exploration in the second task. In the first task, neither user explored the HIV extensively. In contrast, the users from the second study rund explored the virus on different levels and areas. Likely this was affected significantly by the degree of control over the movement through the visualization. In the first study run, the users had significant control issues which were absent in the second study due to changes. In both study runs no users reported that they got lost or confused by the visualization.
 	
-	The users were also asked how useful they considered the visualization to be for their research, or what they could use it for. The users considered it useful for presenting their research and educating students, which is in line with our goal as is mentioned at the end of Section~\ref{introduction}. However, only one user from the first iteration considered it useful for his research. This is in a sense not surprising. Most users worked on the level of molecular structure or protein interactions. Furthermore, while it may be possible to visualize an entire virus, a physical simulation of one is a different problem. 
+	The users were also asked how useful they considered the visualization to be for their research, or what they could use it for. The users considered it useful for presenting their research and educating students, which is in line with our goal as is mentioned at the end of Section~\ref{introduction}. However, only one user from the first study run considered it useful for his research. This is in a sense not surprising. Most users worked on the level of molecular structure or protein interactions. Furthermore, while it may be possible to visualize an entire virus, a physical simulation of one is a different problem. 
 	
 	
-	Several users expressed a desire for alternative representations that they were more familiar with, such as cartoon like representations.
+	Several users expressed a desire for alternative representations that they were more familiar with, such as cartoon representation for secondary structures.
 	
 	POSSIBLY REMOVE: WE EXTENDED LEVELS OF DETAIL VISUALIZATION: NOT ONLY STEPS, BUT ALSO COLOR CODING. REMOVE IF NOT IMPLEMENTED [Tbd].
 	
@@ -1093,8 +1100,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	Serine for example has only of 4 carbon atoms. This means the user will be approximately as far away from a molecule when he wants to see the atoms or amino acid information. 
 	So the semantic scales reside on the same metric scale.
 	Our visualization strategy is designed for distinguishing structures where each semantic level is assigned a unique metric level.
-	In other words, on the their semantic scales reside on the same metric level, as shown in Figure~\ref{hivScale}.
-	Our visualization 
+	In other words, on the their semantic scales reside on the same metric level, as shown in Figure~\ref{fig:hivScale}.
 	The second problem is the variety of information. 
 	For example, due to polarity, the electric charge may vary across a molecule. 
 	Another interesting aspect of a protein might be hydrophobicity.
@@ -1121,9 +1127,9 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	The hierarchical structure of the coloring technique, along with the visibility based variation in color allows users to navigate and inspect parts of the visualization without getting disorientated, while being subtle.
 	Altering the color based on semantic zooming changes the meaning of color coding.
 	Instead of discriminability for any situation, semantic color changes allow structures to be clustered or seperated as necessary.
-	This is achieved while reaining the connection between structures on different levels in a logical manner via the hierarchical nature of the coloring.
+	This is achieved while maintaining the connection between structures on different levels in a logical manner via the hierarchical nature of the coloring.
 	Furthermore the coloring scheme is capable of showing structures on each level in a visually distinct manner. 
-	The user study performed with this software shows that users can find information in an HIV dataset on each level. 
+	The user study performed with our research prototype shows that users can find information in an HIV dataset on each level. 
 	
 	
 	
