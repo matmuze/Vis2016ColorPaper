@@ -105,7 +105,7 @@
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
 %% please capitalize first letter and insert punctuation after last keyword
-\keywords{Bla, Bla, Bla}
+\keywords{Molecular Visualization, Bioinformatics Visualization}
 
 %% ACM Computing Classification System (CCS). 
 %% See <http://www.acm.org/class/1998/> for details.
@@ -583,10 +583,9 @@
 	\alpha= \frac{360}{\sum_{i} m_i - n \cdot s}. 
 	\]
 	
-	In Figure \ref{fig:comparison}(b)), we use a spacing of XX with XX different protein types. 
-	Thus, the colors become very similar and hard to distinguish. 
-	In this overview zoom level, this effect is actually desirable to avoid salt and pepper noise. 
-	However, as we zoom in, we want increasing discriminability, as defined by parameter $d$. 
+	This means, as we zoom out, the colors become very similar and hard to distinguish. However, 
+	in the overview zoom level, this effect is actually desirable to avoid salt and pepper noise. 
+	As we zoom in, we want increasing discriminability, as defined by parameter $d$. 
 	We therefore introduce a dynamic, view-dependent color adaptation approach. 
 	
 	%\textbf{MWA END: my suggestion is to remove the next paragraph}
@@ -1013,17 +1012,18 @@
 			Methionine      & partially & y \\
 			\hline
 		\end{tabular}
-		\label{tableIterationOne}		
+		
 		\caption{Results of Task One in First Study Run}
+		\label{table:tableIterationOne}		
 	\end{table}
 	
 	
 	Two users participated in the first study run. 
+	Their results can be seen in Table~\ref{table:tableIterationOne}.
 	In the first task neither found the pentamer. 
 	Both found the N and C terminals. 
 	Both found the Cyclophilin binding site. 
 	Only one found the alpha helix and the amino acid, while the other found a different sulfur atom.
-	See Table~\ref{tableIterationOne}.
 	
 	In task 2 neither user interacted significantly with the visualization. This was likely due camera control issues. 
 	One of the participants had trouble getting the camera to point where he wanted in general, the other at the lower levels.
