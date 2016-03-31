@@ -193,7 +193,13 @@
 	As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. 
 	As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
 	As the viewer zooms further in, the domains of the proteins will become distinct, then the secondary structures, and eventually even the atoms, whose colors are predefined by convention.
+	
 	We will present the concept of our hierarchical color palette, implementation details for real-time rendering in a large scene, and results of a user study.
+	In Section~\ref{Overview} we explain the basic structure and idea.
+	Section~\ref{sec:hue} describes the implementation details of the coloring .
+	In Sections~\ref{sec:chroma} and \ref{sec:luminance} we describe additions that support the visualization.
+	In Section~\ref{sec:results} we describe the results.
+	Section~\ref{sec:study} contains the user study.
 	
 	%\begin{figure*}
 	%	\centering
@@ -797,6 +803,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	This way, the hue and the luminance encode different hierarchy levels, yet both color channels are seamlessly interpolated for smooth transitions. 
 		
 	\section{Results}
+	\label{sec:results}
 	
 	To showcase the capabilities of the Chameleon, we applied it to a mesoscale molecular scene. 
 	The dataset was provided by the domain experts and modeled with cellPACK \cite{johnson2015cellpack}, a tool for procedural generation of large biomolecular structures.
