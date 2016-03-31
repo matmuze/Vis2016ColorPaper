@@ -669,10 +669,10 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	For a given group $i$, the distance constraint response force with another group $j$ is computed as follows:
 	
 	\begin{equation}
-	y(i, j) = d(g_{i},g_{j})max(|g_{i} - g_{j}| - (r_{i}+r_{j}), 0)
+	y(i, j) = l(g_{i},g_{j})max(|g_{i} - g_{j}| - (r_{i}+r_{j}), 0)
 	\end{equation}
 	
-	Where $d$ corresponds to the direction of the response, i.e., whether the hue angle should increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic_color_palette}.
+	Where $l$ corresponds to the direction of the response, i.e., whether the hue angle should increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic_color_palette}.
 	For a single group the overall forces, comprising attraction and repulsion forces are computed as follow:
 	
 	\begin{equation}
@@ -826,14 +826,14 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	The protein types are grouped together based on their location.
 	There are 6 different protein groups in the dataset; the blood plasma proteins (18 types), the lipids (2 types), the envelope surface (5 types) and interior proteins (15 types), the capsid surface (1 type) and interior proteins (5 types).
 	Figure \ref{teaserImage} shows progressive zooming from the entire virus to single atoms.
-	Initially the blood plasma proteins in green, and the matrix protein in purple, dominate the color palette simply because the comprise more protein types that other compartments, like the capsid proteins in orange.	
-	As we get closer the capsid proteins in orange, we can observe that the colors are getting more distinguishable.\\
+	Initially the blood plasma proteins in green, and the matrix protein in purple, dominate the color palette simply because they have more protein types than other compartments, like the capsid proteins in orange.	
+	As we get closer to the capsid proteins in orange, we can observe that the colors become more distinguishable.\\
 	%The second dataset, shown in Figure \ref{fig:nofig} is a model of an immature HIV which contains 1081 instances of 13 different protein types, and one bi-lipid membrane. \\
 	
-	The Chameleon relies on GPU computing to preserve the smooth and responsive, which is initially offered by cellVIEW.
-	Since we are performing the all the coloring operations in post-processing, the size of the dataset has only little impact of the performance. 
-	We benchmarked the computation speed at HD resolution (1920 × 1080) on a machine equipped with an Intel Core i7-3930 CPU 3.20 GHz machine coupled with a GeForce GTX Titan X graphics card with 12GB of video RAM.
-	We measured \textbf{0.5 ms} on average to count the visible instances when zooming out on the entire dataset, which the most extreme case since a very large number of proteins are visible.	
+	The Chameleon relies on GPU computing to be smooth and responsive, which is initially offered by cellVIEW.
+	Since we perform the all the coloring operations in post-processing, the size of the dataset has only little impact on the performance. 
+	We benchmarked the computation speed at HD resolution (1920$\times$1080) on a machine equipped with an Intel Core i7-3930 CPU 3.20 GHz machine coupled with a GeForce GTX Titan X graphics card with 12GB of video RAM.
+	We measured \textbf{0.5 ms} on average to count the visible instances when zooming out on the entire dataset, which in the most extreme case since a very large number of proteins are visible.	
 	It took \textbf{1.2 ms} to compute the screen pixel coverage of the protein types with the same configuration.
 	The last stage of the pipeline in which we assign the final hue, chroma, and saturation values to each pixel took \textbf{1.3 ms} on average, this also includes the cost of reading back the visibility information to the CPU for the force-based hue assignment.
 		
