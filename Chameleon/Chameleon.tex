@@ -545,7 +545,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	\[
 	\alpha = arcsin\frac{d}{C^*}. 
 	\]
-	Empirically, we found that $d$ around 11 delivers visually pleasing results, which corresponds to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}. 
+	Empirically, we found that $d$ around 11 delivers results which corresponds to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, allowing for easy discrimination and pleasing results. 
 	Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins we have in the HIV model. 
 	The angular distance between proteins will therefore be below the optimal $d$ and defined by 
 	
@@ -627,7 +627,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	Upon modulation of the group sizes, we must also reposition the group centroids on the ring.
 	A naive and non-iterative approach would be to start positioning a first group on the circle, and to place the remaining groups subsequently on the circle, given the size of each group.
 	While the position of the first group on the hue circle can be arbitrarily defined with this approach, the other groups are not guaranteed to be located as near as possible to their default hue value.
-	This could lead to overly large hue shifts for the centroid of the groups as show in Figure~\ref{fig:force-basedlayout}.
+	This could lead to overly large hue shifts for the centroid of the groups as shown in Figure~\ref{fig:force-basedlayout}.
 	
 	To avoid this issue we propose a force-based layout for the positioning of the group centroids on the hue circle.
 	The forces are applied in a single dimension which corresponds to the hue, and include distance constraints between the groups, as well as attraction forces between groups and their default position.
@@ -656,7 +656,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	
 	%\textbf{MWa rewrite BEGIN}
 	
-	As we zoom further into the proteins, we begin to reveal the colors corresponding to the following levels (domains, secondary structures, atoms). 
+	As we zoom further into the details of the proteins, we begin to reveal the colors corresponding to the following levels (domains, secondary structures, atoms). 
 	To ensure logical transitions between levels and to maintain hierarchical information, we introduce a hierarchical hue picking method. 
 	For example, to select hues for $m$ protein domains, the angular distances between the domain hues are calculated as follows: 
 	
@@ -664,9 +664,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	\gamma = min(d, \beta / m),
 	\]
 	where $\beta$ is the maximum size of the domain wedge.
-	This means that the wedge will grow linearly with the number of domains until it reaches the angle $\beta$. 
-	As long as the angle of the wedge is below $\beta$, the angle between domains on the hue circle will be equal to $d$.
-	When the number of domains times $d$ is greater than $\beta$, the angle between domains will begin to shrink, and will be eqal to $\beta / m$.
+	This means that the wedge will grow linearly with the number of domains until it reaches the angle $\beta$, at which point the angle between domains will start to shrink
 	We set $\beta$ to 180 so that a single protein would not cover more than half of the hues, which would lead to a loss of hierarchical information. 
 	Choosing a lower $\beta$ may cause domains within a single protein to be hardly distinguishable.  
 	Given the hue of the protein and the angular distances between the $m$ domains $\gamma$, the domain hue wedge with an angle of $m \cdot \gamma$ is centered around the protein hue value.
