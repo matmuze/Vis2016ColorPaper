@@ -550,7 +550,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	The angular distance between proteins will therefore be below the optimal $d$ and defined by 
 	
 	\[
-	\alpha = \frac{360}{\sum_{i} m_i - n \cdot s}. 
+	\alpha_{compartment} = \frac{360}{\sum_{i} m_i - n \cdot s}. 
 	\]
 	
 	In Figure \ref{fig:comparison}(b)), we use a spacing of XX with XX different protein types. 
@@ -590,7 +590,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	\end{equation}
 	
 	Where $c_i$ corresponds to the visibility factor of a given protein type $i$, $p$ corresponds to the ratio of pixels occupied by proteins of type $i$, and $v$ is the ratio of proteins of type $i$ that are visible.
-	$t_{p}$ and $t_{v}$ correspond to arbitrarily defined thresholds for the screen coverage and visibility, respectively. 
+	The parameters $t_{p}$ and $t_{v}$ correspond to predefined thresholds for the screen coverage and visibility, respectively. 
 	$C$ is a set of $n$ protein types that constitute a group.
 	For that given group the visibility coefficient $w$ is computed as follows:
 	
@@ -638,14 +638,14 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	y(i, j) = d(g_{i},g_{j})max(|g_{i} - g_{j}| - (r_{i}+r_{j}), 0)
 	\end{equation}
 	
-	Where $d$ corresponds to the direction of the response, i.e., whether the hue angle should be increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computer from the visibility information and described in Section\ref{sec:dynamic_color_palette}.
+	Where $d$ corresponds to the direction of the response, i.e., whether the hue angle should increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic_color_palette}.
 	For a single group the overall forces, comprising attraction and repulsion forces are computed as follow:
 	
 	\begin{equation}
-	f_{i} = (g_{i} - i_{i}) + \sum_{j=1}^{n, i \neq j} y(i,j)
+	f_{i} = (g_{i} - I_{i}) + \sum_{j=1}^{n, i \neq j} y(i,j)
 	\end{equation}
 	
-	The first part of the right side of this equation correspond to the attraction forces, where i correspond to the initial group position.
+	The first part of the right side of this equation corresponds to the attraction forces, where $I$ corresponds to the initial group position.
 	The second part is the sum of repulsion forces between the given group and the other ones.
 	Additionally we also include a damping value in the integration calculus to smooth-out the motion of the group centroids when the viewport and the visibility configuration is abruptly changing.
 	
@@ -656,7 +656,7 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	
 	%\textbf{MWa rewrite BEGIN}
 	
-	As we zoom further into the proteins, we being to reveal the colors of that correspond to the following levels (domains, secondary structures, atoms). 
+	As we zoom further into the proteins, we begin to reveal the colors corresponding to the following levels (domains, secondary structures, atoms). 
 	To ensure logical transitions between levels and to maintain hierarchical information, we introduce a hierarchical hue picking method. 
 	For example, to select hues for $m$ protein domains, the angular distances between the domain hues are calculated as follows: 
 	
