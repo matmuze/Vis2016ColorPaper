@@ -157,7 +157,7 @@
 	
 	With improving technology, more and more data across all levels---from atomic to compartment---is being gathered on viruses and cells. 
 	Improving computing technology makes it possible to display an ever increasing amount of this data at once, up to and beyond an entire human immunodeficiency virus (HIV)~\cite{muzic2015cellview}, with its complete macromolecular composition.
-	This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms. Visualization of HIV are not only used for research purposes. Illstrative multi-scale visualization of HIV have also been used to communicate basic properties of the virus to a broader audience, as in Figure~\ref{fig:motivation}, which is the usage scenario we are interested in.
+	This allows all levels to be present in a visualization; we can start at the compartment level and zoom in past the proteins, their domains and secondary structures, such as $\alpha$-helices and $\beta$-sheets, all the way to the amino acids and atoms. Visualization of HIV are not only used for research purposes. Illustrative multi-scale visualizations of HIV have also been used to communicate basic properties of the virus to a broader audience, as in Figure~\ref{fig:motivation}, which is the usage scenario we are interested in.
 	
 	For each described scale, color contrast is used to distinguish elements on that scale. 
 	In interactive visualizations, the color assignment is usually static. 
@@ -168,14 +168,13 @@
 	A naive visualization that defines color maps for each level individually and then blends them may at first glance seem sufficient.
 	However, several issues can occur.
 	First, colors may change significantly between zoom levels.
-
 	This will not only affect understanding how two levels are connected, but also the comprehension if the user is between levels.
 	Second, there is a loss of information when transitioning from one level to the next. 
 	For example, if a user is looking at two compartments that are next to each other and zooms in where they meet, then the information where one compartment ends and the other starts is lost, as the compartment level color coding is already blended away. 
 	This may also cause orientation problems.
 	The reason for this orientation loss is the inherent hierarchy of the data.
 	An atom belongs to an amino acid, which in turn belongs to a domain of a protein, all the way to the top.	
-	Therefore, a visualization of the data must fulfill two requirements. 
+	Therefore, a visualization of the data must fulfill three requirements. 
 	One, structures should be distinguishable.
 	Two, the transtion from one level to another must be smooth.
 	Three, the inherent hierarchy of the data must be preserved.
@@ -197,7 +196,7 @@
 	%As such, there are significant perceptual and cognitive restrictions placed on color coding. 
 	
 	We propose a semantic zooming method for a multi-scale visualization of a cell or virus-like structure, based on a view-dependent, hierarchical color scheme.
-	Starting from the highest hierarchy level, we progressively free-up unused color space and redistribute it to visible elements defined by the current zoom level and item visibility.
+	Starting from the highest hierarchy level, we progressively free up unused color space and redistribute it to visible elements defined by the current zoom level and item visibility.
 	In the HIV as show in Figure~\ref{teaserImage}, the user initially sees the different compartments. 
 	As the user zooms in, the proteins receive more distinct colors based on which compartment they are in. 
 	As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
@@ -208,7 +207,7 @@
 	Section~\ref{sec:hue} describes the implementation details of the coloring .
 	In Sections~\ref{sec:chroma} and \ref{sec:luminance} we describe additions that support the visualization.
 	In Section~\ref{sec:results} we describe the results.
-	Section~\ref{sec:study} contains the user study.
+	Section~\ref{sec:study} contains a user study.
 	
 	%\begin{figure*}
 	%	\centering
@@ -258,7 +257,7 @@
 	
 	\section{Related Work}
 	While there has been intense research on color mapping in visualization in the past, there have been only very few works related to multiscale visualization.
-	We divide the related work in two sections, in the first section we cover previous work about appropriate usage of colors in visualization, and their perceptual impact. 
+	We divide the related work in two sections. In the first section we cover previous work about appropriate usage of colors in visualization, and their perceptual impact. 
 	In the second section we cover related work about large scale molecular rendering, to which we build our technique upon.
 		
 	\subsection{Colors in Visualization}
@@ -271,15 +270,15 @@
 	Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas~\cite{lee2013perceptually}.
 	Visualization of information such as can be found on maps can lead to small areas being next to much larger ones. 
 	In this case, it may be difficult to spot the small areas, and lowering the saturation of the larger areas allows the small ones to stand out more.
-	Recognition may also be affected by contrast effects which may need to be dealt with~\cite{mittelstadt2014methods}. \\
-		
+	Recognition may also be affected by contrast effects which may need to be dealt with~\cite{mittelstadt2014methods}. 
+	
 	XCluSim’s uses a tree-based method~\cite{tennekes2014tree} that attempts to overcome these issues in the case of hierarchical structures. 
 	The tree method uses HCL space (a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance) and gives each cluster a different hue. 
 	The root of the tree has no saturation, i.e. grey, and the hue is divided up into different wedges, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
 	As the tree spreads out, the saturation of the nodes increases, and each level gets its own smaller wedge. 
 	Essentially, each level has its own hue circle with a defined chroma. 
 	However, it was designed for static visualizations, where all colors are visible at the same time. Therefore, the number of possible colors is severely limited, leading to discriminability problems.
-	In contrast, our method allows for dynamical increasing and decreasing of wedge angles based on visibility and depth, allowing for overlap to occur at the lower levels. 
+	In contrast, our method allows for dynamic increasing and decreasing of wedge angles based on visibility and depth, allowing for overlap to occur at the lower levels. 
 	If some of our branches' nodes are not visible, then the wedge will shrink, allowing neighbouring branches to expand. 
 	This assists color discernment by the user when looking at the objects of a subset of the branches.
 	
@@ -312,12 +311,12 @@
 	Lampe et al.~\cite{lampe2007two} pioneered real-time rendering of large-scale atomic data on consumer level hardware. 
 	They extended the fast billboard-based approach introduced by QuteMol \cite{tarini2006ambient}, by rendering the structures per residues rather than per atom, thus reducing the memory bandwidth usage and the GPU driver overhead. 
 	Lindow et al. \cite{lindow2012interactive} followed-up by using  instanced rendering to draw entire structures instead.
-	For each molecule type, they generate 3D grid of the atoms which is stored on the GPU, and then ray-casted upon rendering.
-	Falk et al. \cite{falk2013atomistic} further refined the method with improved depth culling and hierarchical ray casting to achieve faster rendering performance for even larger scenes. \\
+	For each molecule type, they generate a 3D grid of the atoms which is stored on the GPU, and then ray-casted upon rendering.
+	Falk et al. \cite{falk2013atomistic} further refined the method with improved depth culling and hierarchical ray casting to achieve faster rendering performance for even larger scenes.\\
 	
 	Parulek et al.~\cite{parulek2014continuous} introduced seamless transitions between different levels of coarseness for the representation of the molecular surface based on the distance from the camera.
-	The goal was not only to reduce the computation cost, but also to utilize the shape as a mean to reduce high-level details and noise when observing the structure in its entirety.
-	Their technique is using real-time ray-tracing and offers high quality surface details, but it does not scale well in terms of performance when compared to atom-based rendering methods.
+	The goal was not only to reduce the computation cost, but also to utilize the shape as a means to reduce high-level details and noise when observing the structure in its entirety.
+	Their technique uses real-time ray-tracing and offers high quality surface details, but it does not scale well in terms of performance when compared to atom-based rendering methods.
 	A novel approach, for real-time rendering of structures with up to tens of billion atoms, was later on introduced by Le Muzic et al.~\cite{le2014illustrative}. 
 	Their approach, also based on level-of-detail, uses tessellation shaders to switch between different degrees of coarseness for the molecular structures, on-the-fly and upon the rendering operation.
 	The entire scene is thus rendered efficiently in a single draw call, approaching zero GPU-driver overhead. 
@@ -351,13 +350,13 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\label{Overview}
 	
 	Mesoscale datasets feature many relevant properties which are present at different scale levels.
-	The molecular properties that we provide are, from the largest to the smallest scale level: compartment (which we refer as group), protein type, protein domain, secondary structure and atom type.
+	The molecular properties that we provide are, from the largest to the smallest scale level: compartment (which we refer to as protein group), protein type, protein domain, secondary structure and atom type.
 	According to domain experts, these are the most relevant properties in visual analysis of three dimensional molecular structures.
 	%We opted for these properties because, according to domain experts, they are the most relevant properties in visual analysis of three dimensional molecular structures.
 	%This information is internally declared and accessible for each single rendered atom, which allows us to perform dynamic coloring.
 	Scientific illustrators are using these properties to modulate the color palette when showing proteins at different levels, as shown in Figure~\ref{fig:motivation}.
-	However, this require to manually setup the colors palette for each level, which can be cumbersome when dealing with a multitude of large datasets.
-	Our goal is to provide a dynamic coloring mecanism that would automatically assign and display the most relevant information for any given zoom levels, thereby fulfilling the requirements stated in the introduction: 
+	However, this requires to manually set up the color palette for each level, which can be cumbersome when dealing with a multitude of large datasets.
+	Our goal is to provide a dynamic coloring mechanism that would automatically assign and display the most relevant information for any given zoom level, thereby fulfilling the requirements stated in the introduction: 
 		
 	\begin{enumerate}
 		\item On each zoom level, associated main structures (i.e., those structures that result in the best visibility in terms of screen size) should be clearly discriminable from each other. 
@@ -552,18 +551,18 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	Figure \ref{fig:hslvshcl} shows a comparison between an iso-luminant and non-iso-luminant color palette for our visualization. This and the use of chroma and luminance described in Section~\ref{Overview} illustrate our design choice. 
 	We therefore keep the chroma and luminance constant and color the proteins by hue only. 
 	To have better control over color discriminability, we work use CIELab and HCL color palettes, respectively, which are perceptually linear. 
-	This means, we can quantify the dissimilarity between colors by their Euclidean distance in color space. 
+	This means, we can quantify the dissimilarity between colors by their Euclidean distance in the color space. 
 	With constant chroma and luminance, hues are selected from a iso-luminant hue ring with uniform chroma. 
 	
 	To select suitable chroma and luminance values, we investigated which luminance values result in the largest possible hue ring when converting colors from CIELab space back to sRGB. 
-	In an offline procedure, we picked eight extreme a and b values in with equal distance from the non-chromatic center with a given L value and iteratively moved them towards the center until the resulting CIELab color was lying within the sRGB gamut. 
+	In an offline procedure, we picked eight extreme a and b values with equal distance from the non-chromatic center with a given L value and iteratively moved them towards the center until the resulting CIELab color was lying within the sRGB gamut. 
 	The smallest vector magnitude of $\vec{ab}$ thereby defined the radius and chroma for the given luminance, respectively. 
 	We found that a luminance of 75 represents a good value, leading to a maximum chroma of 40 (see Figure \ref{fig:hslvshcl}). 
 	
 	In order to calculate the color of the compartments and their proteins, we can distribute the hues of the hue ring to the different proteins.
 	The color of the compartment will then simply be at the center of the proteins that belong to it.
 	To distribute hues from the hue ring to the proteins, we sample the hues with respect to four parameters: 1) the number of compartments $n$, 2) the number of protein types $m_i$ within each compartment $1 \leq i \leq n$, 3) the optimal color distance between structures $d$, which will be elaborated below, and 4) the minimum color spacing $s$ between compartments. 
-	This corresponds to the top row of (b),(c) and (d) in Figure~\ref{fig:coloroverview}.
+	This corresponds to the top row of (b), (c) and (d) in Figure~\ref{fig:coloroverview}.
 	The first parameter defines the number of ``wedges'' that are overlaid on the hue ring. 
 	The second parameter controls the relative angular width of the wedges. 
 	The third and fourth parameter control the actual angular width of the wedges: 
@@ -571,7 +570,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\[
 	\alpha = arcsin\frac{d}{C^*}. 
 	\]
-	Empirically, we found that $d$ around 11 delivers results which corresponds to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, allowing for easy discrimination and pleasing results. 
+	Empirically, we found that $d$ around 11 delivers results which correspond to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, allowing for easy discrimination and pleasing results. 
 	Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins we have in the HIV model. 
 	The angular distance  $\alpha$ between proteins will therefore be below the optimal $d$ and defined by 
 	
@@ -599,7 +598,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	\label{sec:dynamic}
 	
 	In the initial state, we first generate a color palette assuming that all the compartments are visible.
-	As we zoom-in and explore the scene, large parts on the scene may not actually be visible in the current viewport, as is illustrated in the lower row of Figure~\ref{fig:coloroverview}.
+	As we zoom-in and explore the scene, large parts of the scene may not actually be visible in the current viewport, as is illustrated in the lower row of Figure~\ref{fig:coloroverview}.
 	In this configuration the color palette would become underexploited, and could be improved to increase discriminability between proteins that are currently visible. 
 	We therefore re-compute and optimize the color palette on-the-fly, as proteins appear and disappear.
 	An overview of the mechanism is described in Figure~\ref{fig:coloroverview}.
@@ -609,7 +608,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	This coefficient is calculated based on the visibility of each protein type contained in a given group.
 	The visibility of a given protein type is defined as a boolean value, which corresponds to either visible or not visible.
 	We set a protein type as not visible in case the ratio of elements that are visible to all element of that group becomes too low, based on an arbitrarily defined threshold $t_v$.
-	We also ensure that a protein type will be set as visible, in case some elements are located close to the camera and occupy a significant number of pixels in the viewport, even when the overall percentage of visible elements is low.
+	We also ensure that a protein type will be set as visible in case some elements are located close to the camera and occupy a significant number of pixels in the viewport, even when the overall percentage of visible elements is low.
 	Therefore we also take the pixel occupancy of the proteins into account.
 	The visibility value of a given protein type is computed as follows:
 	
@@ -633,7 +632,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	w = q\sum_{i=1}^{n} c_{i}, c_{i} \in C
 	\end{equation}
 	
-	Where $q$ is a scaling factor which is proportional to the number of protein type in that group. 
+	Where $q$ is a scaling factor which is proportional to the number of protein types in that group. 
 	Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the group coefficient to determine the size of the individual hue sections. \\
 	
 	\subsubsection{Extracting Visibility Information}
@@ -642,9 +641,9 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	Upon rendering, we generate an additional off-line texture which contains, for each pixel, the unique identifier of the rendered protein.
 	We priorly declare two GPU buffers which will, for each protein type, store the occupied pixel count and the total number of visible proteins, respectively.
 	Subsequently, in a dedicated compute shader, we iterate through all the pixels, and we increment the pixel counter corresponding to the protein type stored in the video memory.
-	At the same time, we also flag in a dedicated GPU buffer, the proteins whose unique IDs are present in the generated texture.
+	At the same time, we also flag in a dedicated GPU buffer the proteins whose unique IDs are present in the generated texture.
 	This information will allow us to determine the number of visible instances for each protein type.
-	In a second pass and in a dedicated compute shader, we then iterate through all the protein instances.
+	In a second pass and in a dedicated compute shader we then iterate through all the protein instances.
 	For each protein which was flagged as visible in the previous pass, we increase the number of visible instances corresponding to the protein type.
 	Since the computation is done in parallel it is important to use atomic intrinsic functions to increment the counters, in order to avoid concurrent access to the same value from two different threads.
 	
@@ -767,7 +766,7 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	Based on the size of the protein and its location we define a spherical region in 3D which constitute the focus region.
 	Outside this region, we progressively decrease the chroma value as we zoom in the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
 	The zoom levels distances between which the desaturation effect begins and ends are arbitrarily defined.
-	Should the focused protein change abruptly, we interpolate the focus region centroid and radius between the previous and current focused protein to avoid flickering artifacts.
+	Should the focused protein change abruptly, we interpolate the focus region centroid and radius between the previously and currently focused protein to avoid flickering artifacts.
 	%	Figure \ref{fig:focusContext} shows a single focus protein with XX domains. 
 	
 	%	\textbf{Just to be sure: this does not solve the problem of similar colors of secondary structures of different domains on the same protein?}
@@ -820,10 +819,10 @@ Differentiation is also made between carbon atoms and the remaining ones by shif
 	To showcase the capabilities of the Chameleon, we applied it to a mesoscale molecular scene. 
 	The dataset was provided by the domain experts and modeled with cellPACK \cite{johnson2015cellpack}, a tool for procedural generation of large biomolecular structures.
 	cellPACK summarizes and incorporates the most recent knowledge obtained from structural biology and system biology to generate comprehensive mesoscale models. 
-	Based on experimentally obtained data (e.g. data such as proteins structure, concentration and spatial distribution), the tool is able to generate entire models of viruses and cells via a packing method based on collisions constraints.
+	Based on experimentally obtained data (e.g. data such as protein structure, concentration and spatial distribution), the tool is able to generate entire models of viruses and cells via a packing method based on collisions constraints.
 	We use cellVIEW \cite{muzic2015cellview} for the rendering part, which is a tool designed to efficiently render large molecular scenes on the GPU and is implemented in Unity3D. \\
 	
-	The dataset which we showcase, is a model of an HIV particle in blood serum which contains 20502 instances of 46 different protein types including two lipid membrane layers.
+	The dataset which we showcase is a model of an HIV particle in blood serum which contains 20502 instances of 46 different protein types including two lipid membrane layers.
 	The protein types are grouped together based on their location.
 	There are 6 different protein groups in the dataset; the blood plasma proteins (18 types), the lipids (2 types), the envelope surface (5 types) and interior proteins (15 types), the capsid surface (1 type) and interior proteins (5 types).
 	Figure \ref{teaserImage} shows progressive zooming from the entire virus to single atoms.
