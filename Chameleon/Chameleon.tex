@@ -663,12 +663,16 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	\[
 	\gamma = min(d, \beta / m),
 	\]
-	where $\beta$ is the maximum size of the domain wedge. 
+	where $\beta$ is the maximum size of the domain wedge.
+	This means that the wedge will grow linearly with the number of domains until it reaches the angle $\beta$. 
+	As long as the angle of the wedge is below $\beta$, the angle between domains on the hue circle will be equal to $d$.
+	When the number of domains times $d$ is greater than $\beta$, the angle between domains will begin to shrink, and will be eqal to $\beta / m$.
 	We set $\beta$ to 180 so that a single protein would not cover more than half of the hues, which would lead to a loss of hierarchical information. 
 	Choosing a lower $\beta$ may cause domains within a single protein to be hardly distinguishable.  
 	Given the hue of the protein and the angular distances between the $m$ domains $\gamma$, the domain hue wedge with an angle of $m \cdot \gamma$ is centered around the protein hue value.
-	Mind that domain hue wedges can overlap across proteins, as indicated in Figure \ref{fig:overlap}. 
-	This is a major difference to the hierarchical coloring technique introduced by Tennekes and de Jonge \cite{tennekes2014tree}, who assigned unique, yet hardly distinguishable colors on each zoom levels for static tree visualizations. 
+	Mind that domain hue wedges can overlap across proteins. 
+	Figure \ref{fig:overlap} illustrates the construction of the coloring of the protein domains, as well as the overlap that can occur.
+	This is another major difference to the hierarchical coloring technique introduced by Tennekes and de Jonge \cite{tennekes2014tree}, who assigned unique, yet hardly distinguishable colors on each zoom levels for static tree visualizations. 
 	In our case, being able to clearly distinguish domains is an important task in structural biology, which is also facilitated by structural properties as well. 
 		
 	\begin{figure}
@@ -680,16 +684,16 @@ Finally, we demonstrate the effectiveness of our technique in a user study with 
 	
 	\subsubsection{Interpolating Between Levels}
 	
-	We switch between the levels based on the distance from the rendered atoms to the camera and arbitrarily defined values which delimit where each level begin and ends.
+	We switch between the levels, such as protein and domain levels, based on the distance from the rendered atoms to the camera and arbitrarily defined values which delimit where each level begin and ends.
 	To smooth-out the transition, we interpolate the hue values in-between the levels.	
 	This transition is performed in post-processing on the GPU, in a dedicated shader program.
 	In addition to the unique protein identifier texture mentioned in Section~\ref{sssec:extracting}, we also generate an additional off-line texture upon rendering, which contains the unique identifier of each rendered atom.
 	While iterating through all the pixels, we fetch their unique atom identifiers from the off-line texture.
 	The identifiers allow us to collect, directly from the shader program, all the needed information concerning the rendered atoms, and which was priorly uploaded to the video memory (group, protein type, domain, secondary structure and atom type).	
-	We also use the previously rendered depth texture to retrieving the world-space position of a pixel in the shader.
+	We also use the previously rendered depth texture to retrieve the world-space position of a pixel in the shader.
 	Then, from the world position of each pixel, we are able to compute the world space distance to the camera.
 	From the camera distance we are able to compute the current degree of transition between the closest levels, and fetch their corresponding hue values.	
-	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the previous level and the next one, based on the current degree of transition between those two levels.
+	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the two levels the user is between, based on the degree of transition.
 	
 	
 	%\textbf{MWa rewrite END -- remove next paragraph in case of acceptance}
