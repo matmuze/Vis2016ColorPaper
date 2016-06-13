@@ -1,159 +1,132 @@
-%\documentclass[journal]{vgtc}                % final (journal style)
-\documentclass[review,journal]{vgtc}         % review (journal style)
-%\documentclass[widereview]{vgtc}             % wide-spaced review
-%\documentclass[preprint,journal]{vgtc}       % preprint (journal style)
-%\documentclass[electronic,journal]{vgtc}     % electronic version, journal
+% ---------------------------------------------------------------------------
+% Author guideline and sample document for EG publication using LaTeX2e input
+% D.Fellner, v1.12, Nov 01, 2006
 
-%% Uncomment one of the lines above depending on where your paper is
-%% in the conference process. ``review'' and ``widereview'' are for review
-%% submission, ``preprint'' is for pre-publication, and the final version
-%% doesn't use a specific qualifier. Further, ``electronic'' includes
-%% hyperreferences for more convenient online viewing.
+\documentclass{egpubl}
+\usepackage{vcbm2016}
 
-%% Please use one of the ``review'' options in combination with the
-%% assigned online id (see below) ONLY if your paper uses a double blind
-%% review process. Some conferences, like IEEE Vis and InfoVis, have NOT
-%% in the past.
+% --- for  Annual CONFERENCE
+% \ConferenceSubmission % uncomment for Conference submission
+% \ConferencePaper      % uncomment for (final) Conference Paper
+% \STAR                 % uncomment for STAR contribution
+% \Tutorial             % uncomment for Tutorial contribution
+% \ShortPresentation    % uncomment for (final) Short Conference Presentation
+%
+% --- for  CGF Journal
+% \JournalSubmission    % uncomment for submission to Computer Graphics Forum
+% \JournalPaper         % uncomment for final version of Journal Paper
+%
+% --- for  EG Workshop Proceedings
+\WsSubmission    % uncomment for submission to EG Workshop
+% \WsPaper         % uncomment for final version of EG Workshop contribution
+%
+\electronicVersion % can be used both for the printed and electronic version
 
-%% Please note that the use of figures other than the optional teaser is not permitted on the first page
-%% of the journal version.  Figures should begin on the second page and be
-%% in CMYK or Grey scale format, otherwise, colour shifting may occur
-%% during the printing process.  Papers submitted with figures other than the optional teaser on the
-%% first page will be refused.
+% !! *please* don't change anything above
+% !! unless you REALLY know what you are doing
+% ------------------------------------------------------------------------
 
-%% These three lines bring in essential packages: ``mathptmx'' for Type 1
-%% typefaces, ``graphicx'' for inclusion of EPS figures. and ``times''
-%% for proper handling of the times font family.
+% for including postscript figures
+% mind: package option 'draft' will replace PS figure by a filname within a frame
+\ifpdf \usepackage[pdftex]{graphicx} \pdfcompresslevel=9
+\else \usepackage[dvips]{graphicx} \fi
 
-\usepackage{mathptmx}
-\usepackage{graphicx}
-\usepackage{times}
-\usepackage{epstopdf}
+\PrintedOrElectronic
+
+% prepare for electronic version of your document
+\usepackage{t1enc,dfadobe}
+
+\usepackage{egweblnk}
+\usepackage{cite}
 \usepackage{amsmath}
+% For backwards compatibility to old LaTeX type font selection.
+% Uncomment if your document adheres to LaTeX2e recommendations.
+% \let\rm=\rmfamily    \let\sf=\sffamily    \let\tt=\ttfamily
+% \let\it=\itshape     \let\sl=\slshape     \let\sc=\scshape
+% \let\bf=\bfseries
 
-%% We encourage the use of mathptmx for consistent usage of times font
-%% throughout the proceedings. However, if you encounter conflicts
-%% with other math-related packages, you may want to disable it.
+% end of prologue
 
-%% This turns references into clickable hyperlinks.
-\usepackage[bookmarks,backref=true,linkcolor=black]{hyperref} %,colorlinks
-\hypersetup{
-	pdfauthor = {},
-	pdftitle = {},
-	pdfsubject = {},
-	pdfkeywords = {},
-	colorlinks=true,
-	linkcolor= black,
-	citecolor= black,
-	pageanchor=true,
-	urlcolor = black,
-	plainpages = false,
-	linktocpage
+
+
+% ---------------------------------------------------------------------
+% EG author guidelines plus sample file for EG publication using LaTeX2e input
+% D.Fellner, v1.17, Sep 23, 2010
+
+
+\title[Chameleon]%
+{Chameleon  Dynamic Color Mapping	for Multi-Scale Structural Biology Models}
+
+% for anonymous conference submission please enter your SUBMISSION ID
+% instead of the author's name (and leave the affiliation blank) !!
+\author[auth1 \& auth2]
+{auth1$^{1,2}$
+	andauth2$^{2}$
+	%        S. Spencer$^2$\thanks{Chairman Siggraph Publications Board}
+	\\
+	% For Computer Graphics Forum: Please use the abbreviation of your first name.
+	$^1$place1 \& andmore1\\
+	$^2$place2
+	%        $^2$ Another Department to illustrate the use in papers from authors
+	%             with different affiliations
 }
 
+% ------------------------------------------------------------------------
+
+% if the Editors-in-Chief have given you the data, you may uncomment
+% the following five lines and insert it here
+%
+% \volume{27}   % the volume in which the issue will be published;
+% \issue{1}     % the issue number of the publication
+% \pStartPage{1}      % set starting page
 
 
-%% If you are submitting a paper to a conference for review with a double
-%% blind reviewing process, please replace the value ``0'' below with your
-%% OnlineID. Otherwise, you may safely leave it at ``0''.
-\onlineid{153}
-
-%% declare the category of your paper, only shown in review mode
-\vgtccategory{Research}
-
-%% allow for this line if you want the electronic option to work properly
-\vgtcinsertpkg
-
-%% In preprint mode you may define your own headline.
-%\preprinttext{To appear in an IEEE VGTC sponsored conference.}
-
-%% Paper title.
-
-\title{------------ Chameleon ------------ \\ Dynamic Color Mapping	for Multi-Scale Structural Biology Models}
-
-%% This is how authors are specified in the journal style
-
-%%% indicate IEEE Member or Student Member in form indicated below
-\author{Nicholas Waldin}
-%\author{Roy G. Biv, Ed Grimley, \textit{Member, IEEE}, and Martha Stewart}
-%\authorfooter{
-%%% insert punctuation at end of each item
-%\item
-% Roy G. Biv is with Starbucks Research. E-mail: roy.g.biv@aol.com.
-%\item
-% Ed Grimley is with Grimley Widgets, Inc.. E-mail: ed.grimley@aol.com.
-%\item
-% Martha Stewart is with Martha Stewart Enterprises at Microsoft
-% Research. E-mail: martha.stewart@marthastewart.com.
-%}
-
-%other entries to be set up for journal
-%\shortauthortitle{Biv \MakeLowercase{\textit{et al.}}: Global Illumination for Fun and Profit}
-%\shortauthortitle{Firstauthor \MakeLowercase{\textit{et al.}}: Paper Title}
-
-%% Abstract section.
-\abstract{
-	Visualization of structural biology data uses color to categorize or separate dense structures into particular semantic units. 
-	In multiscale models of viruses or bacteria, there are atoms on the finest level of detail, then amino-acids, secondary structures, macromolecules, up to the compartment level and, in all these levels, elements can be visually distinguished by color.
-	However, currently only a single scale coloring schemes are utilized that show information for one particular scale only. 
-	We present a novel technology which adaptively, based on the current scale level, adjusts the color scheme to depict or distinguish the currently best visible structural information. 
-	We treat the color as a visual resource that is distributed given a particular demand. 
-	The changes of the color scheme are seamlessly interpolated between the color scheme from the previous views into a given new one. 
-	With such dynamic multi-scale color mapping we ensure that the viewer is able to distinguish structural detail that is shown to her on any given scale. 
-	This technique has been tested by users with an expertise in structural biology and has been overall well received.
-} % end of abstract
-
-%% Keywords that describe your work. Will show as 'Index Terms' in journal
-%% please capitalize first letter and insert punctuation after last keyword
-\keywords{Molecular Visualization, Bioinformatics Visualization}
-
-%% ACM Computing Classification System (CCS). 
-%% See <http://www.acm.org/class/1998/> for details.
-%% The ``\CCScat'' command takes four arguments.
-
-\CCScatlist{ % not used in journal version
-	\CCScat{K.6.1}{Management of Computing and Information Systems}%
-	{Project and People Management}{Life Cycle};
-	\CCScat{K.7.m}{The Computing Profession}{Miscellaneous}{Ethics}
-}
-
-%% Uncomment below to include a teaser figure.
-\teaser{
-	\centering
-	\includegraphics[width=1\linewidth]{Figures/teaser_new}
-	\caption{Multi-scale visualization of the HIV virus in real-time, using cellVIEW~\cite{muzic2015cellview} for rendering, together with the presented technique "Chameleon" for dynamic color coding of protein and atom properties.
-		The series of vignettes represent, from left to right, a zooming operation from the entire virus down to single atoms.
-		Along the way, we modulate the colors to provide relevant information based on the current zoom level.
-		(a) At the highest zoom level the orange proteins located inside the capsid are hardly distinguishable, as surrounding compartments which contain more various protein types (green, and purple) are prioritized on the color palette. 
-		(b) As we zoom in on the capsid proteins, other compartments become less visible, which allows the capsid protein ensemble to occupy more space in the color palette.
-		(c) As we continue zooming, we reveal the domains of the protein by shifting the hue value progressively. Simultaneously, we also shift the luminance to show the presence of underlying structures in the next levels.
-		(d) The secondary structures are differentiated by hue, and the atom types by luminance, analogous to the previous levels.
-		At the same time we progressively desaturate the context proteins to reduce the number of colors and improve clarity.
-		(e) The atom colors are progressively shown as we reach the final zoom level.}
-		
-	\label{teaserImage}
-}
-
-%% Uncomment below to disable the manuscript note
-\renewcommand{\manuscriptnotetxt}{}
-
-%% Copyright space is enabled by default as required by guidelines.
-%% It is disabled by the 'review' option or via the following command:
-% \nocopyrightspace
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% START OF THE PAPER %%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%-------------------------------------------------------------------------
 \begin{document}
 	
+	\teaser{
+		\centering
+		\includegraphics[width=1\linewidth]{Figures/teaser_new}
+		\caption{Multi-scale visualization of HIV in real-time, using cellVIEW~\cite{muzic2015cellview} for rendering, together with the presented technique "Chameleon" for dynamic color coding of protein and atom properties.
+			The series of vignettes represent, from left to right, a zooming operation from the entire virus down to single atoms.
+			Along the way, we modulate the colors to provide relevant information based on the current zoom level.
+			(a) At the highest zoom level the orange proteins located inside the capsid are hardly distinguishable, as surrounding compartments which contain more various protein types (green, and purple) are prioritized on the color palette. 
+			(b) As we zoom in on the capsid proteins, other compartments become less visible, which allows the capsid protein ensemble to occupy more space in the color palette.
+			(c) As we continue zooming, we reveal the domains of the protein by shifting the hue value progressively. Simultaneously, we also shift the luminance to show the presence of underlying structures in the next levels.
+			(d) The secondary structures are differentiated by hue, and the atom types by luminance, analogous to the previous levels.
+			At the same time we progressively desaturate the context proteins to reduce the number of colors and improve clarity.
+			(e) The atom colors are progressively shown as we reach the final zoom level.}
+		
+		\label{teaserImage}
+	}
+	
+	\maketitle
+	
+	\begin{abstract}
+		Visualization of structural biology data uses color to categorize or separate dense structures into particular semantic units. 
+		In multiscale models of viruses or bacteria, there are atoms on the finest level of detail, then amino-acids, secondary structures, macromolecules, up to the compartment level and, in all these levels, elements can be visually distinguished by color.
+		However, currently only a single scale coloring schemes are utilized that show information for one particular scale only. 
+		We present a novel technology which adaptively, based on the current scale level, adjusts the color scheme to depict or distinguish the currently best visible structural information. 
+		We treat the color as a visual resource that is distributed given a particular demand. 
+		The changes of the color scheme are seamlessly interpolated between the color scheme from the previous views into a given new one. 
+		With such dynamic multi-scale color mapping we ensure that the viewer is able to distinguish structural detail that is shown to her on any given scale. 
+		This technique has been tested by users with an expertise in structural biology and has been overall well received.
+		
+		\begin{classification} % according to http://www.acm.org/class/1998/
+			\CCScat{tbd}{tbd}{tbd}{tbd}
+		\end{classification}
+		
+	\end{abstract}
+	
+
 	%% The ``\maketitle'' command must be the first command after the
 	%% ``\begin{document}'' command. It prepares and prints the title block.
 	
 	%% the only exception to this rule is the \firstsection command
-	\firstsection{Introduction}
+	\section{Introduction}
 	\label{introduction}
 	\maketitle
+	%\keywords{Molecular Visualization, Bioinformatics Visualization}
 	
 	With improving technology, more and more data across all levels---from atomic to compartment---is being gathered on viruses and cells. 
 	Improving computing technology makes it possible to display an ever increasing amount of this data at once, up to and beyond an entire human immunodeficiency virus (HIV)~\cite{muzic2015cellview}, with its complete macromolecular composition.
@@ -235,10 +208,10 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width=1\linewidth]{Figures/motivation}
-		\caption{Motivation: Multi-scale Illustration of the HIV virus from David Goodsell. 
+		\caption{Motivation: Multi-scale illustration of HIV from David Goodsell. 
 			The left part shows a close up on the protein which is indicated on the right part via the black line.
-			In the close-up illustration the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
-			Differentiation is also made between carbon atoms and the remaining ones by shifting the luminance slightly.}
+			In the close-up the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
+			Differentiation is also made between carbon atoms and the remaining ones by slightly shifting the luminance.}
 		\label{fig:motivation}
 	\end{figure}
 	
@@ -330,7 +303,6 @@
 	The entire scene is thus rendered efficiently in a single draw call, approaching zero GPU-driver overhead. 
 	As a follow up, they developed and released cellVIEW \cite{muzic2015cellview}, a tool designed for rendering large-scale molecular scenes, which was implemented with Unity3D, a popular 3D engine.
 	cellVIEW was primarily developed to showcase large molecular structures generated with cellPACK \cite{johnson2015cellpack}, a tool developed to procedurally generate accurate and multi-scale models of entire viruses and cells.\\
-	
 	The Chameleon is built upon cellVIEW, and is an attempt to improve understanding during exploration of multi-scale molecular scenes generated with cellPACK.
 	cellVIEW leverages GPU computing and parallel programming to provide a fluid user experience, Chameleon was developed with the same programming paradigm.
 	
@@ -360,7 +332,7 @@
 		
 	\begin{enumerate}
 		\item On each zoom level, associated main structures (i.e., those structures that result in the best visibility in terms of screen size) should be clearly discriminable from each other. 
-		\item When navigating, the transitions between the zoom levels should be smooth to avoid abrupt appearance changes of visualization or orientation loss. 
+		\item When navigating, the transitions between the zoom levels should be smooth to avoid abrupt appearance changes of the visualization or orientation loss. 
 		\item The inherent hierarchy of the structures should be reflected in the color coding. 
 		\item The visualization should be aesthetically pleasing to engage a broad audience. 
 	\end{enumerate}
@@ -368,7 +340,7 @@
 	We manipulate all three color components to fulfill these requirements: 
 	We use the \textbf{hue} to distinguish between structures at the respective zoom levels, as described in Section \ref{sec:hue}. 
 	The \textbf{chroma} is used to increase color discriminability for elements in the focus against the context (Section \ref{sec:chroma}). 
-	Finally, we indicate structures from lower hierarchy in the \textbf{luminance} channel to mimic illustrator techniques (Section \ref{sec:luminance}). 
+	Finally, we indicate structures from lower hierarchies in the \textbf{luminance} channel to mimic illustrator techniques (Section \ref{sec:luminance}). 
 	We describe how we dynamically adapt the hues as the user navigates the scene to ensure color discriminability even in a scene with dozens of different entities (Section \ref{sec:dynamic}), and how hues are sub-divided hierarchically as the user zooms further into the scene (Section \ref{sec:hierarchy}). 
 	Finally, we demonstrate the effectiveness of our technique in a user study with domain experts from the field of molecular biology (Section \ref{sec:study}). 
 	
@@ -554,15 +526,15 @@
 	
 	Due to aesthetic reasons, we opted to choose only saturated and iso-luminant colors, resulting in a pastel color palette. 
 	Figure \ref{fig:hslvshcl} shows a comparison between an iso-luminant and non-iso-luminant color palette for our visualization. This and the use of chroma and luminance described in Section~\ref{Overview} illustrate our design choice. 
-	We therefore keep the chroma and luminance constant and color the proteins by hue only. 
+	We therefore keep the chroma and luminance constant and distinguish the proteins by hue only. 
 	To have better control over color discriminability, we work use CIELab and HCL color palettes, respectively, which are perceptually linear. 
 	This means, we can quantify the dissimilarity between colors by their Euclidean distance in the color space. 
-	With constant chroma and luminance, hues are selected from a iso-luminant hue ring with uniform chroma. 
+	With constant chroma and luminance, hues are selected from an iso-luminant hue ring with uniform chroma. 
 	
 	To select suitable chroma and luminance values, we investigated which luminance values result in the largest possible hue ring when converting colors from CIELab space back to sRGB. 
 	In an offline procedure, we picked eight extreme a and b values with equal distance from the non-chromatic center with a given L value and iteratively moved them towards the center until the resulting CIELab color was lying within the sRGB gamut. 
 	The smallest vector magnitude of $\vec{ab}$ thereby defined the radius and chroma for the given luminance, respectively. 
-	We found that a luminance of 75 represents a good value, leading to a maximum chroma of 40 (see Figure \ref{fig:hslvshcl}). 
+	We found that a luminance of 75 [tbd wasn't this because max chroma?]represents a good value, leading to a maximum chroma of 40 (see Figure \ref{fig:hslvshcl}). 
 	
 	In order to calculate the color of the compartments and their proteins, we can distribute the hues of the hue ring to the different proteins.
 	The color of the compartment will then simply be at the center of the proteins that belong to it.
@@ -917,14 +889,16 @@
 	Furthermore, we wanted to know how disruptive the changing colors are, so we did not inform the users about their dynamic behaviour. 
 	Instead, we tested whether they would notice the change.
 	The user study was conducted in two study runs. 
-	In the first run, two domain experts tested the software. 
-	Their feedback was used to adapt the software, which was then tested by five domain experts.
+	In the first run, two domain experts (PhD students) tested the software. 
+	Their feedback was used to adapt the software, which was then tested by four domain experts (PhD and post-doc) and a master student. 
+	All users worked in the field of molecular biology. 
+	To conduct their research, the participants use visualizations on the protein or molecular level.
 	
 	%In the first iteration the secondary structures were identifiable through luminance, not color. They had the same hue as the domain they belonged to, simply lighter ($\beta$-sheets) or darker ($\alpha$-helices);
 	
-	\subsection{Users}
-	We gathered 7 domain experts. 6 were PhDs. and PostDocs, and one was a master student. All users were experts in the field of molecular biology. 
-	To conduct their research, the participants use visualizations on the protein or molecular level.
+%	\subsection{Users}
+%	We gathered 7 domain experts. 6 were PhDs. and PostDocs, and one was a master student. All users were experts in the field of molecular biology. 
+%	To conduct their research, the participants use visualizations on the protein or molecular level.
 	
 	
 	\subsection{Study Design}
@@ -937,7 +911,7 @@
 	Without means to distinguish structures on different search levels, the task would not be solvable and therefore either create a bias towards our technique or not fully demonstrate its potential.\\
 	The study consisted of two parts. In the first part the user was asked to identify structures on different levels. 
 	It also allows us to measure what information can be found.  
-	In the second part the users explored the HIV virus freely, and we observed what they discovered.
+	In the second part the users explored the HIV freely, and we observed what they discovered.
 	
 	\subsection{Structure Identification Task}
 %	\begin{figure}
@@ -1120,7 +1094,7 @@
 	Still, every user that found the N and C terminals referred to them by their color. 
 	Several referred to alpha helices by color. 
 	This means that the visualization succeeded in creating a smooth transition between the levels, and was still useful, despite the users not being aware of its support. 
-	Furthermore, the fact that most students were succesful at least up to the secondary structure level indicates that our multiscale visualization technique can be used on each level. 
+	Furthermore, the fact that most participants were successful at least up to the secondary structure level indicates that our multiscale visualization technique can be used on each level. 
 	Overall, users liked the study and visualization, but thought the tasks were very difficult.
 	
 	
@@ -1129,7 +1103,7 @@
 	The users were also asked how useful they considered the visualization to be for their research, or what they could use it for. The users considered it useful for presenting their research and educating students, which is in line with our goal as mentioned in the beginning. However, only one user from the first study run considered it useful for his research. This is in a sense not surprising. Most users worked on the level of molecular structure or protein interactions. Furthermore, while it may be possible to visualize an entire virus, a physical simulation of one is a different problem. 
 	
 	
-	Several users expressed a desire for alternative representations that they were more familiar with, such as cartoon representation for secondary structures.
+	Several users expressed a desire for alternative representations that they were more familiar with, such as the cartoon/ribbon representation for secondary structures. However, there are two things to take into account. First, adding such representations directly would prohibit a smooth transition. Combining the ribbon representation together with the Van der Waals representation will lead to confusing images when between levels. Furthermore, it is possible to add additional representations on demand when the user asks for it. For example, the user could click on a molecule which could trigger a pop-up with alternative representations.
 	
 	
 	
@@ -1243,13 +1217,14 @@
 	
 	
 	%% if specified like this the section will be committed in review mode
-	\acknowledgments{
+	\section*{acknowledgments}
 		The authors wish to thank A, B, C. This work was supported in part by
-		a grant from XYZ.}
+		a grant from XYZ.
 	
-	\bibliographystyle{abbrv}
+	\bibliographystyle{eg-alpha}
+%	\bibliographystyle{eg-alpha-doi}
+	
 	%%use following if all content of bibtex file should be shown
 	%\no
-	{}
 	\bibliography{Chameleon}
 \end{document}
