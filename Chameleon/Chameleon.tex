@@ -890,13 +890,13 @@
 		\item Are the dynamic color changes by Chameleon distracting / unpleasant in the exploration process? 
 	\end{enumerate}
 	
-	To answer these two research questions, we asked seven students and professionals in the field of biology to perform two tasks. 
+	To answer these two research questions, we asked five students and professionals in the field of biology to perform two tasks. 
 	In the first task (\emph{structure identification task}), users were asked to identify structures on multiple levels of detail. 
-	The task description was provided by the molecular biologist and illustrator David Goodsell and resembles publicly available description of the HIV capsid at PDB-101 \cite{goodsell2016} (see supplemental material for full task description).
+	The task description was provided by the molecular biologist and illustrator David Goodsell and resembles a publicly available description of the HIV capsid at PDB-101 \cite{goodsell2016} (see supplemental material for full task description).
 	Based on this description of the HIV capsid, users were asked to identify the following structures: 
 	\begin{enumerate}
 		\itemsep0em 
-		\item one of the 12 pentamer capsid protein, 
+		\item one of the 12 pentamer capsid proteins, 
 		\item the N-terminal and C-terminal domain of the capsid protein, 
 		\item the alpha helix in the N-terminal domain stabilizing the hexamers / pentamers, 
 		\item the binding site of cyclophilin A, which is a loop on the surface of the capsid protein with several prline amino acids, and
@@ -904,18 +904,18 @@
 	\end{enumerate}
 	Mind that the last item was not included in the expert's task description, but was added as a representative task on the amino acid and atom level, respectively. 
 	Since we did not color-code the amino acid level explicitly, users were given the hint to identify methionine based on the sulfur atom. 
-	To assess the performance in the structure identification task, we recorded whether users were able to correctly identify the above listed structures solely based on their structural representation. 
-	We provided no textual labels or details-on-demand in this study.  
+	To assess the performance in the structure identification task, we recorded whether users were able to correctly identify the above listed structures. 
 	In the subsequent \emph{free exploration task}, users could freely navigate through the visualization, while thinking aloud. 
 	All reported insights were noted. 
 	Both tasks were video-taped and followed by a questionnaire and a semi-structured interview. 
 	
 	With the structure identification task, we could assess whether users with sufficient knowledge to assess molecular structures without additional text labels are able to identify the above structures using our system. 
 	Through the free exploration task, our goal was to assess whether users would notice and be distracted by our dynamic color mapping. 
+	%Although our system is targeted towards a broader audience, the knowledge of our users allowed us to assess whether the structural information is sufficiently distinct without adding textual information. 
 	We decided for a qualitative evaluation since there is no clear baseline for a comparative lab experiment (\textbf{TODO: show image without color coding for illustration!}). 
 	In addition, performance measures of such complex tasks are rather hard to compare with only a decent number of expert users performing the study. 
 	
-	After a pilot study with two researchers (28 and 25, one female) in the field of biochemistry and proteomics, respectively, we improved the navigation controls of our system (\textbf{HOW??}), since we observed a strong negative impact on the ability to explore the scene. 
+	%After a pilot study with two researchers (28 and 25, one female) in the field of biochemistry and proteomics, respectively, we improved the navigation controls of our system (\textbf{HOW??}), since we observed a strong negative impact on the ability to explore the scene. 
 	We will report observations, questionnaire results, and feedback from five experts or students in the field of molecular biology (2 PhD students, one Post-Doc, one pharmacist, and one master student; one female, aged 24 to 31, all with normal or corrected-to-normal vision). 
 	
 	\subsection{Results}
@@ -929,10 +929,10 @@
 	\definecolor{ci}{rgb}{1.0,0.0,0}
 	\definecolor{cn}{rgb}{0.5,0.5,0.5}
 	
-	 \begin{table*}
+\begin{table}
 	 	
 	 	\centering
-	 	\begin{tabular}{| l | l | l | l | l | l |}
+	 	{\footnotesize \begin{tabular}{| l | l | l | l | l | l |}
 	 		\hline
 	 		Task \textbackslash User & 1 & 2 & 3 & 4 & 5 \\
 	 		\hline
@@ -948,10 +948,10 @@
 	 		\hline
 	 		Methionine      & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cp}p} (90\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cp}p} 			& \textbf{\color{cn}n}  \\
 	 		\hline
-	 	\end{tabular}
+	 	\end{tabular}}
 	 	\caption{Structure identification task: \textbf{\color{cc}c} identified correct item, \textbf{\color{cp}p} partially correctly identified item, \textbf{\color{ci}i} identified incorrect item, \textbf{\color{cn}n} nothing found. User-reported certainty of correctness in brackets. }
 	 	\label{table:identification}
-	 \end{table*}
+	 \end{table}
 	 
 	 In the questionnaire, users assessed the identification of compartments, but also the proteins, as very easy  (see Figure \ref{fig:questionnaire}). 
 	 However, the domain and secondary structure identification was rated as much more difficult. 
@@ -973,21 +973,32 @@ On average, they spent 10 minutes for exploration.
 Some users reported that they learned something new when exploring the visualization, such as that \textit{``HIV uses [the] host membrane''} and \textit{``how crowded everything is''}. 
 The four users focused on different parts of the virus during their free exploration, such as the membrane (user 1 and 5), the proteins in the matrix (user 1 and 4), and the amino acids of the Cyclophilin A binding site (user 2). 
 
-TODO: color questionnaire, atomic level
+In the questionnaire, most users indicated that they noticed color changes (average response: 4 on a 5-point Likert scale), but the confusion caused by these color changes were rated fairly low (2 on average). 
+When asked about the changing colors in the post-experiment interview, all users reported that they noticed changing colors when zooming to the atomic level. 
+However, only one user noticed it on all levels, while a second one thought \textit{``something odd''} was occurring on the secondary structures level. 
 
 In general, our users all issued the highest possible grade for visual appeal in our questionnaire. 
 In the post-experiment interview, they explained that they considered the tool useful for presenting their research and educating students -- which is in line with our research goals. 
 However, they also had suggestions for improvement, such as adding text labels, visually marking the termini of the protein domains, and providing a cartoon representation for secondary structures. 
 
-\subsection{Discussion}
+\subsection{Summary and Discussion of Results}
 
-Our results indicate that Chameleon can support users when identifying structures in multi-scale molecular visualizations. 
+The performance and feedback of the molecular biologists in our study indicate that Chameleon supports users in identifying molecular structures on multiple scales. 
+Users were equally successful identifying a pentamer capsid protein and the protein domains. 
+The pentamer capsid protein differed only in shape from the more frequent hexamer capsid proteins, while the two different domains of the capsid proteins were solely encoded by color. 
+However, the users reported lower certainty but higher task difficulty for the identification of the domains.
+This is an indication that identification by structure is a stronger visual cue than identification by color alone -- yet, color can be used if no structural cues are available, as in our protein domain example. 
 
-TODO: comparison pentamer (identification solely by structure) and C- and N-terminal domain: same success rate, but lower certainty and higher task difficulty; indicates that structural changes are stronger 
+On the secondary structures level, the identification rate was similarly high, but users were quite uncertain about their findings and reported a high task difficulty. 
+On this level, alpha helices and beta sheets were discriminated by color. 
+However, the particular alpha helix mentioned in the task description could only be identified by its shape. 
+The request for an alternative cartoon representation for identifying structures on this level shows the limits of multi-scale color mapping without adapting the structural representation. 
+In the future, it will be important to explore combinations of semantic zooming comprising both, structural and color information. 
 
-TODO: secondary structures: shows limitations of color-only LOD: future work: combining Chameleon with alternative structural representation 
-
-TODO: only noticed color changes for atomic levels, referred to protein domains by color; indicates that dynamic color mapping is not disturbing, yet provides a 
+User feedback indicates that the dynamic color changes introduced by our system do not interfere with the users' workflows. 
+While protein domains and secondary structures were mainly referred to by their color, only few users noticed the color changes (apart from the atomic level) and none found them overly confusing. 
+All users found the visualization highly appealing and useful for presentation and education purposes. 
+We therefore conclude that Chameleon is a valuable extension to multi-scale molecular visualization, which causes no notable distraction, but allows for efficient and visually pleasing visual encoding of protein sub-structures. 
 
 	
 %	We conducted a user study with domain experts in biology in order to evaluate our visualization and to improve it based on the feedback.
