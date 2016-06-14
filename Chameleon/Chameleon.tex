@@ -884,226 +884,332 @@
 	
 	\section{User Study}
 	\label{sec:study}
-	We conducted a user study with domain experts in biology in order to evaluate our visualization and to improve it based on the feedback.
-	We wanted to know whether the colors helped to solve the tasks.
-	Furthermore, we wanted to know how disruptive the changing colors are, so we did not inform the users about their dynamic behaviour. 
-	Instead, we tested whether they would notice the change.
-	The user study was conducted in two study runs. 
-	In the first run, two domain experts (PhD students) tested the software. 
-	Their feedback was used to adapt the software, which was then tested by four domain experts (PhD and post-doc) and a master student. 
-	All users worked in the field of molecular biology. 
-	To conduct their research, the participants use visualizations on the protein or molecular level.
-	
-	%In the first iteration the secondary structures were identifiable through luminance, not color. They had the same hue as the domain they belonged to, simply lighter ($\beta$-sheets) or darker ($\alpha$-helices);
-	
-%	\subsection{Users}
-%	We gathered 7 domain experts. 6 were PhDs. and PostDocs, and one was a master student. All users were experts in the field of molecular biology. 
-%	To conduct their research, the participants use visualizations on the protein or molecular level.
-	
-	
-	\subsection{Study Design}
-	We performed a qualitative study instead of a quantitative lab experiment.
-	In a qualitative study, the user is given a visualization and is tasked with solving some questions. 
-	In contrast to a quantitative user study, where task completion times and errors across multiple conditions are compared, the goal is to measure what the user can discover about the dataset.
-	There are two reasons for this choice.
-	First, the task is too complex to be captured well by these simple measurements. 
-	Second, there is no established baseline condition.
-	Without means to distinguish structures on different search levels, the task would not be solvable and therefore either create a bias towards our technique or not fully demonstrate its potential.\\
-	The study consisted of two parts. In the first part the user was asked to identify structures on different levels. 
-	It also allows us to measure what information can be found.  
-	In the second part the users explored the HIV freely, and we observed what they discovered.
-	
-	\subsection{Structure Identification Task}
-%	\begin{figure}
-%		\centering
-%		\includegraphics[width=1\linewidth]{Figures/pentamerStudy}
-%		\caption{Rendering of Capsid during the second user study. In the center there is a pentamer, and to the left of it a hexamer.}
-%		\label{fig:pentamerStudy}
-%	\end{figure}
-	Based on a description designed by a molecular bioligist and an illustrator, the first task was to investigate the capsid of the HIV. 
-	The following is a shortened version of the description: \\
-	
-	\textit{
-		The capsid encloses the genome (2 strands of RNA) along with different viral proteins. 
-		The capsid protein is able to form hexamers and pentamers by shifting slightly in structure, and folds to form two domains connected by a flexible linker: the N-terminal domain and C-terminal domain. 
-		The N-terminal domain is involved in forming the hexamers or pentamers, and the C-terminal domain is involved in dimer contacts between hexamers / pentamers. 
-		There are two $\alpha$-helices in the N-terminal that stabilize the hexamers and pentamers. 
-		As HIV is budding from an infected cell, the cellular enzyme cyclophilin A binds to the capsid. 
-		On the surface of the capsid protein there is a loop with several proline amino acids, which is the bonding of cyclophilin.}\\
-	
-	The task which we gave to the users was to locate the following elements:
-	
+	We conducted a qualitative user study to answer two research questions: 
 	\begin{enumerate}
-		\itemsep0em 
-		\item Capsid pentamer.
-		\item N-terminal and C-terminal domain of capsid protein.
-		\item Alpha helix in the N-terminal domain stabilizing the hexamers and pentamers.
-		\item Binding site of cyclophilin A.
-		\item Methionine amino acid within the alpha helix.
+		\item Does Chameleon color mapping allow discrimination of structures on multiple scales? 
+		\item Are the dynamic color changes by Chameleon distracting / unpleasant in the exploration process? 
 	\end{enumerate}
 	
-	Each structure was located on a different scale. 
-	In the last task they were asked to find a Methionine amino acid molecule, for which they were given the chemical formula and a structural description.
-	The task of finding the pentamer was added so the users would practice moving the camera around. 
-	Pentamers and Hexamers share the same structure, they simply have 5 or 6 capsid proteins respectively. 
-	However, there are only 12 pentamers in the capsid.
-	Therefore, recognizing a pentamer was easier than actually finding one, because their sparcity was the largest obstacle in finding them.
+	To answer these two research questions, we asked seven students and professionals in the field of biology to perform two tasks. 
+	In the first task (\emph{structure identification task}), users were asked to identify structures on multiple levels of detail. 
+	The task description was provided by the molecular biologist and illustrator David Goodsell and resembles publicly available description of the HIV capsid at PDB-101 \cite{goodsell2016} (see supplemental material for full task description).
+	Based on this description of the HIV capsid, users were asked to identify the following structures: 
+	\begin{enumerate}
+		\itemsep0em 
+		\item one of the 12 pentamer capsid protein, 
+		\item the N-terminal and C-terminal domain of the capsid protein, 
+		\item the alpha helix in the N-terminal domain stabilizing the hexamers / pentamers, 
+		\item the binding site of cyclophilin A, which is a loop on the surface of the capsid protein with several prline amino acids, and
+		\item one methionine amino acid within the alpha helix.
+	\end{enumerate}
+	Mind that the last item was not included in the expert's task description, but was added as a representative task on the amino acid and atom level, respectively. 
+	Since we did not color-code the amino acid level explicitly, users were given the hint to identify methionine based on the sulfur atom. 
+	To assess the performance in the structure identification task, we recorded whether users were able to correctly identify the above listed structures solely based on their structural representation. 
+	We provided no textual labels or details-on-demand in this study.  
+	In the subsequent \emph{free exploration task}, users could freely navigate through the visualization, while thinking aloud. 
+	All reported insights were noted. 
+	Both tasks were video-taped and followed by a questionnaire and a semi-structured interview. 
 	
-	All capsid proteins, i.e., both hexamers and pentamers had the same color at the protein level. They could be distinguished only by shape. By zooming to the domain level, the N- and C-terminals are assigned different colors. At the secondary structure level, $\alpha$-helices and $\beta$-sheets received different colors. In the first study run, the helices had lower luminance than the domain they belonged to, and the sheets had higher luminance. In the second study run, each secondary structure received its own color. 
-	The cyclophiline binding site was not part of an $\alpha$-helix or $\beta$-sheet.
-	This was to test whether or not the user could find a structure that was not explicitly marked. 
-	We did not show the amino acid level.
-	To find the Methionine amino acid, the user had to look for a sulfur atom; there was no other amino acid with a sulfur atom near it, though there is a second one in the protein. 
-	If the user did not find the amino acid or realize that they needed to look for a sulfur atom, they were asked to find a sulfur atom instead.
+	With the structure identification task, we could assess whether users with sufficient knowledge to assess molecular structures without additional text labels are able to identify the above structures using our system. 
+	Through the free exploration task, our goal was to assess whether users would notice and be distracted by our dynamic color mapping. 
+	We decided for a qualitative evaluation since there is no clear baseline for a comparative lab experiment (\textbf{TODO: show image without color coding for illustration!}). 
+	In addition, performance measures of such complex tasks are rather hard to compare with only a decent number of expert users performing the study. 
 	
+	After a pilot study with two researchers (28 and 25, one female) in the field of biochemistry and proteomics, respectively, we improved the navigation controls of our system (\textbf{HOW??}), since we observed a strong negative impact on the ability to explore the scene. 
+	We will report observations, questionnaire results, and feedback from five experts or students in the field of molecular biology (2 PhD students, one Post-Doc, one pharmacist, and one master student; one female, aged 24 to 31, all with normal or corrected-to-normal vision). 
 	
+	\subsection{Results}
 	
+	Table \ref{table:identification} summarizes the performance of users in the structure identification task. 
+	Except for user 3 (the pharmacist), all users were able to correctly identify all structures down to the secondary structures level. 
+	\textbf{TODO: why did user 3 fail? Why was amino acid so hard to find?}
 	
+	\definecolor{cc}{rgb}{0,0.5,0}
+	\definecolor{cp}{rgb}{0.7,0.5,0}
+	\definecolor{ci}{rgb}{1.0,0.0,0}
+	\definecolor{cn}{rgb}{0.5,0.5,0.5}
 	
-	\subsection{Free Exploration}
-	In the structure identification task, we were interested in whether or not users could complete the tasks, as well as reasons for potential failures. 
-	In the exploration part, users could freely navigate through the visualization while thinking aloud. We were interested in the insights users would gain while exploring the model.
-	Most important is the degree of exploration, as well as what the users were capable of finding or looking at, as the users were capable of focusing on many different objects as well as on different levels.
+	 \begin{table*}
+	 	
+	 	\centering
+	 	\begin{tabular}{| l | l | l | l | l | l |}
+	 		\hline
+	 		Task \textbackslash User & 1 & 2 & 3 & 4 & 5 \\
+	 		\hline
+	 		Pentamer       & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (90\%) 	& \textbf{\color{ci}i} (70\%) 	& \textbf{\color{cc}c} (very) 		& \textbf{\color{cc}c}\\
+	 		\hline
+	 		C-terminal     & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (70\%) 	& \textbf{\color{ci}i} 		& \textbf{\color{cc}c} (pretty) 	& \textbf{\color{cc}c} (quite) \\
+	 		\hline
+	 		N-terminal     & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (70\%) 	& \textbf{\color{ci}i} 		& \textbf{\color{cc}c} (not very) 	& \textbf{\color{cc}c} (quite)\\
+	 		\hline
+	 		$\alpha$-helix & \textbf{\color{cc}c} (guess) 	& \textbf{\color{cc}c} (50\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cc}c} (pretty) 	& \textbf{\color{cc}c} (not sure) \\
+	 		\hline
+	 		Binding site   & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cc}c} (85\%) 	& \textbf{\color{cc}c} (90\%) 	& \textbf{\color{cc}c} (very) 		& \textbf{\color{cc}c} (pretty) \\
+	 		\hline
+	 		Methionine      & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cp}p} (90\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cp}p} 			& \textbf{\color{cn}n}  \\
+	 		\hline
+	 	\end{tabular}
+	 	\caption{Structure identification task: \textbf{\color{cc}c} identified correct item, \textbf{\color{cp}p} partially correctly identified item, \textbf{\color{ci}i} identified incorrect item, \textbf{\color{cn}n} nothing found. User-reported certainty of correctness in brackets. }
+	 	\label{table:identification}
+	 \end{table*}
+	 
+	 In the questionnaire, users assessed the identification of compartments, but also the proteins, as very easy  (see Figure \ref{fig:questionnaire}). 
+	 However, the domain and secondary structure identification was rated as much more difficult. 
+	 This is also reflected in the users' self-reported certainty of the identified structures (Table \ref{table:identification}): 
+	 While the users were quite certain about the identity of a pentamer capsid, once they spotted it, they were least certain about the alpha helices stabilizing the hexamers and pentamers. 
+	 All users, except for user 3, were able to identify the C- and N-terminal domains of the capsid proteins. 
+	 All those users referred to the domains by color. 
+	 Several (\textbf{TODO: how many??}) also referred to the alpha helices by color. 
+	 
+	 \begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{Figures/questionnaires.pdf}
+\caption{Average and standard error responses on five-point Likert scale for questions concerning the ease of identification of structures.}
+\label{fig:questionnaire}
+\end{figure}
+
+In the free exploration task, all except for user 3 explored the virus. 
+On average, they spent 10 minutes for exploration. 
+Some users reported that they learned something new when exploring the visualization, such as that \textit{``HIV uses [the] host membrane''} and \textit{``how crowded everything is''}. 
+The four users focused on different parts of the virus during their free exploration, such as the membrane (user 1 and 5), the proteins in the matrix (user 1 and 4), and the amino acids of the Cyclophilin A binding site (user 2). 
+
+TODO: color questionnaire, atomic level
+
+In general, our users all issued the highest possible grade for visual appeal in our questionnaire. 
+In the post-experiment interview, they explained that they considered the tool useful for presenting their research and educating students -- which is in line with our research goals. 
+However, they also had suggestions for improvement, such as adding text labels, visually marking the termini of the protein domains, and providing a cartoon representation for secondary structures. 
+
+\subsection{Discussion}
+
+Our results indicate that Chameleon can support users when identifying structures in multi-scale molecular visualizations. 
+
+TODO: comparison pentamer (identification solely by structure) and C- and N-terminal domain: same success rate, but lower certainty and higher task difficulty; indicates that structural changes are stronger 
+
+TODO: secondary structures: shows limitations of color-only LOD: future work: combining Chameleon with alternative structural representation 
+
+TODO: only noticed color changes for atomic levels, referred to protein domains by color; indicates that dynamic color mapping is not disturbing, yet provides a 
+
 	
-	\subsection{Results of First Study Run}
-	\begin{table}
-		
-		\centering
-		\begin{tabular}{| c | c | c |}
-			\hline
-			Task \textbackslash User & 1 & 2  \\
-			\hline
-			Pentamer       & n & n \\
-			\hline
-			C-terminal     & y & y \\
-			\hline
-			N-terminal     & y & y \\
-			\hline
-			$\alpha$-helix & n & y \\
-			\hline
-			Binding site   & y & y\\
-			\hline
-			Methionine      & partially & y \\
-			\hline
-		\end{tabular}
-		
-		\caption{Results of Task One in First Study Run}
-		\label{table:tableIterationOne}		
-	\end{table}
-	
-	
-	Two users participated in the first study run. 
-	Their results can be seen in Table~\ref{table:tableIterationOne}.
-	In the first task neither found the pentamer. 
-	Both found the N and C terminals. 
-	Both found the Cyclophilin binding site. 
-	Only one found the alpha helix and the amino acid, while the other found a different sulfur atom.
-	
-	In task 2 neither user interacted significantly with the visualization. This was likely due camera control issues. 
-	One of the participants had trouble getting the camera to point where he wanted in general, the other at the lower levels.
-	This is partially due to the method of control over the camera. 
-	The controls allowed panning, zooming and rotating the camera. 
-	Furthermore, the movement of the camera did not take the semantic or zoom level into account.
-	
-	\subsection{Feedback}
-	Two issues were identified in the first study run. 
-	The first problem was camera control. 
-	In order to use the camera when zoomed further in a certain degree of experience was required, otherwise the camera could easily be moved too far.
-	In order to fix this, we altered the camera controls so the user could slow down the camera movement significantly.
-	
-	The other issue was the detection of the secondary structures. 
-	One of the users could not detect the $\alpha$-helices. The other could, but did not use the coloring of the secondary structure.
-	Instead, he looked at the correct area on the atomic level and found it based on the atomic structure.
-	We noticed that there were several helices and sheets in the protein. 
-	This meant that the altering of the luminance might not seperate a helix from the surrounding area. 
-	Therefore, we altered the coloring of the secondary structures to be based on hue, and each secondary structure would receive its own hue.
-	This coloring is based on the same principle as other levels.
-	
-	
-	\subsection{Results of Identification Task Second Study Run}
-	In the second study run, none of the users had significant issues with the camera, though some controlled it better than others.
-	For the 5 users, as shown in Table~\ref{table:seconrund}, the results are as follows:
-	\begin{table}
-		
-		\centering
-		\begin{tabular}{| c | c | c | c | c | c |}
-			\hline
-			Task \textbackslash User & 1 & 2 & 3 & 4 & 5 \\
-			\hline
-			Pentamer       & y & y & n & y & y\\
-			\hline
-			C-terminal     & y & y & n & y & y \\
-			\hline
-			N-terminal     & y & y & n & y & y  \\
-			\hline
-			$\alpha$-helix & y & y & n & y & y \\
-			\hline
-			Binding site   & y & y & y & y & y \\
-			\hline
-			Methionine      & y & partially & n & partially & n  \\
-			\hline
-		\end{tabular}
-		\caption{Results of Task One in Second Study Run}
-		\label{table:seconrund}
-	\end{table}
-	Apart from user 3, users could identify structures across all levels fairly well. 
-	Users 2 and 4 found a Methionine, but not the correct one. 
-	This is because they didn't notice the colors, so they didn't know exactly where to restrict their search.
-	Therefore, they found one of the other Methionine amino acids in the protein.
-	
-	
-	\subsection{Observations}
-	One of the users failed to identify the pentamer and mixed up the N and C terminals. 
-	In the capsid, there is some space between the hexamers. 
-	From the users description of the pentamer and of the capsid structure, he mixed up the interior and exterior of the hexamers. 
-	The user who considered a subset of the C-terminal as the entire domain had zoomed past the domain level to the secondary structure level.
-	The user in the second study run who did not find the $alpha$-helix also did not find a sulfur atom. He never zoomed in closely enough to the proteins to change the colors to the atom colors. It is likely that he became discouraged due to his failure to find the helix, as well as believing there was no way to identify the sulfur atom.
-	
-	With the exception of one user, the only problems with identifying structures came at the secondary structure and amino acid level. 
-	The amino acid level was significantly more difficult, as the amino acids were not explicitly visually represented. 
-	The users had to find it based on one atom, a strategy which they had to arrive at themselves. 
-	
-	
-	
-	\subsection{Results of Exploration Task Second Study Run}
-	
-	The actions of the users in the second task were extremely varied. 
-	Unlike the first study run, 4 of the 5 users spent time exploring the virus. 
-	However, the parts they explored varied significantly. 
-	
-	User 1 looked at the membrane and the proteins in the matrix. 
-	He found one of the capsid hexamers that can also be found in the matrix.
-	User 2 tried to find the other amino acids in the helix that had been mentioned in the description. 
-	He also took particular interest in the Cyclophilin binding site. 
-	He looked at its structure and identified several of the amino acids.
-	The third user, who had significant issues finding the structures, did not explore the HIV significantly.
-	The fourth user looked at the atomic structure of proteins that were not part of the capsid.
-	However he did not explore any protein in detail. 
-	Instead, he was more interested in the variety of proteins in the HIV.
-	The last user took interest in the membrane and the proteins near it.
-	He was interested in the structure of the protein and in the area where it met the membrane.
-	Of those who explored the virus, the users spent just short of 10 minutes on average for exploration.
-	
-	
-	
-	
-	\subsection{Feedback}
-	An interesting aspect was how little the users noticed the changing colors, yet still used the colors to identify the areas.
-	When asked about the changing colors in the post-experiment interview, all users noticed the changing colors when zooming to the atomic level, but only one noticed it on all levels, while a second thought something odd was occuring on the secondary structure level. 
-	
-	Still, every user that found the N and C terminals referred to them by their color. 
-	Several referred to alpha helices by color. 
-	This means that the visualization succeeded in creating a smooth transition between the levels, and was still useful, despite the users not being aware of its support. 
-	Furthermore, the fact that most participants were successful at least up to the secondary structure level indicates that our multiscale visualization technique can be used on each level. 
-	Overall, users liked the study and visualization, but thought the tasks were very difficult.
-	
-	
-	The largest difference between the study runs was the degree of exploration in the second task. In the first task, neither user explored the HIV extensively. In contrast, the users from the second study run explored the virus on different levels and areas. Likely this was affected significantly by the degree of control over the movement through the visualization. In the first study run, the users had significant control issues which were absent in the second study due to changes. In both study runs no users reported that they got lost or confused by the visualization.
-	
-	The users were also asked how useful they considered the visualization to be for their research, or what they could use it for. The users considered it useful for presenting their research and educating students, which is in line with our goal as mentioned in the beginning. However, only one user from the first study run considered it useful for his research. This is in a sense not surprising. Most users worked on the level of molecular structure or protein interactions. Furthermore, while it may be possible to visualize an entire virus, a physical simulation of one is a different problem. 
-	
-	
-	Several users expressed a desire for alternative representations that they were more familiar with, such as the cartoon/ribbon representation for secondary structures. However, there are two things to take into account. First, adding such representations directly would prohibit a smooth transition. Combining the ribbon representation together with the Van der Waals representation will lead to confusing images when between levels. Furthermore, it is possible to add additional representations on demand when the user asks for it. For example, the user could click on a molecule which could trigger a pop-up with alternative representations.
+%	We conducted a user study with domain experts in biology in order to evaluate our visualization and to improve it based on the feedback.
+%	We wanted to know whether the colors helped to solve the tasks.
+%	Furthermore, we wanted to know how disruptive the changing colors are, so we did not inform the users about their dynamic behaviour. 
+%	Instead, we tested whether they would notice the change.
+%	The user study was conducted in two study runs. 
+%	In the first run, two domain experts (PhD students) tested the software. 
+%	Their feedback was used to adapt the software, which was then tested by four domain experts (PhD and post-doc) and a master student. 
+%	All users worked in the field of molecular biology. 
+%	To conduct their research, the participants use visualizations on the protein or molecular level.
+%	
+%	%In the first iteration the secondary structures were identifiable through luminance, not color. They had the same hue as the domain they belonged to, simply lighter ($\beta$-sheets) or darker ($\alpha$-helices);
+%	
+%%	\subsection{Users}
+%%	We gathered 7 domain experts. 6 were PhDs. and PostDocs, and one was a master student. All users were experts in the field of molecular biology. 
+%%	To conduct their research, the participants use visualizations on the protein or molecular level.
+%	
+%	
+%	\subsection{Study Design}
+%	We performed a qualitative study instead of a quantitative lab experiment.
+%	In a qualitative study, the user is given a visualization and is tasked with solving some questions. 
+%	In contrast to a quantitative user study, where task completion times and errors across multiple conditions are compared, the goal is to measure what the user can discover about the dataset.
+%	There are two reasons for this choice.
+%	First, the task is too complex to be captured well by these simple measurements. 
+%	Second, there is no established baseline condition.
+%	Without means to distinguish structures on different search levels, the task would not be solvable and therefore either create a bias towards our technique or not fully demonstrate its potential.\\
+%	The study consisted of two parts. In the first part the user was asked to identify structures on different levels. 
+%	It also allows us to measure what information can be found.  
+%	In the second part the users explored the HIV freely, and we observed what they discovered.
+%	
+%	\subsection{Structure Identification Task}
+%%	\begin{figure}
+%%		\centering
+%%		\includegraphics[width=1\linewidth]{Figures/pentamerStudy}
+%%		\caption{Rendering of Capsid during the second user study. In the center there is a pentamer, and to the left of it a hexamer.}
+%%		\label{fig:pentamerStudy}
+%%	\end{figure}
+%	Based on a description designed by a molecular bioligist and an illustrator, the first task was to investigate the capsid of the HIV. 
+%	The following is a shortened version of the description: \\
+%	
+%	\textit{
+%		The capsid encloses the genome (2 strands of RNA) along with different viral proteins. 
+%		The capsid protein is able to form hexamers and pentamers by shifting slightly in structure, and folds to form two domains connected by a flexible linker: the N-terminal domain and C-terminal domain. 
+%		The N-terminal domain is involved in forming the hexamers or pentamers, and the C-terminal domain is involved in dimer contacts between hexamers / pentamers. 
+%		There are two $\alpha$-helices in the N-terminal that stabilize the hexamers and pentamers. 
+%		As HIV is budding from an infected cell, the cellular enzyme cyclophilin A binds to the capsid. 
+%		On the surface of the capsid protein there is a loop with several proline amino acids, which is the bonding of cyclophilin.}\\
+%	
+%	The task which we gave to the users was to locate the following elements:
+%	
+%	\begin{enumerate}
+%		\itemsep0em 
+%		\item Capsid pentamer.
+%		\item N-terminal and C-terminal domain of capsid protein.
+%		\item Alpha helix in the N-terminal domain stabilizing the hexamers and pentamers.
+%		\item Binding site of cyclophilin A.
+%		\item Methionine amino acid within the alpha helix.
+%	\end{enumerate}
+%	
+%	Each structure was located on a different scale. 
+%	In the last task they were asked to find a Methionine amino acid molecule, for which they were given the chemical formula and a structural description.
+%	The task of finding the pentamer was added so the users would practice moving the camera around. 
+%	Pentamers and Hexamers share the same structure, they simply have 5 or 6 capsid proteins respectively. 
+%	However, there are only 12 pentamers in the capsid.
+%	Therefore, recognizing a pentamer was easier than actually finding one, because their sparcity was the largest obstacle in finding them.
+%	
+%	All capsid proteins, i.e., both hexamers and pentamers had the same color at the protein level. They could be distinguished only by shape. By zooming to the domain level, the N- and C-terminals are assigned different colors. At the secondary structure level, $\alpha$-helices and $\beta$-sheets received different colors. In the first study run, the helices had lower luminance than the domain they belonged to, and the sheets had higher luminance. In the second study run, each secondary structure received its own color. 
+%	The cyclophiline binding site was not part of an $\alpha$-helix or $\beta$-sheet.
+%	This was to test whether or not the user could find a structure that was not explicitly marked. 
+%	We did not show the amino acid level.
+%	To find the Methionine amino acid, the user had to look for a sulfur atom; there was no other amino acid with a sulfur atom near it, though there is a second one in the protein. 
+%	If the user did not find the amino acid or realize that they needed to look for a sulfur atom, they were asked to find a sulfur atom instead.
+%	
+%	
+%	
+%	
+%	
+%	\subsection{Free Exploration}
+%	In the structure identification task, we were interested in whether or not users could complete the tasks, as well as reasons for potential failures. 
+%	In the exploration part, users could freely navigate through the visualization while thinking aloud. We were interested in the insights users would gain while exploring the model.
+%	Most important is the degree of exploration, as well as what the users were capable of finding or looking at, as the users were capable of focusing on many different objects as well as on different levels.
+%	
+%	\subsection{Results of First Study Run}
+%	\begin{table}
+%		
+%		\centering
+%		\begin{tabular}{| c | c | c |}
+%			\hline
+%			Task \textbackslash User & 1 & 2  \\
+%			\hline
+%			Pentamer       & n & n \\
+%			\hline
+%			C-terminal     & y & y \\
+%			\hline
+%			N-terminal     & y & y \\
+%			\hline
+%			$\alpha$-helix & n & y \\
+%			\hline
+%			Binding site   & y & y\\
+%			\hline
+%			Methionine      & partially & y \\
+%			\hline
+%		\end{tabular}
+%		
+%		\caption{Results of Task One in First Study Run}
+%		\label{table:tableIterationOne}		
+%	\end{table}
+%	
+%	
+%	Two users participated in the first study run. 
+%	Their results can be seen in Table~\ref{table:tableIterationOne}.
+%	In the first task neither found the pentamer. 
+%	Both found the N and C terminals. 
+%	Both found the Cyclophilin binding site. 
+%	Only one found the alpha helix and the amino acid, while the other found a different sulfur atom.
+%	
+%	In task 2 neither user interacted significantly with the visualization. This was likely due camera control issues. 
+%	One of the participants had trouble getting the camera to point where he wanted in general, the other at the lower levels.
+%	This is partially due to the method of control over the camera. 
+%	The controls allowed panning, zooming and rotating the camera. 
+%	Furthermore, the movement of the camera did not take the semantic or zoom level into account.
+%	
+%	\subsection{Feedback}
+%	Two issues were identified in the first study run. 
+%	The first problem was camera control. 
+%	In order to use the camera when zoomed further in a certain degree of experience was required, otherwise the camera could easily be moved too far.
+%	In order to fix this, we altered the camera controls so the user could slow down the camera movement significantly.
+%	
+%	The other issue was the detection of the secondary structures. 
+%	One of the users could not detect the $\alpha$-helices. The other could, but did not use the coloring of the secondary structure.
+%	Instead, he looked at the correct area on the atomic level and found it based on the atomic structure.
+%	We noticed that there were several helices and sheets in the protein. 
+%	This meant that the altering of the luminance might not seperate a helix from the surrounding area. 
+%	Therefore, we altered the coloring of the secondary structures to be based on hue, and each secondary structure would receive its own hue.
+%	This coloring is based on the same principle as other levels.
+%	
+%	
+%	\subsection{Results of Identification Task Second Study Run}
+%	In the second study run, none of the users had significant issues with the camera, though some controlled it better than others.
+%	For the 5 users, as shown in Table~\ref{table:seconrund}, the results are as follows:
+%	\begin{table}
+%		
+%		\centering
+%		\begin{tabular}{| c | c | c | c | c | c |}
+%			\hline
+%			Task \textbackslash User & 1 & 2 & 3 & 4 & 5 \\
+%			\hline
+%			Pentamer       & y & y & n & y & y\\
+%			\hline
+%			C-terminal     & y & y & n & y & y \\
+%			\hline
+%			N-terminal     & y & y & n & y & y  \\
+%			\hline
+%			$\alpha$-helix & y & y & n & y & y \\
+%			\hline
+%			Binding site   & y & y & y & y & y \\
+%			\hline
+%			Methionine      & y & partially & n & partially & n  \\
+%			\hline
+%		\end{tabular}
+%		\caption{Results of Task One in Second Study Run}
+%		\label{table:seconrund}
+%	\end{table}
+%	Apart from user 3, users could identify structures across all levels fairly well. 
+%	Users 2 and 4 found a Methionine, but not the correct one. 
+%	This is because they didn't notice the colors, so they didn't know exactly where to restrict their search.
+%	Therefore, they found one of the other Methionine amino acids in the protein.
+%	
+%	
+%	\subsection{Observations}
+%	One of the users failed to identify the pentamer and mixed up the N and C terminals. 
+%	In the capsid, there is some space between the hexamers. 
+%	From the users description of the pentamer and of the capsid structure, he mixed up the interior and exterior of the hexamers. 
+%	The user who considered a subset of the C-terminal as the entire domain had zoomed past the domain level to the secondary structure level.
+%	The user in the second study run who did not find the $alpha$-helix also did not find a sulfur atom. He never zoomed in closely enough to the proteins to change the colors to the atom colors. It is likely that he became discouraged due to his failure to find the helix, as well as believing there was no way to identify the sulfur atom.
+%	
+%	With the exception of one user, the only problems with identifying structures came at the secondary structure and amino acid level. 
+%	The amino acid level was significantly more difficult, as the amino acids were not explicitly visually represented. 
+%	The users had to find it based on one atom, a strategy which they had to arrive at themselves. 
+%	
+%	
+%	
+%	\subsection{Results of Exploration Task Second Study Run}
+%	
+%	The actions of the users in the second task were extremely varied. 
+%	Unlike the first study run, 4 of the 5 users spent time exploring the virus. 
+%	However, the parts they explored varied significantly. 
+%	
+%	User 1 looked at the membrane and the proteins in the matrix. 
+%	He found one of the capsid hexamers that can also be found in the matrix.
+%	User 2 tried to find the other amino acids in the helix that had been mentioned in the description. 
+%	He also took particular interest in the Cyclophilin binding site. 
+%	He looked at its structure and identified several of the amino acids.
+%	The third user, who had significant issues finding the structures, did not explore the HIV significantly.
+%	The fourth user looked at the atomic structure of proteins that were not part of the capsid.
+%	However he did not explore any protein in detail. 
+%	Instead, he was more interested in the variety of proteins in the HIV.
+%	The last user took interest in the membrane and the proteins near it.
+%	He was interested in the structure of the protein and in the area where it met the membrane.
+%	Of those who explored the virus, the users spent just short of 10 minutes on average for exploration.
+%	
+%	
+%	
+%	
+%	\subsection{Feedback}
+%	An interesting aspect was how little the users noticed the changing colors, yet still used the colors to identify the areas.
+%	When asked about the changing colors in the post-experiment interview, all users noticed the changing colors when zooming to the atomic level, but only one noticed it on all levels, while a second thought something odd was occuring on the secondary structure level. 
+%	
+%	Still, every user that found the N and C terminals referred to them by their color. 
+%	Several referred to alpha helices by color. 
+%	This means that the visualization succeeded in creating a smooth transition between the levels, and was still useful, despite the users not being aware of its support. 
+%	Furthermore, the fact that most participants were successful at least up to the secondary structure level indicates that our multiscale visualization technique can be used on each level. 
+%	Overall, users liked the study and visualization, but thought the tasks were very difficult.
+%	
+%	
+%	The largest difference between the study runs was the degree of exploration in the second task. In the first task, neither user explored the HIV extensively. In contrast, the users from the second study run explored the virus on different levels and areas. Likely this was affected significantly by the degree of control over the movement through the visualization. In the first study run, the users had significant control issues which were absent in the second study due to changes. In both study runs no users reported that they got lost or confused by the visualization.
+%	
+%	The users were also asked how useful they considered the visualization to be for their research, or what they could use it for. The users considered it useful for presenting their research and educating students, which is in line with our goal as mentioned in the beginning. However, only one user from the first study run considered it useful for his research. This is in a sense not surprising. Most users worked on the level of molecular structure or protein interactions. Furthermore, while it may be possible to visualize an entire virus, a physical simulation of one is a different problem. 
+%	
+%	
+%	Several users expressed a desire for alternative representations that they were more familiar with, such as the cartoon/ribbon representation for secondary structures. However, there are two things to take into account. First, adding such representations directly would prohibit a smooth transition. Combining the ribbon representation together with the Van der Waals representation will lead to confusing images when between levels. Furthermore, it is possible to add additional representations on demand when the user asks for it. For example, the user could click on a molecule which could trigger a pop-up with alternative representations.
 	
 	
 	
