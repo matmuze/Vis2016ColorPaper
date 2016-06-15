@@ -1275,20 +1275,23 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	\section{Limitations}
 	There are still two basic limitations to our coloring scheme. 
 	The first is information on two different levels that are very close to each other, for example the amino acids and atoms. 
-	Amino acids vary significantly in size and complexity, however some consist out of just several carbon atoms with even less other atom types, except for hydrogen. 
-	Serine for example has only 4 carbon atoms. This means the user will be approximately as far away from a molecule when he wants to see the atoms or amino acid information. 
-	So the semantic scales reside on the same metric scale.
-	Our visualization strategy is designed for distinguishing structures where each semantic level has a unique metric level.
-	In other words, their semantic scales reside on the same metric level, as shown in Figure~\ref{fig:hivScale}.
+	As can be seen in Figure~\ref{fig:hivScale}, some semantic scales are on similar or the same metric scale. 
+	This means the user will be approximately as far away from a molecule when he wants to see the atoms or amino acid information. 
+%	Amino acids vary significantly in size and complexity, however some consist out of just several carbon atoms with even less other atom types, except for hydrogen. 
+%	Serine for example has only 4 carbon atoms. This means the user will be approximately as far away from a molecule when he wants to see the atoms or amino acid information. 
+%	So the semantic scales reside on the same metric scale.
+%	Our visualization strategy is designed for distinguishing structures where each semantic level has a unique metric level.
+%	In other words, their semantic scales reside on the same metric level, as shown in Figure~\ref{fig:hivScale}.
 	The second problem is the variety of information. 
-	For example, due to polarity, the electric charge may vary across a molecule. 
-	Another interesting aspect of a protein might be hydrophobicity.
-	A researcher may want to specify what information he can see. 
+%	For example, due to polarity, the electric charge may vary across a molecule. 
+%	Another interesting aspect of a protein might be hydrophobicity.
+	A researcher may want to specify what information he can see, such as polarity or hydrophobicity.
 	This means there are several paths that can be taken when zooming in.\\
-	Another problem is alternative representations, such as cartoon representations of the secondary structure of proteins. 
-	Several users expressed a desire for alternative representations that they were more familiar with.
-	However, there can be some difficulty when using them. The cartoon representation for example has a lot of area which can be seen through. 
-	If two proteins are one behind the other, then they can be hard to tell apart.
+	Another problem is alternative representations, such as cartoon representations of the secondary structure of proteins, which are not being used.
+	These representations could cause unexplored issues when zooming from one level to another.
+%	Several users expressed a desire for alternative representations that they were more familiar with.
+%	However, there can be some difficulty when using them. The cartoon representation for example has a lot of area which can be seen through. 
+%	If two proteins are one behind the other, then they can be hard to tell apart.
 	
 
 	
@@ -1303,15 +1306,15 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	Furthermore the coloring scheme is capable of showing structures on each level in a visually distinct manner. 
 	The user study performed with our research prototype shows that users can find information in an HIV dataset on each level. \\
 	%\subsection{future work}
-	There are several points that can be addressed in the future. The most obvious is to overcome the two basic limitations mentioned above. 
+	There are several points that can be addressed in the future. The most obvious is to overcome the limitations mentioned above. 
 	The users also expressed interest in interacting with the visualization. 
 	Structures such as the capsid consist out of numerous proteins. 
 	The users wanted to be able highlight individual proteins or sections. 
 	It might also be possible to couple this action with alternative representations for proteins, such as the cartoon representation.
-	Finally, camera control can be adapted to the visualization. 
-	Currently, the camera is controlled simply by inputing the desired direction of movement. 
-	Alternate controls, such as tying the camera to a protein or structure, could be added.
-	This would allow the user easier inspection of proteins or protein structures by making it easier for him to rotate around or follow the surface of an object.
+%	Finally, camera control can be adapted to the visualization. 
+%	Currently, the camera is controlled simply by inputing the desired direction of movement. 
+%	Alternate controls, such as tying the camera to a protein or structure, could be added.
+%	This would allow the user easier inspection of proteins or protein structures by making it easier for him to rotate around or follow the surface of an object.
 	
 	
 	
