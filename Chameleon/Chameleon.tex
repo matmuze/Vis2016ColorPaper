@@ -558,9 +558,8 @@
 	For each protein group we derive a visibility coefficient in order to scale their corresponding section on the hue circle. 
 	This coefficient is calculated based on the visibility of each protein type contained in a given group.
 	The visibility of a given protein type is defined as a boolean value: visible or not visible.
-	A protein type is not visible if the ratio of visible to non visible elements becomes too low, based on an arbitrarily defined threshold $t_v$.
-	[tbd elaborate on t sub v]
-	A protein type will also be set as visible if some elements are located close to the camera and occupy a significant number of pixels in the viewport, even when the overall percentage of visible elements is low.
+	A protein type is not visible if none are displayed on the screen.
+%	A protein type will also be set as visible if some elements are located close to the camera and occupy a significant number of pixels in the viewport, even when the overall percentage of visible elements is low.
 	Therefore we also take the pixel occupancy of the proteins into account.
 	The visibility value of a given protein type is computed as follows:
 	
@@ -585,7 +584,7 @@
 	\end{equation}
 	
 	Where $q$ is a scaling factor which is proportional to the number of protein types in that group. 
-	Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the group coefficient to determine the size of the individual hue sections. \\
+	Once we compute the coefficient of each protein group, we divide the hue circle proportionally to the group coefficient to determine the size of individual hue sections. \\
 	
 	\subsubsection{Extracting Visibility Information}
 	\label{sssec:extracting}
@@ -901,7 +900,9 @@
 	
 	Table \ref{table:identification} summarizes the performance of users in the structure identification task. 
 	Except for user 3 (the pharmacist), all users were able to correctly identify all structures down to the secondary structures level. 
-	\textbf{TODO: why did user 3 fail? Why was amino acid so hard to find?}
+	User 3 mixed up the N and C terminals of the capsid protein, and the rest of the tasks are to some degree based on finding them.
+	With regards to the amino acid, there was more than one kind of amino acid with a sulfur atom, and two users mistook it for the correct one.
+	\textbf{TODO: why did user 3 fail? Why was amino acid so hard to find? DONE: Look at 2 previous sentences}
 	
 	\definecolor{cc}{rgb}{0,0.5,0}
 	\definecolor{cp}{rgb}{0.7,0.5,0}
@@ -1265,14 +1266,14 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	There are still two basic limitations to our coloring scheme. 
 	The first is information on two different levels that are very close to each other, for example the amino acids and atoms. 
 	Amino acids vary significantly in size and complexity, however some consist out of just several carbon atoms with even less other atom types, except for hydrogen. 
-	Serine for example has only of 4 carbon atoms. This means the user will be approximately as far away from a molecule when he wants to see the atoms or amino acid information. 
+	Serine for example has only 4 carbon atoms. This means the user will be approximately as far away from a molecule when he wants to see the atoms or amino acid information. 
 	So the semantic scales reside on the same metric scale.
-	Our visualization strategy is designed for distinguishing structures where each semantic level is assigned a unique metric level.
+	Our visualization strategy is designed for distinguishing structures where each semantic level has a unique metric level.
 	In other words, their semantic scales reside on the same metric level, as shown in Figure~\ref{fig:hivScale}.
 	The second problem is the variety of information. 
 	For example, due to polarity, the electric charge may vary across a molecule. 
 	Another interesting aspect of a protein might be hydrophobicity.
-	A researcher may want to specify what kind of information he can see. 
+	A researcher may want to specify what information he can see. 
 	This means there are several paths that can be taken when zooming in.\\
 	Another problem is alternative representations, such as cartoon representations of the secondary structure of proteins. 
 	Several users expressed a desire for alternative representations that they were more familiar with.
