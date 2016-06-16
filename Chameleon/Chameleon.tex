@@ -595,14 +595,18 @@
 	The third and fourth parameter control the actual angular width of the wedges: 
 	Given the chroma $C^*$ (i.e.\, radius) of the hue ring and the optimal Euclidean color distance $d$, the optimal angular distance between neighboring proteins within the same compartment is defined as: 
 	\[
-	\alpha = arcsin\frac{d}{C^*}. 
+	\alpha_{opt} = arcsin\frac{d}{C^*}. 
 	\]
 	
-	The hue ring in Figure \ref{fig:hueWheel} shows 21 distinct colors, where the distance $d$ between neighboring colors is around 12, which corresponds to approximately five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, and the spacing $s$ is set to zero.  
-	However, in the initial level, have 46 distinct protein types distributed to five compartments. 
+	In the hue ring in Figure \ref{fig:hueWheel}, we chose a distance $d$ between neighboring colors of 11.5, which corresponds to five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}. 
+	With this setting and a chroma radius of $C^*=40$, $\alpha_{opt}$ is 16.7, which allows for a maximum of 21 distinct hues. 
+	With a lower $d$, individual color dots could not be properly distinguished any more. 
+%	The hue ring in Figure \ref{fig:hueWheel} shows 21 distinct colors, where the distance $d$ between neighboring colors is around 12, which corresponds to approximately five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, and the spacing $s$ is set to zero.  
+%	We choose this $d$ of 12 as our optimal color distance. 
+	However, in the initial level of HIV, we have 46 distinct protein types distributed to five compartments. 
 %	Empirically, we found that $d$ around 11 delivers results which correspond to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, allowing for easy discrimination. 
 %	Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins in the HIV model. 
-	The angular distance  $\alpha$ between protein type colors can therefore be below the optimal $d$: 
+	The angular distance  $\alpha$ between protein type colors can therefore be below the optimal $\alpha_{opt}$: 
 	\[
 	\alpha= \frac{360  - n \cdot s}{\sum_{i} m_i}. 
 	\]
@@ -618,7 +622,7 @@
 	\label{sec:dynamic}
 	
 	%In the initial state, we first generate a color palette assuming that all the compartments are visible.
-	As the user zooms in and explores the scene, large parts of the scene may not actually be visible in the current viewport, as is illustrated in the lower row of Figure~\ref{fig:coloroverview}.
+	As the user zooms in and explores the scene, large parts of the scene may not actually be visible in the current viewport, as is illustrated in the lower row of Figure~\ref{fig:coloroverview}(a-c).
 	In this configuration the color palette becomes underexploited. %, and can be improved to increase discriminability. 
 	We therefore re-compute and optimize the color palette on-the-fly as proteins appear and disappear.
 	An overview of the mechanism is illustrated in Figure~\ref{fig:coloroverview}.
@@ -721,9 +725,9 @@
 	To select hues for $m$ protein domains, the angular distances between the domain hues are calculated as follows: 
 	
 	\[
-	\gamma = min(d, \beta / m),
+	\gamma = min(\alpha_{opt}, \beta / m),
 	\]
-	where $\beta$ is the maximum size of the domain wedge.
+	where $\beta$ is the maximum size of the domain wedge and $\alpha_{opt}$ is the optimal angular distance, as defined in Section \ref{sec:hue}.
 	This means that the wedge will grow linearly with the number of domains until it reaches the angle $\beta$, at which point the angle between domains will start to shrink. 
 	We set $\beta$ to 180 so that a single protein would not cover more than half of the hues. 
 	A larger $\beta$ could lead to a loss of hierarchical information. 
