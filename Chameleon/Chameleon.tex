@@ -86,9 +86,9 @@
 	
 	\teaser{
 		\centering
-		\includegraphics[width=1\linewidth]{Figures/teaser_new}
+		\includegraphics[width=0.95\linewidth]{Figures/teaser_new}
 				\caption{Interactive multi-scale visualization of HIV using ``Chameleon'' for dynamic color coding of protein and atom properties: 
-					Zooming from an overview of the entire virus (a) to the capsid (b), the capsid interior (c), \textbf{TODO: which??} a single protein in the capsid (d), and its atomic structure (e). 
+					Zooming from an overview of the entire virus (a) to the capsid (b), the capsid interior (c), a single integrase (pdb id: 1ex4) protein in the capsid (d), and its atomic structure (e). 
 					Mind how protein colors become more differentiated as we zoom in (a-b), and how protein domains (c), secondary structures (d), and individual atoms (e) are being progressively revealed through dynamic color adaptations.  }
 				
 %		\caption{Multi-scale visualization of HIV in real-time, using cellVIEW~\cite{muzic2015cellview} for rendering, together with the presented technique "Chameleon" for dynamic color coding of protein and atom properties.
@@ -135,6 +135,7 @@
 	With improving technology, more and more data across all levels---from atomic to compartment---is being gathered on viruses and cells. 
 	Today it is possible to display an ever increasing amount of this data at once, up to and beyond an entire human immunodeficiency virus (HIV)~\cite{muzic2015cellview}, with its complete macromolecular composition.
 	All levels can be present; we can start at the compartment level and zoom in past the proteins, their domains and secondary structures, all the way to the amino acids and atoms (see Figure \ref{teaserImage}). Visualizations of HIV are not only used for research purposes, but also to communicate its basic properties to a broader audience, as in Figure~\ref{fig:motivation}, which is what we are interested in.
+
 	
 	%Colors are used to distinguish elements on each scale.
 	Illustrators use colors to distinguish elements. 
@@ -227,7 +228,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width=1\linewidth]{Figures/motivation}
-				\caption{Multi-scale illustration of HIV \cite{RCSBPDB2011}: overview of the virus on the left and close-up on the \textbf{TODO: which??} protein on the right. In the close-up different shades of blue are used to discriminate between protein domains, and carbon atoms are slightly darker. }
+				\caption{Multi-scale illustration of HIV \cite{RCSBPDB2011}: overview of the virus on the left and close-up on the envelope protein on the right. In the close-up different shades of blue are used to discriminate between protein domains, and carbon atoms are slightly darker. }
 %		\caption{Motivation: Multi-scale illustration of HIV from David Goodsell. 
 %			The left part shows a close up on the protein which is indicated on the right part via the black line.
 %			In the close-up the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
@@ -594,10 +595,10 @@
 	The second parameter controls the relative angular width of the wedges. 
 	The third and fourth parameter control the actual angular width of the wedges: 
 	Given the chroma $C^*$ (i.e.\, radius) of the hue ring and the optimal Euclidean color distance $d$, the optimal angular distance between neighboring proteins within the same compartment is defined as: 
-	\[
-	\alpha_{opt} = arcsin\frac{d}{C^*}. 
-	\]
-	
+	\[%
+	\alpha_{opt} = arcsin\frac{d}{C^*}. %
+	\]%
+	%
 	In the hue ring in Figure \ref{fig:hueWheel}, we chose a distance $d$ between neighboring colors of 11.5, which corresponds to five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}. 
 	With this setting and a chroma radius of $C^*=40$, $\alpha_{opt}$ is 16.7, which allows for a maximum of 21 distinct hues. 
 	With a lower $d$, individual color dots could not be properly distinguished any more. 
@@ -607,11 +608,10 @@
 %	Empirically, we found that $d$ around 11 delivers results which correspond to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, allowing for easy discrimination. 
 %	Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins in the HIV model. 
 	The angular distance  $\alpha$ between protein type colors can therefore be below the optimal $\alpha_{opt}$: 
-	\[
-	\alpha= \frac{360  - n \cdot s}{\sum_{i} m_i}. 
-	\]
-	
-	
+	\[%
+	\alpha= \frac{360  - n \cdot s}{\sum_{i} m_i}. %
+	\]%
+	%
 	This means that in the initial overview zoom level protein colors can be very similar and hard to distinguish. 
 	In the overview zoom level, this effect is actually desirable to avoid salt and pepper noise. 
 	However, as we zoom in, we want increasing discriminability. 
@@ -637,18 +637,15 @@
 %	A protein type will also be set as visible if some elements are located close to the camera and occupy a significant number of pixels in the viewport, even when the overall percentage of visible elements is low.
 %	Therefore we also take the pixel occupancy of the proteins into account.
 	The visibility value of a given protein type is computed as follows:
-	
-	\begin{equation}
-	c_{i}=\begin{cases}
+	%
+	\begin{align}
+	c_{i}&=\begin{cases}%
 	1, & \text{if $p_{i}>t_{p}$ or $v_{i}>t_{v}$}.\\
-	0, & \text{otherwise}.
-	\end{cases}
-	\end{equation}
-	
-	\begin{equation}
-	C = \left\lbrace c_{1}, ... , c_{n} \right\rbrace,  
-	\end{equation}
-	
+	0, & \text{otherwise}.%
+	\end{cases}\\
+	C &= \left\lbrace c_{1}, ... , c_{n} \right\rbrace,  %
+	\end{align}
+	%
 	where $c_i$ corresponds to the visibility factor of a given protein type $i$, $p_i$ corresponds to the ratio of pixels occupied by proteins of type $i$, and $v_i$ is the ratio of proteins of type $i$ that are visible.
 	The parameters $t_{p}$ and $t_{v}$ correspond to predefined thresholds for the screen coverage and visibility, respectively. 
 	$C$ is a set of $n$ protein types that constitute a group.
@@ -697,18 +694,18 @@
 	The forces are applied in a single dimension which corresponds to the hue circle and include distance constraints between the groups as well as attraction forces between groups and their default position.
 	We then integrate the forces, using Euler Integration on the CPU \textbf{TODO: GPU??} to compute the new positions of the groups until reaching a state of equilibrium.
 	For a given group $i$, the distance constraint response force with another group $j$ is computed as follows:
-	
+	%
 	\begin{equation}
 	y(i, j) = l(g_{i},g_{j})max(|g_{i} - g_{j}| - (r_{i}+r_{j}), 0)
 	\end{equation}
-	
+	%
 	Where $l$ corresponds to the direction of the response, i.e., whether the hue angle should increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic}.
 	For a single group the overall forces, comprising of attraction and repulsion forces, are computed as follow:
-	
+	%
 	\begin{equation}
 	f_{i} = (g_{i} - I_{i}) + \sum_{j=1}^{n, i \neq j} y(i,j)
 	\end{equation}
-	
+	%
 	The first part of the right side of this equation corresponds to the attraction forces, where $I$ corresponds to the initial group position.
 	The second part is the sum of repulsion forces between the given group and the other ones.
     Additionally we also include a damping value in the integration calculus to smooth-out the motion of the group centroids when the viewport and visibility configuration abruptly change. This does not affect the final color assignment for a view, merely the transition.
@@ -723,10 +720,11 @@
 	As we zoom further into the details of the proteins, we begin to reveal the colors corresponding to the following levels (domains, secondary structures, atoms). 
 	To ensure logical transitions between levels and to maintain hierarchical information, we introduce a hierarchical hue picking method. 
 	To select hues for $m$ protein domains, the angular distances between the domain hues are calculated as follows: 
-	
+	%
 	\[
-	\gamma = min(\alpha_{opt}, \beta / m),
+	\gamma = min(\alpha_{opt}, \beta / m)
 	\]
+	%
 	where $\beta$ is the maximum size of the domain wedge and $\alpha_{opt}$ is the optimal angular distance, as defined in Section \ref{sec:hue}.
 	This means that the wedge will grow linearly with the number of domains until it reaches the angle $\beta$, at which point the angle between domains will start to shrink. 
 	We set $\beta$ to 180 so that a single protein would not cover more than half of the hues. 
@@ -822,14 +820,14 @@
 			\label{fig:results_1}
 		\end{figure*}
 		
-		\begin{figure*}[t]
+		\begin{figure}[t]
 			\centering
-			\includegraphics[width=1\linewidth]{Figures/results}
+			\includegraphics[width=1\linewidth]{Figures/huemodulation2x2}
 			\caption{The hue, chroma, luminance modulation in sequential steps.
 				(a) only the protein colors are show, (b) protein domains are show via hue modulation, (c) secondary structures are shown via luminance modulation, (d) secondary structures are shown via hue modulation
-				(e) atom types are shown via luminance modulation, (f) focus is highlighted via chroma modulation, (g) atom types are shown via hue modulation. \textbf{TODO: remove (a), put b-e into a 2x2 one-column figure matrix, showing the 2 zoom levels with and without luminance modulation; refer to this from luminance modulation section. Put (g) into context desaturation section. }}
+				(e) atom types are shown via luminance modulation, (f) focus is highlighted via chroma modulation, (g) atom types are shown via hue modulation. \textbf{TODO: update caption remove (a), put b-e into a 2x2 one-column figure matrix, showing the 2 zoom levels with and without luminance modulation; refer to this from luminance modulation section. Put (g) into context desaturation section. }}
 			\label{fig:results_2}
-		\end{figure*}
+		\end{figure}
 	
 	
 	
