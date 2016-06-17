@@ -39,6 +39,7 @@
 \usepackage{egweblnk}
 \usepackage{cite}
 \usepackage{amsmath}
+\usepackage{booktabs}
 % For backwards compatibility to old LaTeX type font selection.
 % Uncomment if your document adheres to LaTeX2e recommendations.
 % \let\rm=\rmfamily    \let\sf=\sffamily    \let\tt=\ttfamily
@@ -86,7 +87,7 @@
 	
 	\teaser{
 		\centering
-		\includegraphics[width=0.95\linewidth]{Figures/teaser_new}
+		\includegraphics[width=0.975\linewidth]{Figures/teaser_new}
 				\caption{Interactive multi-scale visualization of HIV using ``Chameleon'' for dynamic color coding of protein and atom properties: 
 					Zooming from an overview of the entire virus (a) to the capsid (b), the capsid interior (c), a single integrase (pdb id: 1ex4) protein in the capsid (d), and its atomic structure (e). 
 					Mind how protein colors become more differentiated as we zoom in (a-b), and how protein domains (c), secondary structures (d), and individual atoms (e) are being progressively revealed through dynamic color adaptations.  }
@@ -373,8 +374,9 @@
 	We manipulate all three color components of the HCL color space to fulfill these requirements: 
 	We use the \textbf{hue} to distinguish between structures at the respective zoom levels, as described in Section \ref{sec:hue}. 
 	The \textbf{chroma} is used to increase color discriminability for elements in the focus against the context (Section \ref{sec:chroma}). 
-	Finally, we indicate structures from lower hierarchies in the \textbf{luminance} channel to mimic illustrator techniques (see Figure \ref{fig:motivation}) and to smoothen color transitions (Section \ref{sec:luminance}). 
-	Wwe use CIELab and HCL color palettes which are perceptually linear. 
+	Finally, we indicate structures from lower hierarchies in the \textbf{luminance} channel to mimic illustrator techniques (see Figure \ref{fig:motivation}) and to smoothen color transitions (Section \ref{sec:luminance}).
+	All objects in the scene must be fully opaque, as transparency can lead to unpredictable and confusing color mixtures. 
+	We use CIELab and HCL color palettes which are perceptually linear. 
 	This means we can quantify the dissimilarity between colors by their Euclidean distance.
 	We describe how we dynamically adapt the hues as the user navigates the scene to ensure color discriminability even in a scene with dozens of different entities (Section \ref{sec:dynamic}), and how hues are sub-divided hierarchically as the user zooms further into the scene (Section \ref{sec:hierarchy}). 
 	Finally, we demonstrate the effectiveness of our technique in a user study with professionals and students from the field of molecular biology (Section \ref{sec:study}). 
@@ -615,7 +617,7 @@
 	This means that in the initial overview zoom level protein colors can be very similar and hard to distinguish. 
 	In the overview zoom level, this effect is actually desirable to avoid salt and pepper noise. 
 	However, as we zoom in, we want increasing discriminability. 
-	We therefore introduce a dynamic, view-dependent color adaptation approach. 
+	\textbf{We therefore introduce a dynamic, view-dependent color adaptation approach over which the user can manually set some parameters if he so desires.}
 	
 	%\textbf{MWA END: my suggestion is to remove the next paragraph}
 	\subsection{View-Dependent Color Adjustment}
@@ -648,6 +650,7 @@
 	%
 	where $c_i$ corresponds to the visibility factor of a given protein type $i$, $p_i$ corresponds to the ratio of pixels occupied by proteins of type $i$, and $v_i$ is the ratio of proteins of type $i$ that are visible.
 	The parameters $t_{p}$ and $t_{v}$ correspond to predefined thresholds for the screen coverage and visibility, respectively. 
+	\textbf{In this paper they are equal to 0, i.e. they are visible if they are on the screen.}
 	$C$ is a set of $n$ protein types that constitute a group.
 	\textbf{TODO: are we sure this is correct? Could it be as simple as just counting all protein types that have at least one visible pixel per compartment? Otherwise: what happens if a protein type has visible pixels below the threshold? Which colors are they assigned?}
 	
@@ -657,9 +660,18 @@
 	w = q\sum_{i=1}^{n} c_{i}, c_{i} \in C, 
 	\end{equation}
 	
-	where $q$ is a scaling factor which is proportional to the number of protein types in that group. 
+	where $q$ is a scaling factor which is proportional to \textbf{the total number of proteins.}%the number of protein types in that group. 
 	\textbf{TODO: again, is this correct? a scaling factor proportional to the total number of protein types in a group multiplied by the visible protein types -- could this be just the ratio visible by total? But this would not fit to Figure 4. My guess would be that simply $m_i$ of the previous section is set, and the smaller $m_i$, the bigger the possible angular distance between the hues. Please clarify!}
-	Once we compute the group visibility coefficient of each protein group, we divide the hue circle proportionally to the group visibility coefficient to determine the size of individual hue sections. 
+	
+	\textbf{Once we compute the group visibility coefficient of each protein group, we divide the hue circle proportionally to the group visibility coefficient to determine the size of individual hue sections. 
+	The coefficient corresponds to the angle on the hue circle. 
+	We give control over the maximum angle to the user. 
+	This allows the user to take control if necessary.
+	For example, if there are 2 groups with 2 proteins each, they would all be equi-distant from each other.
+	By specifying a maximum angle, the user can force the proteins to group.
+	If the user specifies a maximum angle of 0, then each protein group only has one color.
+	We also allow the user to control the angle between 2 groups.
+	This means the user can control how distinct groups are from each other, if he so desires.}
 	
 	\subsubsection{Extracting Visibility Information}
 	\label{sssec:extracting}
@@ -682,6 +694,7 @@
 	
 	\subsubsection{Force-Based Hue Assignment}
 	
+	\textbf{We use a force based method in order to determine the positions of the groups on the hue circle [manu: what we define as the wedges]}
 	By default, each group is assigned a centroid hue value, which we refer to as default centroid hue.
 	As we move the camera and affect the visibility of the proteins, we modulate the size of the groups on the hue ring.
 	Upon modulation of the group sizes, we must also reposition the group centroids on the ring.
@@ -696,10 +709,13 @@
 	For a given group $i$, the distance constraint response force with another group $j$ is computed as follows:
 	%
 	\begin{equation}
-	y(i, j) = l(g_{i},g_{j})max(|g_{i} - g_{j}| - (r_{i}+r_{j}), 0)
+	y(i, j) = l(g_{i},g_{j})max((w_{i}+w_{j}) - |g_{i} - g_{j}|, 0)
 	\end{equation}
 	%
-	Where $l$ corresponds to the direction of the response, i.e., whether the hue angle should increase or decrease, g is the position of the group centroid, and r is the radius of the distance constraint and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic}.
+	\textbf{MNAU: Mathieu got the formula wrong. Had to switch $(w_{i}+w_{j})$ and $|g_{i} - g_{j}|$}
+	\textbf{MANU: I renamed r to w}
+	Where $l$ corresponds to the direction of the response, i.e., whether the hue angle should increase or decrease, $g$ is the position of the group centroid, and $w$ is the radius of the distance constraint and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic}.
+	\textbf{Essentially, all it does is determine if two groups overlap or not and to what degree. If they do no overlap, the force is equal to 0. The w takes the user specified minimum distance between wedges into account.}
 	For a single group the overall forces, comprising of attraction and repulsion forces, are computed as follow:
 	%
 	\begin{equation}
@@ -756,7 +772,7 @@
 	The individual zoom levels (compartment, proteins, domains, etc.) are associated with specific distances of the camera to the scene. 
 	In our HIV example, distance values were chosen so that the associated zoom levels were optimally visible. 
 	Assigning zoom levels to camera distances is task-dependent. 
-	Some items, like atoms and amino acids, have very similar sizes (see Figure \ref{fig:hivScale}) and would therefore occupy similar zoom ranges. 
+	Some items, like atoms and amino acids, have very similar sizes (see Figure \ref{fig:hivScale}) and would therefore occupy similar zoom ranges, i.e. the camera would be similarly close to the object.
 	It therefore depends on the users' priorities to select or omit certain levels for color coding. 
 	
 	\begin{figure}
@@ -776,7 +792,10 @@
 	We also use the previously rendered depth texture to retrieve the world-space position of a pixel in the shader.
 	Then, from the world position of each pixel, we are able to compute the world space distance to the camera.
 	From the camera distance we are able to compute the current degree of transition between the closest levels, as well as the hue values associated with the two closest zoom levels.	
-	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the two levels the user is between, based on the degree of transition, as illustrated in Figure \ref{fig:zoom_continuum}, top and middle line. 
+	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the two levels the user is between, based on the degree of transition, as illustrated in Figure \ref{fig:zoom_continuum}, top and middle line.
+	At what camera distances which levels are displayed is determined by the user for two reasons.
+	One, depending on the visualization complexity and item size, the desired distance may vary.
+	Two, the same object in two different visualizations may have different world space sizes.
 	
 		\begin{figure}
 			\centering
@@ -1005,6 +1024,8 @@
 	
 	%After a pilot study with two researchers (28 and 25, one female) in the field of biochemistry and proteomics, respectively, we improved the navigation controls of our system (\textbf{HOW??}), since we observed a strong negative impact on the ability to explore the scene. 
 	We will report observations, questionnaire results, and feedback from five experts or students in the field of molecular biology (2 PhD students, one Post-Doc, one pharmacist, and one master student; one female, aged 24 to 31, all with normal or corrected-to-normal vision). 
+	While the method is also aimed at the general audience, no such users were involved in the study. 
+	The task description for such users would have to be extremely long and detailed, leading likely to issues with text comprehension or revealing too much information. 
 	
 	\subsection{Results}
 	
@@ -1031,24 +1052,20 @@
 \begin{table}
 	 	
 	 	\centering
-	 	{\scriptsize \begin{tabular}{| l | l | l | l | l | l |}
-	 		\hline
-	 		Task \textbackslash User & 1 & 2 & 3 & 4 & 5 \\
-	 		\hline
-	 		Pentamer       & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (90\%) 	& \textbf{\color{ci}i} (70\%) 	& \textbf{\color{cc}c} (very) 		& \textbf{\color{cc}c}\\
-	 		\hline
-	 		C-terminal     & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (70\%) 	& \textbf{\color{ci}i} 		& \textbf{\color{cc}c} (pretty) 	& \textbf{\color{cc}c} (quite) \\
-	 		\hline
-	 		N-terminal     & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (70\%) 	& \textbf{\color{ci}i} 		& \textbf{\color{cc}c} (not very) 	& \textbf{\color{cc}c} (quite)\\
-	 		\hline
-	 		$\alpha$-helix & \textbf{\color{cc}c} (guess) 	& \textbf{\color{cc}c} (50\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cc}c} (pretty) 	& \textbf{\color{cc}c} (not sure) \\
-	 		\hline
-	 		Binding site   & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cc}c} (85\%) 	& \textbf{\color{cc}c} (90\%) 	& \textbf{\color{cc}c} (very) 		& \textbf{\color{cc}c} (pretty) \\
-	 		\hline
-	 		Methionine      & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cp}p} (90\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cp}p} 			& \textbf{\color{cn}n}  \\
-	 		\hline
-	 	\end{tabular}}
 	 	\caption{Structure identification task: \textbf{\color{cc}c} identified correct item, \textbf{\color{cp}p} partially correctly identified item, \textbf{\color{ci}i} identified incorrect item, \textbf{\color{cn}n} nothing found. User-reported certainty of correctness in brackets. }
+	 	{\scriptsize \begin{tabular}{ l l l l l l }
+	 		\toprule
+	 		Task \textbackslash User & 1 & 2 & 3 & 4 & 5 \\
+	 		\midrule
+	 		Pentamer       & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (90\%) 	& \textbf{\color{ci}i} (70\%) 	& \textbf{\color{cc}c} (very) 		& \textbf{\color{cc}c}\\
+	 		C-terminal     & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (70\%) 	& \textbf{\color{ci}i} 		& \textbf{\color{cc}c} (pretty) 	& \textbf{\color{cc}c} (quite) \\
+	 		N-terminal     & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (70\%) 	& \textbf{\color{ci}i} 		& \textbf{\color{cc}c} (not very) 	& \textbf{\color{cc}c} (quite)\\
+	 		$\alpha$-helix & \textbf{\color{cc}c} (guess) 	& \textbf{\color{cc}c} (50\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cc}c} (pretty) 	& \textbf{\color{cc}c} (not sure) \\
+	 		Binding site   & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cc}c} (85\%) 	& \textbf{\color{cc}c} (90\%) 	& \textbf{\color{cc}c} (very) 		& \textbf{\color{cc}c} (pretty) \\
+	 		Methionine      & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cp}p} (90\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cp}p} 			& \textbf{\color{cn}n}  \\
+	 		\bottomrule
+	 	\end{tabular}}
+	 	
 	 	\label{table:identification}
 	 \end{table}
 	 
@@ -1402,7 +1419,7 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	
 	
 	\section{Conclusion and Future Work}
-	The work presented here is a method that is capable of rendering a cell-like structure on different levels in a coherent and cohesive manner using color. 
+	The work presented here is a method that is capable of rendering a hierarchical, cell-like structure on different levels in a coherent and cohesive manner using color. 
 	The hierarchical structure of the coloring technique, along with the visibility based variation in color allows users to navigate and inspect parts of the visualization without getting disorientated, while being subtle.
 	Altering the color based on semantic zooming changes the meaning of color coding.
 	Instead of discriminability for any situation, semantic color changes allow structures to be clustered or seperated as necessary.
@@ -1430,7 +1447,7 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	
 	
 	%% if specified like this the section will be committed in review mode
-	\section*{acknowledgments}
+	\section*{Acknowledgments}
 		The authors wish to thank A, B, C. This work was supported in part by
 		a grant from XYZ.
 	
