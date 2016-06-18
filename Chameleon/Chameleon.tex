@@ -617,7 +617,7 @@
 	\textbf{TODO: check which spacing between wedges we used for our example figures / video!} 
 %	Empirically, we found that $d$ around 11 delivers results which correspond to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, allowing for easy discrimination. 
 %	Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins in the HIV model. 
-	Our angular distance  $\alpha$ between protein type colors is therefore be below the optimal $\alpha_{opt}$: 
+	Our angular distance  $\alpha$ between protein type colors is therefore below the optimal $\alpha_{opt}$: 
 	\begin{equation}%
 	\alpha= \frac{360  - n \cdot s}{\sum_{i} m_i}. %
 	\label{eq:wedge}%
@@ -890,12 +890,14 @@
 	
 	Due to our hierarchical color assignment, domain colors of neighboring proteins or secondary structures of neighboring domains may be assigned identical colors (Figure~\ref{fig:overlap}).
 	To increase color discriminability, and reduce occurrence of similar colors, we modulate the chroma to generate a focus+context effect. 
-	We select the protein with the highest screen coverage in the central region \textbf{TODO: DEFINE!} of the screen as focus element.
-	Based on the size of the protein and its location, we define a spherical region in 3D which constitute the focus region.
-	Outside this region, we progressively decrease the chroma value as we zoom in the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
-	The zoom levels distances between which the desaturation effect begins and ends are arbitrarily defined.
-	Should the focused protein change abruptly, we interpolate the focus region centroid and radius between the previously and currently focused protein to avoid flickering artifacts.
+	By clicking on a protein of interest, we define a spherical 3D region around the protein, which constitutes the focus region. 
+%	We select the protein with the highest screen coverage in the central region \textbf{TODO: DEFINE!} of the screen as focus element.
+%	Based on the size of the protein and its location, we define a spherical region in 3D which constitute the focus region.
+	Outside this region, we progressively decrease the chroma value \textbf{TODO: down to which value?} as we zoom towards the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
+%	The zoom levels distances between which the desaturation effect begins and ends are arbitrarily defined.
+	When selecting a new focus protein, we interpolate the focus region centroid and radius between the previously and currently focused protein to avoid flickering artifacts.
 	%	Figure \ref{fig:focusContext} shows a single focus protein with XX domains. 
+	\textbf{TODO: Figure \ref{fig:results_2} shows a comparison between the desaturated context and the default view for the protein domains and secondary structures levels. -- Figure is not in GitHUB, so I don't see it -- fix reference and caption, please!}
 	
 	%	\textbf{Just to be sure: this does not solve the problem of similar colors of secondary structures of different domains on the same protein?}
 	
@@ -955,9 +957,9 @@
 	\label{sec:results}
 	
 	To showcase the capabilities of the Chameleon, we applied it to a mesoscale molecular scene. 
-	The dataset was provided by domain experts and modeled with cellPACK \cite{johnson2015cellpack}, a tool for procedural generation of large biomolecular structures.
-	cellPACK summarizes and incorporates the most recent knowledge obtained from structural biology and system biology to generate comprehensive mesoscale models. 
-	Based on experimentally obtained data (e.g. data such as protein structure, concentration and spatial distribution), the tool is able to generate entire models of viruses and cells via a packing method based on collisions constraints.
+	The dataset was provided by domain experts and modeled with cellPACK \cite{johnson2015cellpack}, a tool for procedural generation of large biomolecular structures, incorporating the most recent knowledge from structural and systems biology. 
+%	cellPACK summarizes and incorporates the most recent knowledge obtained from structural biology and system biology to generate comprehensive mesoscale models. 
+%	Based on experimentally obtained data (e.g. data such as protein structure, concentration and spatial distribution), the tool is able to generate entire models of viruses and cells via a packing method based on collisions constraints.
 	We use cellVIEW \cite{muzic2015cellview} for the rendering part, which is a tool designed to efficiently render large molecular scenes on the GPU and is implemented in Unity3D. 
 	
 	The dataset which we showcase is a model of an HIV particle in blood serum which contains 20502 instances of 46 different protein types including two lipid membrane layers.
@@ -970,7 +972,7 @@
 	Figure~\ref{fig:results_2} shows all the sequential steps we take to progressively reveal the protein properties as we zoom in.
 	
 	%The second dataset, shown in Figure \ref{fig:nofig} is a model of an immature HIV which contains 1081 instances of 13 different protein types, and one bi-lipid membrane. \\	
-	The Chameleon relies on GPU computing to provide a smooth and responsive user experience.
+	Chameleon relies on GPU computing to provide a smooth and responsive user experience.
 	Since we perform the all the coloring operations in post-processing, the size of the dataset has only little impact on the performance. 
 	We benchmarked the computation speed at HD resolution (1920$\times$1080) on a machine equipped with an Intel Core i7-3930 CPU 3.20 GHz machine coupled with a GeForce GTX Titan X graphics card with 12GB of video RAM.
 	We measured \textbf{0.5 ms} on average to count the visible instances when zooming out on the entire dataset, which in the most extreme case since a very large number of proteins are visible.	
@@ -1043,6 +1045,7 @@
 	In the subsequent \emph{free exploration task}, users could freely navigate through the visualization, while thinking aloud. 
 	All reported insights were noted. 
 	Both tasks were video-taped and followed by a questionnaire and a semi-structured interview. 
+	Before the study, users could play around with the tool to get familiar with the navigation, and were also instructed how to toggle the visibility of the protein groups. 
 	
 	With the structure identification task, we could assess whether users with sufficient knowledge to assess molecular structures without additional text labels are able to identify the above structures using our system. 
 	Through the free exploration task, our goal was to assess whether users would notice and be distracted by our dynamic color mapping. 
@@ -1109,7 +1112,7 @@
 	 
 	 \begin{figure}
 \centering
-\includegraphics[width=0.9\linewidth]{Figures/questionnaires.pdf}
+\includegraphics[width=1.0\linewidth]{Figures/questionnaires.pdf}
 \caption{Average and standard error of responses on five-point Likert scale for questions concerning the ease of identification of structures (blue), as well as color changes and visual appeal (orange).}
 \label{fig:questionnaire}
 \end{figure}
@@ -1133,7 +1136,7 @@ The performance and feedback of the molecular biologists in our study indicate t
 Users were equally successful identifying one of the capsid proteins forming a pentamer, and identifying the two domains of the capsid protein. 
 The pentamer capsid protein differed only in shape from the more frequent hexamer capsid proteins, while the two different domains of the capsid proteins were solely encoded by color. 
 However, the users reported lower certainty and higher task difficulty for the identification of the domains.
-This is an indication that identification by structure is easier than identification by color alone -- yet, color can be used if no structural cues are available, as in our protein domain example. 
+This is an indication that identification by structure is easier than identification by color alone -- yet, color can be used if no strong structural cues are available, as in our protein domain example. 
 
 On the secondary structures level, the identification rate was similarly high, but users were quite uncertain about their findings and reported a high task difficulty. 
 On this level, alpha helices and beta sheets were discriminated by color \textbf{TODO: show figure!}. 
@@ -1462,7 +1465,7 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	First, we want to investigate mixing categorical and quantitative color coding on different zoom levels. 
 	A user may be interested not only in structural information, but also in attributes like polarity or hydrophobicity at certain zoom levels. 
 	This means there can be alternative paths in the color space when zooming in. 
-	Second, our study has shown limitations of structure identification tasks at certain zoom levels, where domain experts are used to different structural representations, such as the cartoon representation. 
+	Second, our study has shown limitations of structure identification tasks at certain zoom levels, where domain experts are used to different representations, such as the cartoon representation. 
 	A future challenge therefore is to find meaningful semantic zooming strategies that comprise both, the color and the structural representation. 
 %	The most obvious is to overcome the limitations mentioned above. 
 %	The users also expressed interest in interacting with the visualization. 
