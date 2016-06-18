@@ -149,7 +149,7 @@
 	For example, if we apply categorical color coding to proteins, then proteins can be easily discriminated, but secondary structures or atoms are not visually depicted.
 	On the other hand, when color-coding individual atoms, the visualization is prone to salt-and-pepper noise in the overview levels. 
 	%In zoomable visualizations, this will either lead to information loss when zooming in, or salt and pepper noise when zooming out.
-	\textbf{TODO: can we have three examples here? somewhere zoomed in middle range: protein coloring only (like Figure 2, right), our approach, where protein domains / secondary structures are visible, atom level coloring with extensive salt-and-pepper noise}. 
+	\textbf{Comment: this has to go in supplementary material. Need higher res images to show well. TODO: can we have three examples here? somewhere zoomed in middle range: protein coloring only (like Figure 2, right), our approach, where protein domains / secondary structures are visible, atom level coloring with extensive salt-and-pepper noise}. 
 		
 	%A naive visualization that defines color maps for each level and blends them may at first glance seem sufficient.
 	A naive approach to multi-scale color mapping would be to independently define colors for each zoom level and then blend them while zooming. 
@@ -273,14 +273,14 @@
 	Not only clear visibility, but also harmonious and appealing colors can be important~\cite{ihaka2003colour}, as well as the assignment and mixing of colors~\cite{wang2008color}. 
 	There are many points to consider, and as a result guidelines have been published on how to decide which color scheme is the most appropriate~\cite{bergman1995rule}, \cite{healey1996choosing}. There have also been guides aimed at two dimensional color maps, such as by Bernard et al.~\cite{bernard2015survey} and the software ColorMap-Explorer by Steiger et al.~\cite{steiger2015explorative}.	
 	Furthermore, several tools have been developed to assist users select appropriate colors for maps, such as Colorbrewer~\cite{harrower2003colorbrewer}, and color maps for clusters of data, such as ``i want hue''~\cite{iwanthue} and XCluSim~\cite{l2015xclusim}. 	
-	Such clustering can, however, cause perceptual issues, either due to the large number of clusters or their layout. \textbf{TODO: I don't get this, so I cannot rephrase it.} 
-	Particular care needs to be taken when dealing with higher dimensional data~\cite{mittelstiidt2014revisiting}, so the distances between the clusters do not become distorted. 
-	Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas~\cite{lee2013perceptually}.
+	Such clustering can, however, cause perceptual issues, either due to the large number of clusters or their layout.
+	In cases such as colored maps, visually dominant structures may visually suppress small groups or areas~\cite{lee2013perceptually}.
 	Visualization of information such as can be found on maps can lead to small areas being next to much larger ones. 
 	In this case, it may be difficult to spot the small areas, and lowering the saturation of the larger areas allows the small ones to stand out more.
 	Recognition may also be affected by contrast effects which may need to be dealt with~\cite{mittelstadt2014methods}. 
+	Particular care needs to be taken when dealing with higher dimensional data~\cite{mittelstiidt2014revisiting}, so the distances between the clusters do not become distorted. 
 	
-		While there has been intense research on color mapping in visualization in the past, there have been only very few works related to multiscale visualization.
+	While there has been intense research on color mapping in visualization in the past, there have been only very few works related to multiscale visualization.
 	Tree Colors use a tree-based method~\cite{tennekes2014tree} that attempts to overcome these issues in the case of hierarchical structures. 
 	The tree method uses HCL space (a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance) and gives each cluster a different hue. 
 	The root of the tree has no saturation, i.e. grey, and the hue is divided up into different wedges, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
@@ -564,7 +564,7 @@
 	\section{Dynamic Hue Palette}
 	\label{sec:hue}
 	
-	\textbf{TODO: check consistency: hue ring / wheel / circle; compartment / protein group...} 
+	\textbf{Done, leaving so i remember to check again if we have enough timeTODO: check consistency: hue ring / wheel / circle; compartment / protein group...} 
 	
 	In the highest hierarchy level (compartment, as illustrated in Figure \ref{teaserImage}a), our task is to find colors for each individual protein type that allow users to discriminate the proteins, but also understand their hierarchical grouping into the compartments. 
 	%Also, aesthetics are important, as we target our work at interested users from a broader audience. 
@@ -606,18 +606,21 @@
 	Given the chroma $C^*$ (i.e.\, radius) of the hue ring and the optimal Euclidean color distance $d$, the optimal angular distance between neighboring proteins within the same compartment is defined as: 
 	\begin{equation}%
 	\alpha_{opt} = arcsin\frac{d}{C^*}. %
-	\end{equation}\\end{equation}]%
+	\end{equation}%
 	%
-	In the hue ring in Figure \ref{fig:hueWheel}, we chose a distance $d$ between neighboring colors of 11.5, which corresponds to five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}. 
+	In CIELab color space the ''just noticeable difference'' (jnd) is equal to 2.3\cite{lee2013perceptually}.
+	Using the jnd would of course lead to poor discernibility. 
+	We discovered that roughly 5 jnd steps (11.5) were needed to allow for easy discernibility. 
+	%In the hue ring in Figure \ref{fig:hueWheel}, we chose a distance $d$ between neighboring colors of 11.5, which corresponds to five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}. 
 	With this setting and a chroma radius of $C^*=40$, $\alpha_{opt}$ is 16.7$^{\circ}$, which allows for a maximum of 21 distinct hues. 
 	With a lower $d$, we found that individual color dots could not be properly distinguished any more. 
 %	The hue ring in Figure \ref{fig:hueWheel} shows 21 distinct colors, where the distance $d$ between neighboring colors is around 12, which corresponds to approximately five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, and the spacing $s$ is set to zero.  
 %	We choose this $d$ of 12 as our optimal color distance. 
 	However, in the HIV, we have 46 distinct protein types $\sum_{i} m_i$ distributed to five compartments $n$. 
-	\textbf{TODO: check which spacing between wedges we used for our example figures / video!} 
+	\textbf{to manu: this has been added below. see next todo (added comment there) TODO: check which spacing between wedges we used for our example figures / video!} 
 %	Empirically, we found that $d$ around 11 delivers results which correspond to around 5 \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, allowing for easy discrimination. 
 %	Assuming no spacing between compartments (i.e.\, $s=0$), this would result in only 32 distinct colors, which is far below the number of proteins in the HIV model. 
-	Our angular distance  $\alpha$ between protein type colors is therefore below the optimal $\alpha_{opt}$: 
+	Our angular distance  $\alpha$ between protein type colors is therefore below the minimum $\alpha_{opt}$: 
 	\begin{equation}%
 	\alpha= \frac{360  - n \cdot s}{\sum_{i} m_i}. %
 	\label{eq:wedge}%
@@ -677,8 +680,9 @@
 %	\textbf{TODO: again, is this correct? a scaling factor proportional to the total number of protein types in a group multiplied by the visible protein types -- could this be just the ratio visible by total? But this would not fit to Figure 4. My guess would be that simply $m_i$ of the previous section is set, and the smaller $m_i$, the bigger the possible angular distance between the hues. Please clarify!}
 
 	As visualized in Figure \ref{fig:coloroverview}d, the hue circle is divided proportionally to the protein groups' numbers of visible proteins. 
-	As the number of visible protein types can be potentially small, we allow the user to determine a maximum angular distance $\alpha_{opt}$ between protein types to avoid excessive color changes while panning. 
-	In our HIV showcase, we use $\alpha_{opt}=16.7^{\circ}$, as described further above. \textbf{TODO: I don't know whether this is true, but at least it would make sense... Please check values we used for the figure / video!} 
+	As the number of visible protein types can be potentially small, we allow the user to determine a maximum angular distance of a protein group to avoid excessive color changes while panning. 
+	\textbf{radd commented sentence}
+	In our HIV showcase, we use 110 degrees, which in our case is can be reached if the user is looking at the secondary structure level of only one compartment. The miminum angle between groups is 5 degrees. 
 	
 %	\textbf{Once we compute the group visibility coefficient of each protein group, we divide the hue circle proportionally to the group visibility coefficient to determine the size of individual hue sections. 
 %	The coefficient corresponds to the angle on the hue circle. 
@@ -726,7 +730,7 @@
 	
 	To avoid this issue, we use a force-based layout for the positioning of the group centroids on the hue circle.
 	The forces are applied in a single dimension which corresponds to the hue circle and include distance constraints between the groups as well as attraction forces between groups and their default position.
-	We then integrate the forces, using Euler Integration on the CPU \textbf{TODO: GPU??} to compute the new positions of the groups until reaching a state of equilibrium.
+	We then integrate the forces, using Euler Integration to compute the new positions of the groups until reaching a state of equilibrium.
 	For a given group $i$, the distance constraint response force with another group $j$ is computed as follows:
 	%
 	\begin{equation}%
@@ -737,7 +741,7 @@
 	\begin{equation}
 	r_i = \frac{m_i \cdot \alpha + s}{2}. 
 	\end{equation}
-	\textbf{TODO: I tried to simplify here, but I am not sure whether this is correct. Please check!} 
+	\textbf{Done, but left to reminder me to check again TODO: I tried to simplify here, but I am not sure whether this is correct. Please check!} 
 	%and which corresponds to the weight computed from the visibility information and described in Section~\ref{sec:dynamic}.
 	In other words, the force-based hue assignments aims to keep the resized wedges close to their default centroids, while avoiding overlaps between neighboring wedges.  
 %	\textbf{Essentially, all it does is determine if two groups overlap or not and to what degree. If they do no overlap, the force is equal to 0. The w takes the user specified minimum distance between wedges into account.}
@@ -750,7 +754,7 @@
 	%
 	The first part of the right side of this equation corresponds to the attraction forces, where $I$ corresponds to the initial group position.
 	The second part is the sum of repulsion forces between the given group and the other ones.
-    Additionally we also include a damping value \textbf{TODO: which?? More information!} in the integration calculus to smooth-out the motion of the group centroids when the viewport and visibility configuration abruptly change. This does not affect the final color assignment for a view, merely the transition.
+    Additionally we also include a damping value of 0.2 (reduce velocity by 20\% per time step) in the integration calculus to smooth-out the motion of the group centroids when the viewport and visibility configuration abruptly change. This does not affect the final color assignment for a view, merely the transition.
 	
 	\subsection{Hierarchical Colors}
 	\label{sec:hierarchy}
@@ -774,7 +778,7 @@
 	We set $\beta$ to 180 so that a single protein would not cover more than half of the hues. 
 	A larger $\beta$ could lead to a loss of hierarchical information. 
 	Choosing a lower $\beta$ may cause domains within a single protein to be hardly distinguishable.  
-	\textbf{TODO: examples for too small and too large beta and beta of 180. }
+	\textbf{Comment: will be added to suplementary material TODO: examples for too small and too large beta and beta of 180. }
 	The domain hue wedge is centered around the protein hue value, as illustrated in Figure \ref{fig:overlap}.
 	Mind that domain hue wedges can overlap across proteins. 
 	%Figure \ref{fig:overlap} illustrates the construction of the coloring of the protein domains, as well as the overlap that can occur.
@@ -830,7 +834,7 @@
 		\begin{figure}
 			\centering
 			\includegraphics[width=1\linewidth]{Figures/zoomfigure}
-			\caption{Interpolation of hue and luminance values for a fragment: based on the world space distance to the camera, the interpolation factor between the two closest levels (compartment and protein) is computed and used as blending factor between compartment and protein hue, and protein and domain luminance. \textbf{This figure does not look nice. Also, why is the blending factor 0.3, if the camera is right in the middle between the levels??}  }
+			\caption{Interpolation of hue and luminance values for a fragment: based on the world space distance to the camera, the interpolation factor between the two closest levels (protein and domain) is computed and used as blending factor between protein and domain hue, and domain and secondary structure luminance offset. If the distance is too large, only the proteins are shown.  \textbf{Comment: updated}.}
 %			\caption{Interpolation of hue and luminance depends on the position of the view. The black camera in the top line shows the position of the viewer with respect to the different levels. The grey crosses show the corresponding positions for interpolating hue and luminance.
 %				The hue is equal to a linear interpolation of the two neighbouring levels shown in the middle line, here compartment and protein. Luminance is equal to a linear interpoation of the next two levels, here protein and domain, visible on the bottom line. The interpolation is based on the ratio of the distance to the neighbouring levels, here 0.3 and 0.7. }
 			\label{fig:zoom_continuum}
@@ -872,12 +876,16 @@
 		\begin{figure}[t]
 			\centering
 			\includegraphics[width=1\linewidth]{Figures/huemodulation2x2}
-			\caption{The hue, chroma, luminance modulation in sequential steps.
-				(a) only the protein colors are show, (b) protein domains are show via hue modulation, (c) secondary structures are shown via luminance modulation, (d) secondary structures are shown via hue modulation
-				(e) atom types are shown via luminance modulation, (f) focus is highlighted via chroma modulation, (g) atom types are shown via hue modulation. \textbf{TODO: update caption remove (a), put b-e into a 2x2 one-column figure matrix, showing the 2 zoom levels with and without luminance modulation; refer to this from luminance modulation section. Put (g) into context desaturation section. }}
+			\caption{Luminance modulation. (a) and (c) without. (b) and (d) with modulation for secondary structures and atoms respectively.}
 			\label{fig:results_2}
 		\end{figure}
-	
+		
+		\begin{figure}[t]
+			\centering	
+			\includegraphics[width=1\linewidth]{Figures/desaturated}
+			\caption{Without (a) and with (b) desaturated peripheral colors.}
+			\label{fig:results_3}
+		\end{figure}
 	
 	
 
@@ -893,11 +901,11 @@
 	By clicking on a protein of interest, we define a spherical 3D region around the protein, which constitutes the focus region. 
 %	We select the protein with the highest screen coverage in the central region \textbf{TODO: DEFINE!} of the screen as focus element.
 %	Based on the size of the protein and its location, we define a spherical region in 3D which constitute the focus region.
-	Outside this region, we progressively decrease the chroma value \textbf{TODO: down to which value?} as we zoom towards the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
+	Outside this region, we progressively decrease the chroma value as far as 0 as we zoom towards the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
 %	The zoom levels distances between which the desaturation effect begins and ends are arbitrarily defined.
 	When selecting a new focus protein, we interpolate the focus region centroid and radius between the previously and currently focused protein to avoid flickering artifacts.
 	%	Figure \ref{fig:focusContext} shows a single focus protein with XX domains. 
-	\textbf{TODO: Figure \ref{fig:results_2} shows a comparison between the desaturated context and the default view for the protein domains and secondary structures levels. -- Figure is not in GitHUB, so I don't see it -- fix reference and caption, please!}
+
 	
 	%	\textbf{Just to be sure: this does not solve the problem of similar colors of secondary structures of different domains on the same protein?}
 	
@@ -938,10 +946,11 @@
 	%	\textbf{Figure goodsell layer by goodsell himself}
 	
 	For each hierarchy level, we therefore not only assign unique hues, but also unique luminance values. 
-	We modulate our base luminance value of 75 only by a small range \textbf{TODO: how much??}, to avoid extensive visual clutter and not to interfere with shading cues. 
-	\textbf{TODO: illustrate by figure for protein 10 and 12 from wedge figure. } 
+	We modulate our base luminance value of 75 by up to 10 for secondary structures and 15 for atoms, to avoid extensive visual clutter and not to interfere with shading cues. As the user zooms closer to the respective level the luminance modulation is reduced.
+	\textbf{manu, I don't know which figure, and I don't think this is necessary to illustrate that detailed. TODO: illustrate by figure for protein 10 and 12 from wedge figure. } 
 %	In the example of Figure \ref{fig:zoomLevels}, we use a luminance range of 20 to distinguish the sub-elements. 
 	Thus, this luminance modulation is only a subtle indication of lower-level structural properties. 
+	See Figure~\ref{fig:results_2}.
 	
 	Like the hue, the luminance value is defined by the distance of the camera to the respective structures. 
 	Given an interpolation factor derived from the zooming distance to the pre-defined zoom levels (see Figure \ref{fig:zoom_continuum}), luminance values are interpolated linearly between two neighboring levels. 
@@ -1139,7 +1148,7 @@ However, the users reported lower certainty and higher task difficulty for the i
 This is an indication that identification by structure is easier than identification by color alone -- yet, color can be used if no strong structural cues are available, as in our protein domain example. 
 
 On the secondary structures level, the identification rate was similarly high, but users were quite uncertain about their findings and reported a high task difficulty. 
-On this level, alpha helices and beta sheets were discriminated by color \textbf{TODO: show figure!}. 
+On this level, alpha helices and beta sheets were discriminated by color, similar to \ref{fig:results_2}~(c) \textbf{we don't have space, secondary structures have been shown in color before TODO: show figure!}. 
 However, the particular alpha helix mentioned in the task description could only be identified by its shape. 
 The request for an alternative cartoon representation for identifying structures on this level shows the limits of multi-scale color mapping without adapting the structural representation. 
 In the future, it will be important to explore combinations of semantic zooming comprising both, structural and color information. 
