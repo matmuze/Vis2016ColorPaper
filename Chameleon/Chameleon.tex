@@ -89,7 +89,7 @@
 		\centering
 		\includegraphics[width=0.975\linewidth]{Figures/teaser_new}
 				\caption{Interactive multi-scale visualization of HIV using ``Chameleon'' for dynamic color coding of protein and atom properties: 
-					Zooming from an overview of the entire virus (a) to the capsid (b), the capsid interior (c), a single integrase (pdb id: 1ex4) protein in the capsid (d), and its atomic structure (e). 
+					Zooming from an overview of the entire virus (a) to the capsid (b), the capsid interior (c), a single integrase protein in the capsid (d), and its atomic structure (e). 
 					Mind how protein colors become more differentiated as we zoom in (a-b), and how protein domains (c), secondary structures (d), and individual atoms (e) are being progressively revealed through dynamic color adaptations.  }
 				
 %		\caption{Multi-scale visualization of HIV in real-time, using cellVIEW~\cite{muzic2015cellview} for rendering, together with the presented technique "Chameleon" for dynamic color coding of protein and atom properties.
@@ -110,7 +110,7 @@
 	\begin{abstract}
 		Visualization of structural biology data uses color to categorize or separate dense structures into particular semantic units. 
 		In multiscale models of viruses or bacteria, there are atoms on the finest level of detail, then amino-acids, secondary structures, macromolecules, up to the compartment level and, in all these levels, elements can be visually distinguished by color.
-		However, currently only a single scale coloring schemes are utilized that show information for one particular scale only. 
+		However, currently only single scale coloring schemes are utilized that show information for one particular scale only. 
 		We present a novel technology which adaptively, based on the current scale level, adjusts the color scheme to depict or distinguish the currently best visible structural information. 
 		We treat the color as a visual resource that is distributed given a particular demand. 
 		The changes of the color scheme are seamlessly interpolated between the color scheme from the previous views into a given new one. 
@@ -139,8 +139,7 @@
 
 	
 	%Colors are used to distinguish elements on each scale.
-	Illustrators use colors to distinguish elements. 
-	However, these color assignments are static and carefully selected for each zoom level independently. 
+	Illustrators use carefully selected color assignments for each detail level of their illustrations. 
 	In Figure~\ref{fig:motivation}, the illustrator depicts different protein types by color in the overview on the right. 
 	In the close-up on the left, he uses different shades of blue to distinguish between the protein domains, which are not indicated in the overview. 
 	In interactively zoomable visualizations, such a static single-scale color assignment will either lead to a loss of excess of information. 
@@ -148,24 +147,24 @@
 	%At best, users can select their preferred color scheme. 
 	%Unfortunately, single-scale color mapping will lead either to a loss or an excess of information.
 	For example, if we apply categorical color coding to proteins, then proteins can be easily discriminated, but secondary structures or atoms are not visually depicted.
-	On the other hand, when color-coding individual atoms, the visualization is prone to salt-and-pepper noise. 
+	On the other hand, when color-coding individual atoms, the visualization is prone to salt-and-pepper noise in the overview levels. 
 	%In zoomable visualizations, this will either lead to information loss when zooming in, or salt and pepper noise when zooming out.
 	\textbf{TODO: can we have three examples here? somewhere zoomed in middle range: protein coloring only (like Figure 2, right), our approach, where protein domains / secondary structures are visible, atom level coloring with extensive salt-and-pepper noise}. 
 		
 	%A naive visualization that defines color maps for each level and blends them may at first glance seem sufficient.
 	A naive approach to multi-scale color mapping would be to independently define colors for each zoom level and then blend them while zooming. 
 	However, several issues can occur:
-	First, colors may change significantly between zoom levels.
+	First, with independent color assignments for each zoom level, colors may change significantly when zooming.
 	This may not only cause disorientation when zooming due to considerable color changes, but may also cause artificial hues or grayed out colors when blending between levels \cite{chuang2009hue}.  
 	%This will not only affect understanding how two levels are connected, but also comprehension if the user is between levels.
-	Second, there is a loss of information when transitioning from one level to the next. 
+	Second, there is a loss of hierarchy information when transitioning from one level to the next. 
 	For example, when looking at two neighboring compartments and zooming in, it may be hard to maintain an overview which compartment certain proteins belong to. 
 	%For example, if a user is looking at two neighboring compartments and zooms in where they meet, then he can not tell where one ends and the other begins, as the compartment level color coding is blended away. 
 	This may cause orientation problems due to the inherent hierarchy of the data.
-	An atom belongs to an amino acid, which in turn belongs to a domain of a protein, all the way to the top.
+	%An atom belongs to an amino acid, which in turn belongs to a domain of a protein, all the way to the top.
 	To take the data hierarchy into account, Tennekes and de Jonge~\cite{tennekes2014tree} proposed a color space for hierarchical visualizations. 
-	Their approach was targeted towards static visualizations and therefore assigns unique hues to each child node. 
-	This leads to poor scalability with respect to color discriminability. 
+	Their approach was targeted towards static visualizations and therefore assigns unique hues to each child node in a tree. 
+	However, this leads to poor scalability with respect to color discriminability. 
 	The HIV, shown in Figure \ref{teaserImage} and Figure \ref{fig:motivation}, consists of 46 protein types, each divided further into multiple protein domains, secondary structures, amino acids, and atoms. 
 	However, this scalability issues can be resolved by exploiting the interactive navigation capabilities -- and thereby caused dynamic visibility changes -- of our system. 
 	
@@ -192,16 +191,22 @@
 	
 	We propose the semantic color zooming method Chameleon for multi-scale visualizations of cell or virus-like structures, based on a view-dependent, hierarchical color scheme.
 	Starting from the highest hierarchy level, we progressively free up unused color space and redistribute it to visible elements defined by the current zoom level and item visibility.
-	In the HIV as shown in Figure~\ref{teaserImage}, the user initially sees the different compartments. 
-	As the user zooms in, the proteins receive more distinct colors based on their compartment. 
-	As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
-	As the viewer zooms further in, the domains of the proteins will become distinct, then the secondary structures, and eventually even the atoms.%, whose colors are predefined by convention.
-%	We will present the concept of our hierarchical color palette, implementation details for real-time rendering in a large scene, and results of a user study.
-%	In Section~\ref{Overview} we explain the basic structure and idea.
-%	Section~\ref{sec:hue} describes the implementation details of the coloring .
-%	In Sections~\ref{sec:chroma} and \ref{sec:luminance} we describe additions that support the visualization.
-%	In Section~\ref{sec:results} we describe the results.
-%	Section~\ref{sec:study} contains a user study.
+	Our contributions are: 
+	\begin{enumerate}
+		\item A view-dependent, hierarchical hue palette for expressive color mapping of multi-scale structural biology models, 
+		\item usage of chroma and luminance to minimize visual clutter and encode structural properties across multiple zoom levels, and 
+		\item results from a small expert user study, showing that users can distinguish structures on multiple scales through dynamic color mapping, while rating the visualization as highly appealing. 
+	\end{enumerate}
+%	In the HIV as shown in Figure~\ref{teaserImage}, the user initially sees the different compartments. 
+%	As the user zooms in, the proteins receive more distinct colors based on their compartment. 
+%	As compartments and proteins disappear, the colors of the visible proteins are adjusted to enhance discernibility.  
+%	As the viewer zooms further in, the domains of the proteins will become distinct, then the secondary structures, and eventually even the atoms.%, whose colors are predefined by convention.
+%%	We will present the concept of our hierarchical color palette, implementation details for real-time rendering in a large scene, and results of a user study.
+%%	In Section~\ref{Overview} we explain the basic structure and idea.
+%%	Section~\ref{sec:hue} describes the implementation details of the coloring .
+%%	In Sections~\ref{sec:chroma} and \ref{sec:luminance} we describe additions that support the visualization.
+%%	In Section~\ref{sec:results} we describe the results.
+%%	Section~\ref{sec:study} contains a user study.
 	
 	%\begin{figure*}
 	%	\centering
@@ -229,7 +234,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width=1\linewidth]{Figures/motivation}
-				\caption{Multi-scale illustration of HIV \cite{RCSBPDB2011}: overview of the virus on the left and close-up on the envelope protein on the right. In the close-up different shades of blue are used to discriminate between protein domains, and carbon atoms are slightly darker. }
+				\caption{Multi-scale illustration of HIV \cite{RCSBPDB2011}: overview of the virus on the right and close-up on the envelope protein on the left. In the close-up different shades of blue are used to discriminate between protein domains, and carbon atoms are slightly darker. }
 %		\caption{Motivation: Multi-scale illustration of HIV from David Goodsell. 
 %			The left part shows a close up on the protein which is indicated on the right part via the black line.
 %			In the close-up the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
@@ -259,7 +264,7 @@
 	%As the viewer zooms further in, the domains of the proteins will become distinct, and eventually even the atoms, whose colors are predefined by convention. 
 	
 	\section{Related Work}
-	While there has been intense research on color mapping in visualization in the past, there have been only very few works related to multiscale visualization.
+
 %	We divide the related work in two sections. In the first section we cover previous work about appropriate usage of colors in visualization, and their perceptual impact. 
 %	In the second section we cover related work about large scale molecular rendering, to which we build our technique upon.
 %		
@@ -268,14 +273,15 @@
 	Not only clear visibility, but also harmonious and appealing colors can be important~\cite{ihaka2003colour}, as well as the assignment and mixing of colors~\cite{wang2008color}. 
 	There are many points to consider, and as a result guidelines have been published on how to decide which color scheme is the most appropriate~\cite{bergman1995rule}, \cite{healey1996choosing}. There have also been guides aimed at two dimensional color maps, such as by Bernard et al.~\cite{bernard2015survey} and the software ColorMap-Explorer by Steiger et al.~\cite{steiger2015explorative}.	
 	Furthermore, several tools have been developed to assist users select appropriate colors for maps, such as Colorbrewer~\cite{harrower2003colorbrewer}, and color maps for clusters of data, such as ``i want hue''~\cite{iwanthue} and XCluSim~\cite{l2015xclusim}. 	
-	Such clustering can, however, cause perceptual issues, either due to the large number of clusters or their layout. \textbf{I don't get this, so I cannot rephrase it.} 
+	Such clustering can, however, cause perceptual issues, either due to the large number of clusters or their layout. \textbf{TODO: I don't get this, so I cannot rephrase it.} 
 	Particular care needs to be taken when dealing with higher dimensional data~\cite{mittelstiidt2014revisiting}, so the distances between the clusters do not become distorted. 
 	Furthermore, in cases such as coloring maps, visually dominant structures may visually suppress small groups or areas~\cite{lee2013perceptually}.
 	Visualization of information such as can be found on maps can lead to small areas being next to much larger ones. 
 	In this case, it may be difficult to spot the small areas, and lowering the saturation of the larger areas allows the small ones to stand out more.
 	Recognition may also be affected by contrast effects which may need to be dealt with~\cite{mittelstadt2014methods}. 
 	
-	XCluSim uses a tree-based method~\cite{tennekes2014tree} that attempts to overcome these issues in the case of hierarchical structures. 
+		While there has been intense research on color mapping in visualization in the past, there have been only very few works related to multiscale visualization.
+	Tree Colors use a tree-based method~\cite{tennekes2014tree} that attempts to overcome these issues in the case of hierarchical structures. 
 	The tree method uses HCL space (a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance) and gives each cluster a different hue. 
 	The root of the tree has no saturation, i.e. grey, and the hue is divided up into different wedges, one for each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
 	As the tree spreads out, the saturation of the nodes increases, and each level gets its own smaller wedge. 
@@ -313,16 +319,15 @@
 %	\subsection{Multi-Scale Molecular Visualization}
 	
 	The development of new modeling techniques for three dimensional molecular structures led to a rapid increase in size of the studied datasets.
-	To keep up with the progress, new visualization methods were specifically developed to address this challenge, such as by Lampe et al.~\cite{lampe2007two}, QuteMol \cite{tarini2006ambient}, or Falk et al. \cite{falk2013atomistic}. 
+	To keep up with the progress, new visualization methods were specifically developed to address this challenge, such as by Lampe et al.~\cite{lampe2007two} or Falk et al. \cite{falk2013atomistic}. 
 	An overview of the state-of-the-art in visualization of biomolecular structures is given by Kozlikova et al.~\cite{kozlikova2015visualization}. 
 	
 	To support seamless zooming in molecular visualizations, Parulek et al.~\cite{parulek2014continuous} introduced seamless transitions between different levels of coarseness for the representation of the molecular surface based on the distance from the camera.
 	Their goal was not only to reduce the computation cost, but also to utilize the shape as a means to reduce high-level details and noise when observing the structure in its entirety.
-	Le Muzic et al.~\cite{le2014illustrative} extended this approach to allow for real-time rendering of structures with up to tens of billion atoms, using tessellation shaders to switch between different degrees of coarseness for the molecular structures, on-the-fly. 
+	Le Muzic et al.~\cite{le2014illustrative} extended this approach to allow for real-time rendering of structures with up to tens of billion atoms. %, using tessellation shaders to switch between different degrees of coarseness for the molecular structures, on-the-fly. 
 	cellVIEW \cite{muzic2015cellview} renders such large-scale molecular scenes using Unity3D, a popular 3D engine. 
 	It showcases large molecular structures generated with cellPACK \cite{johnson2015cellpack}, a tool developed to procedurally generate accurate and multi-scale models of entire viruses and cells.
 	While these tools provide the foundation to interactively navigate massively packed molecular landscapes, they currently do not have sufficient visual expressiveness to effectively reveal structural information beyond the protein level. 
-	
 %	Lampe et al.~\cite{lampe2007two} pioneered real-time rendering of large-scale atomic data on consumer level hardware. 
 %	They extended the fast billboard-based approach introduced by QuteMol \cite{tarini2006ambient}, by rendering the structures per residues rather than per atom, thus reducing the memory bandwidth usage and the GPU driver overhead. 
 %	Lindow et al. \cite{lindow2012interactive} followed-up by using  instanced rendering to draw entire structures instead.
@@ -336,9 +341,8 @@
 %	The entire scene is thus rendered efficiently in a single draw call, approaching zero GPU-driver overhead. 
 %	As a follow up, they developed and released cellVIEW \cite{muzic2015cellview}, a tool designed for rendering large-scale molecular scenes, which was implemented with Unity3D, a popular 3D engine.
 %	cellVIEW was primarily developed to showcase large molecular structures generated with cellPACK \cite{johnson2015cellpack}, a tool developed to procedurally generate accurate and multi-scale models of entire viruses and cells.\\
-	
 	Chameleon is built upon cellVIEW, and is an attempt to improve understanding during exploration of multi-scale molecular scenes generated with cellPACK.
-	cellVIEW leverages GPU computing and parallel programming to provide a fluid user experience, Chameleon was developed with the same programming paradigm.
+	%cellVIEW leverages GPU computing and parallel programming to provide a fluid user experience, Chameleon was developed with the same programming paradigm.
 	
 %	\begin{figure}[t]
 %		\centering
