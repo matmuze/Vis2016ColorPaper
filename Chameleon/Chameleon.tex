@@ -846,8 +846,9 @@
 	Then, from the world position of each pixel, we compute the world space distance to the camera.
 	From the camera distance we are able to compute the current degree of transition between the closest levels, as well as the hue values associated with the two closest zoom levels.	
 	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the two levels the user is between, based on the degree of transition, as illustrated in Figure \ref{fig:zoom_continuum}, top and middle line.
-	In our current implementation, users have to define the camera distances for the zoom Levels manually. 
-	In the future, we plan to investigate automatic camera distance settings, based on the screen size of the structures associated with the zoom Levels.
+	
+	In our current implementation, users have to define the camera distances for the zoom levels manually. 
+	In the future, we plan to investigate automatic camera distance settings, based on the screen size of the structures associated with the zoom levels.
 	
 	
 		\begin{figure}
