@@ -146,7 +146,7 @@
 	%Usually the color assignment is static.
 	%At best, users can select their preferred color scheme. 
 	%Unfortunately, single-scale color mapping will lead either to a loss or an excess of information.
-	For example, if we apply categorical color coding to proteins, then proteins can be easily discriminated, but secondary structures or atoms are not visually depicted (Figure~\ref{fig:NoiseDifference}, left).
+	For example, if we apply categorical color coding to protein groups, then proteins can be easily discriminated, but secondary structures or atoms are not visually depicted (Figure~\ref{fig:NoiseDifference}, left).
 	On the other hand, when color-coding individual atoms, the visualization is prone to salt-and-pepper noise in the overview levels (Figure~\ref{fig:NoiseDifference}, right).
 	
 	\begin{figure}
@@ -728,7 +728,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.85\linewidth]{"Figures/force-based layout"}
-		\caption{Force-based hue assignment: Initial wedge placement (a) and resulting force-based placement (b). Red Arrows indicate the default hues for the wedge centroids, and black arrows represent the forces. }
+		\caption{Force-based hue assignment: Initial wedge placement (a) and resulting force-based placement (b). Red arrows indicate the default hues for the wedge centroids, and black arrows represent the forces. }
 		\label{fig:force-basedlayout}
 	\end{figure}
 	
@@ -826,7 +826,6 @@
 	In our HIV example, distance values were chosen so that the structures associated with the zoom levels were optimally visible. 
 	Assigning zoom levels to camera distances is task-dependent. 
 	Some items, like atoms and amino acids, have very similar sizes (see Figure \ref{fig:hivScale}) and would therefore occupy similar zoom ranges, i.e. it is not possible to uniquely determine what information a user would be interested in for some camera distances.
-	
 	Thus, it depends on the users' priorities to select or omit certain levels for color coding. 
 	
 	\begin{figure}
@@ -912,7 +911,7 @@
 %	Based on the size of the protein and its location, we define a spherical region in 3D which constitute the focus region.
 	Outside this region, we progressively decrease the chroma value as far as 0 as we zoom towards the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
 %	The zoom levels distances between which the desaturation effect begins and ends are arbitrarily defined.
-	When selecting a new focus protein, we interpolate the focus region centroid and radius between the previously and currently focused protein to avoid flickering artifacts.
+	When selecting a new focus protein, we interpolate the focus region centroid and radius between the previously and currently focused protein to avoid flickering artifacts. See Figure~\ref{fig:results_3}.
 	%	Figure \ref{fig:focusContext} shows a single focus protein with XX domains. 
 
 	
@@ -996,14 +995,14 @@
 %	Based on experimentally obtained data (e.g. data such as protein structure, concentration and spatial distribution), the tool is able to generate entire models of viruses and cells via a packing method based on collisions constraints.
 	We use cellVIEW \cite{muzic2015cellview} for the rendering part, which is a tool designed to efficiently render large molecular scenes on the GPU and is implemented in Unity3D. 
 	
-	The dataset which we showcase is a model of an HIV particle in blood serum which contains 20502 instances of 46 different protein types including two lipid membrane layers.
+	The dataset which we showcase is a model of an HIV particle in the blood serum which contains 20502 instances of 46 different protein types including two lipid membrane layers.
 	The protein types are grouped together based on their location.
 	There are 6 different protein groups in the dataset; the blood plasma proteins (18 types), the lipids (2 types), the envelope surface (5 types) and interior proteins (15 types), the capsid surface (1 type) and interior proteins (5 types).
 	Figure \ref{teaserImage} shows progressive zooming from the entire virus to single atoms.	
 	Initially the blood plasma proteins in green, and the matrix protein in purple, dominate the color palette because they have more protein types than other compartments, like the orange capsid proteins.	
 	As we get closer to the capsid proteins in orange, we observe that the colors become more distinguishable.	
 	To visualize the results of the view-dependent color palette optimization more precisely, we also developed a palette widget, shown in Figure~\ref{fig:results_1}.
-	Figure~\ref{fig:results_2} shows all the sequential steps we take to progressively reveal the protein properties as we zoom in.
+%	Figure~\ref{fig:results_2} shows all the sequential steps we take to progressively reveal the protein properties as we zoom in.
 	
 	%The second dataset, shown in Figure \ref{fig:nofig} is a model of an immature HIV which contains 1081 instances of 13 different protein types, and one bi-lipid membrane. \\	
 	Chameleon relies on GPU computing to provide a smooth and responsive user experience.
@@ -1063,7 +1062,6 @@
 	
 	To answer these two research questions, we asked five students and professionals in the field of biology to perform two tasks. 
 	In the first task (\emph{structure identification task}), users were asked to identify structures on multiple levels of detail.
-	If a structure is identifiable, then it must also be discriminable. 
 	The task description was provided by the molecular biologist and illustrator David Goodsell and resembles a publicly available description of the HIV capsid at PDB-101 \cite{goodsell2016}.
 	Based on this description of the HIV capsid, users were asked to identify the following structures: 
 	\begin{enumerate}
@@ -1082,7 +1080,8 @@
 	Both tasks were video-taped and followed by a questionnaire and a semi-structured interview. 
 	Before the study, users could play around with the tool to get familiar with the navigation, and were also instructed how to toggle the visibility of the protein groups. 
 	
-	With the structure identification task, we could assess whether users with sufficient knowledge to assess molecular structures without additional text labels are able to identify the above structures using our system. 
+	With the structure identification task, we could understand whether users with sufficient knowledge to assess molecular structures without additional text labels are able to identify the above structures using our system. 
+	While our color mapping provided the necessary discrimination of individual structures in the respective zoom levels, the identification of the structures was only possible through their structural properties.
 	Through the free exploration task, our goal was to assess whether users would notice and be distracted by our dynamic color mapping. 
 	%Although our system is targeted towards a broader audience, the knowledge of our users allowed us to assess whether the structural information is sufficiently distinct without adding textual information. 
 	We decided for a qualitative evaluation since there is no clear baseline for a comparative lab experiment. 
@@ -1169,9 +1168,9 @@ However, they also had suggestions for improvement, such as adding text labels, 
  \end{figure}
 The performance and feedback of the molecular biologists in our study indicate that Chameleon supports users in identifying molecular structures on multiple scales. 
 Users were equally successful identifying one of the capsid proteins forming a pentamer, and identifying the two domains of the capsid protein. 
-The pentamer capsid protein differed only in shape from the more frequent hexamer capsid proteins, while the two different domains of the capsid proteins were solely encoded by color. 
+The pentamer capsid protein differed only in shape from the more frequent hexamer capsid proteins, while the two different domains of the capsid proteins were encoded by color. 
 However, the users reported lower certainty and higher task difficulty for the identification of the domains.
-This is an indication that identification by structure is easier than identification by color alone -- yet, color can be used if no strong structural cues are available, as in our protein domain example, or for discriminating the existence of a structure.
+This is an indication that identification by structure is easier than identification by color alone -- yet, color can be used if no strong structural cues are available, as in our protein domain example.
 
 On the secondary structures level, the identification rate was similarly high, but users were quite uncertain about their findings and reported a high task difficulty. 
 On this level, alpha helices and beta sheets were discriminated by color, similar to Figure \ref{fig:results_2}. 
@@ -1180,7 +1179,7 @@ The request for an alternative cartoon representation for identifying structures
 In the future, it will be important to explore combinations of semantic zooming comprising both, structural and color information. 
 
 User feedback shows that the our system's dynamic color changes do not interfere with the users' work-flow. 
-While protein domains and secondary structures were mainly referred to by their color, i.e. discriminated by color, only few users noticed the color changes (apart of the atomic level) and none found them confusing. 
+While protein domains and secondary structures were mainly referred to by their color, only few users noticed the color changes (apart of the atomic level) and none found them confusing. 
 All users found the visualization highly appealing and useful for presentation and education purposes. 
 We therefore conclude that Chameleon is a valuable extension to multi-scale molecular visualization and causes no notable distraction, but allows for efficient and pleasing visual encoding of protein sub-structures. 
 
@@ -1496,8 +1495,8 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	The user study performed with our research prototype shows that users can find information in an HIV dataset on each level, while not being distracted by the dynamic color mapping. 
 	%\subsection{future work}
 	
-	While we demonstrated Chameleon on our HIV Showcase with five zoom Levels, we plan to extend our approach to more general use cases in the future -- in the biology domain and beyond.
-	Currently, the hues of the overview Level are initially assigned using a force-based layout and are sub-divided in lower hierarchy levels. 
+	While we demonstrated Chameleon on our HIV showcase with five zoom levels, we plan to extend our approach to more general use cases in the future -- in the biology domain and beyond.
+	Currently, the hues of the overview level are initially assigned using a force-based layout and are sub-divided in lower hierarchy levels. 
 	In the future, we plan to investigate methods with consistent hue assignments across all levels.
 %	Another point is the visualization of multiple levels at the same time, which we did through luminance modulation.
 %	However, it may be possible to encode more information without running the risk of creating salt and pepper noise.
