@@ -910,9 +910,9 @@
 	By clicking on a protein of interest, we define a spherical 3D region around the protein, which constitutes the focus region. 
 %	We select the protein with the highest screen coverage in the central region \textbf{TODO: DEFINE!} of the screen as focus element.
 %	Based on the size of the protein and its location, we define a spherical region in 3D which constitute the focus region.
-	Outside this region, we progressively decrease the chroma value as far as 0 as we zoom towards the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene. 
+	Outside this region, we progressively decrease the chroma value as far as 0 as we zoom towards the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene, as can be seen in Figure~\ref{fig:results_3}. 
 %	The zoom levels distances between which the desaturation effect begins and ends are arbitrarily defined.
-	When selecting a new focus protein, we interpolate the focus region centroid and radius between the previously and currently focused protein to avoid flickering artifacts. See Figure~\ref{fig:results_3}.
+	When selecting a new focus protein, we interpolate the focus region centroid and radius between the previously and currently focused protein to avoid flickering artifacts. 
 	%	Figure \ref{fig:focusContext} shows a single focus protein with XX domains. 
 
 	
@@ -1081,7 +1081,7 @@
 	Both tasks were video-taped and followed by a questionnaire and a semi-structured interview. 
 	Before the study, users could play around with the tool to get familiar with the navigation, and were also instructed how to toggle the visibility of the protein groups. 
 	
-	With the structure identification task, we could understand whether users with sufficient knowledge to assess molecular structures without additional text labels are able to identify the above structures using our system. 
+	With the structure identification task, we could assess whether users with sufficient knowledge to understand molecular structures without additional text labels are able to identify the above structures using our system. 
 	While our color mapping provided the necessary discrimination of individual structures in the respective zoom levels, the identification of the structures was only possible through their structural properties.
 	Through the free exploration task, our goal was to assess whether users would notice and be distracted by our dynamic color mapping. 
 	%Although our system is targeted towards a broader audience, the knowledge of our users allowed us to assess whether the structural information is sufficiently distinct without adding textual information. 
