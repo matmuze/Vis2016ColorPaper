@@ -61,8 +61,8 @@
 % for anonymous conference submission please enter your SUBMISSION ID
 % instead of the author's name (and leave the affiliation blank) !!
 \author[auth1 \& auth2]
-{auth1$^{1,2}$
-	and auth2$^{2}$
+{paper1009$^{1,2}$
+%	and auth2$^{2}$
 	%        S. Spencer$^2$\thanks{Chairman Siggraph Publications Board}
 	\\
 	% For Computer Graphics Forum: Please use the abbreviation of your first name.
@@ -573,8 +573,6 @@
 	\section{Dynamic Hue Palette}
 	\label{sec:hue}
 	
-	\textbf{Done, leaving so i remember to check again if we have enough timeTODO: check consistency: hue ring / wheel / circle; compartment / protein group...} 
-	
 	In the highest hierarchy level (compartment, as illustrated in Figure \ref{teaserImage}a), our task is to find colors for each individual protein type that allow users to discriminate the proteins, but also understand their hierarchical grouping into the compartments. 
 	%Also, aesthetics are important, as we target our work at interested users from a broader audience. 
 	%Since chroma and luminance as used for focus+context visualization and smoothing transitions, 
@@ -583,8 +581,8 @@
 	To maintain good contrast for encoding shape properties through shading, we fixed the luminance value to 75. 
 	With this luminance value, we also can use a wide radius to fit the hue ring within the sRGB gamut, leading to a maximum chroma of 40. 
 	Figure \ref{fig:hslvshcl} shows a comparison between a hue palette picked from a an HSL ring (left) and an iso-luminant HCL ring (right). 
-	\textbf{tbd: remove this comment. Removed better visibile for iso-luminant}
-%	Mind how the structural properties are better visible in the iso-luminant pastel color palette on the right. 
+%	\textbf{tbd: remove this comment. Removed better visibile for iso-luminant}
+	Mind how the structural properties are better visible in the iso-luminant pastel color palette on the right. 
 	
 	\begin{figure}
 \centering
@@ -1174,10 +1172,10 @@ However, the particular alpha helix mentioned in the task description could only
 The request for an alternative cartoon representation for identifying structures on this level shows the limits of multi-scale color mapping without adapting the structural representation. 
 In the future, it will be important to explore combinations of semantic zooming comprising both, structural and color information. 
 
-User feedback indicates that the dynamic color changes introduced by our system do not interfere with the users' workflows. 
-While protein domains and secondary structures were mainly referred to by their color, only few users noticed the color changes (apart from the atomic level) and none found them overly confusing. 
+User feedback shows that the our system's dynamic color changes do not interfere with the users' work-flow. 
+While protein domains and secondary structures were mainly referred to by their color, i.e. discriminated by color, only few users noticed the color changes (apart of the atomic level) and none found them confusing. 
 All users found the visualization highly appealing and useful for presentation and education purposes. 
-We therefore conclude that Chameleon is a valuable extension to multi-scale molecular visualization, which causes no notable distraction, but allows for efficient and pleasing visual encoding of protein sub-structures. 
+We therefore conclude that Chameleon is a valuable extension to multi-scale molecular visualization and causes no notable distraction, but allows for efficient and pleasing visual encoding of protein sub-structures. 
 
 	
 %	We conducted a user study with domain experts in biology in order to evaluate our visualization and to improve it based on the feedback.
