@@ -139,7 +139,7 @@
 
 	
 	%Colors are used to distinguish elements on each scale.
-	Illustrators use carefully selected color assignments for each detail level of their illustrations. 
+	Illustrators carefully select color assignments for each detail level of their illustrations. 
 	In Figure~\ref{fig:motivation}, the illustrator depicts different protein types by color in the overview on the right. 
 	In the close-up on the left, he uses different shades of blue to distinguish between the protein domains, which are not indicated in the overview. 
 	In interactively zoomable visualizations, such a static single-scale color assignment will either lead to a loss of excess of information. 
@@ -388,7 +388,7 @@
 	We use the \textbf{hue} to distinguish between structures at the respective zoom levels, as described in Section \ref{sec:hue}. 
 	The \textbf{chroma} is used to increase color discriminability for elements in the focus against the context (Section \ref{sec:chroma}). 
 	Finally, we indicate structures from lower hierarchies in the \textbf{luminance} channel to mimic illustrator techniques (see Figure \ref{fig:motivation}) and to smoothen color transitions (Section \ref{sec:luminance}).
-	All objects in the scene must be fully opaque, as transparency can lead to unpredictable and confusing color mixtures. 
+	All objects in the scene must be fully opaque, as transparency for densely packed molecular data can lead to unpredictable and confusing color mixtures. 
 	We use CIELab and HCL color palettes, which are perceptually linear. 
 	This means we can quantify the dissimilarity between colors by their Euclidean distance.
 	We describe how we dynamically adapt the hues as the user is panning the scene to ensure color discriminability even in a scene with dozens of different entities (Section \ref{sec:dynamic}), and how hues are sub-divided hierarchically as the user zooms further into the scene (Section \ref{sec:hierarchy}). 
@@ -583,7 +583,8 @@
 	To maintain good contrast for encoding shape properties through shading, we fixed the luminance value to 75. 
 	With this luminance value, we also can use a wide radius to fit the hue ring within the sRGB gamut, leading to a maximum chroma of 40. 
 	Figure \ref{fig:hslvshcl} shows a comparison between a hue palette picked from a an HSL ring (left) and an iso-luminant HCL ring (right). 
-	Mind how the structural properties are better visible in the iso-luminant pastel color palette on the right. 
+	\textbf{tbd: remove this comment. Removed better visibile for iso-luminant}
+%	Mind how the structural properties are better visible in the iso-luminant pastel color palette on the right. 
 	
 	\begin{figure}
 \centering
@@ -719,7 +720,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.85\linewidth]{"Figures/force-based layout"}
-		\caption{The force-based hue assignment mecanism, the red arrows indicate the default hue for the centroid of a group. a) The groups are positioned with a naive and non-iterative approach, the black arrows represent the forces that we apply to reposition the groups, b) the groups are attracted towards their default hue value, until the system reaches a state of equilibrium.}
+		\caption{The force-based hue assignment mechanism, the red arrows indicate the default hue for the centroid of a group. a) The groups are positioned with a naive and non-iterative approach, the black arrows represent the forces that we apply to reposition the groups, b) the groups are attracted towards their default hue value, until the system reaches a state of equilibrium.}
 		\label{fig:force-basedlayout}
 	\end{figure}
 	
@@ -757,7 +758,7 @@
 	In other words, the force-based hue assignments aims to keep the resized wedges close to their default centroids, while avoiding overlaps between neighboring wedges.  
 %	\textbf{Essentially, all it does is determine if two groups overlap or not and to what degree. If they do no overlap, the force is equal to 0. The w takes the user specified minimum distance between wedges into account.}
     % Not true, it also tries to keep the wedges close to their original position
-	For a single group, the overall forces -- comprising of attraction and repulsion forces -- are computed as follow:
+	For a single group, the overall forces -- comprising of attraction and repulsion forces -- are computed as follows:
 	%
 	\begin{equation}
 	f_{i} = (g_{i} - I_{i}) + \sum_{j=1}^{n, i \neq j} y(i,j)
@@ -816,7 +817,8 @@
 	The individual zoom levels (compartment, proteins, domains, etc.) are associated with specific distances of the camera to the scene. 
 	In our HIV example, distance values were chosen so that the structures associated with the zoom levels were optimally visible. 
 	Assigning zoom levels to camera distances is task-dependent. 
-	Some items, like atoms and amino acids, have very similar sizes (see Figure \ref{fig:hivScale}) and would therefore occupy similar zoom ranges, i.e. the camera would be similarly close to the object.
+	Some items, like atoms and amino acids, have very similar sizes (see Figure \ref{fig:hivScale}) and would therefore occupy similar zoom ranges, i.e. it is not possible to uniquely determine what information a user would be interested in for some camera distances.
+	
 	Thus, it depends on the users' priorities to select or omit certain levels for color coding. 
 	
 	\begin{figure}
@@ -834,12 +836,15 @@
 	While iterating through all the pixels, we fetch their unique atom identifiers from the off-line texture.
 	The identifiers allow us to collect, directly from the shader program, all the needed information concerning the rendered atoms, and which was priorly uploaded to the video memory (group, protein type, domain, secondary structure and atom type).	
 	We also use the previously rendered depth texture to retrieve the world-space position of a pixel in the shader.
-	Then, from the world position of each pixel, we are able to compute the world space distance to the camera.
+	Then, from the world position of each pixel, we compute the world space distance to the camera.
 	From the camera distance we are able to compute the current degree of transition between the closest levels, as well as the hue values associated with the two closest zoom levels.	
 	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the two levels the user is between, based on the degree of transition, as illustrated in Figure \ref{fig:zoom_continuum}, top and middle line.
-	At what camera distances which levels are displayed is determined by the user for two reasons.
+	The user determines the camera distances at which the levels are displayed for two reasons:
+	%At what camera distances which levels are displayed is determined by the user for two reasons.
 	One, depending on the visualization complexity and item size, the desired distance may vary.
-	Two, the same object in two different visualizations may have different world space sizes.
+	Two, the same object in two different visualizations may have different world space sizes. 
+	This means the object may have different sizes for the same camera distance in different visualizations.
+	
 	
 		\begin{figure}
 			\centering
@@ -856,8 +861,8 @@
 	\subsubsection{Pre-Defined Color Palettes}
 	
 	In some cases, it can be desirable to use pre-defined color palettes instead of automatically calculated categorical colors. 
-	In our HIV showcase, we use pre-defined atom color codes for the lowest zoom level (see Figure \ref{teaserImage}e), to support domain knowledge. 
-	In this case, Chameleon simply blends to those pre-defined colors when zooming further in. 
+	In our HIV showcase, we use pre-defined atom color codes for the highest zoom level (see Figure \ref{teaserImage}e), to support domain knowledge, such as CPK coloring for atoms. 
+	In this case, Chameleon simply blends to those pre-defined colors when zooming to the atomic level. 
 	
 	%\textbf{MWa rewrite END -- remove next paragraph in case of acceptance}
 	%
@@ -938,8 +943,8 @@
 	\label{sec:luminance}
 	
 	So far, we used the hue channel to discriminate structures on different zoom levels and the chroma to distinguish focus proteins from the context. 
-	The final color channel we can manipulate is luminance. 
-	Illustrators sometimes use the luminance channel to indicate structural properties in lower hierarchy levels, as shown in Figure \ref{fig:motivation}. 
+	The final color channel we manipulate is luminance. 
+	Molecular illustrators sometimes use the luminance channel to indicate structural properties in lower hierarchy levels, as shown in Figure \ref{fig:motivation} or in the "Molecule of the Month"~\cite{goodsell2016}. 
 	This is a reasonable choice, given that hue is known to be an effective channel to encode low-frequency information, while luminance is more effective to encode high-frequency information~\cite{bergman1995rule}. 
 	In addition, encoding information from an additional zoom level can support orientation when blending between zoom levels. 
 	
@@ -972,7 +977,7 @@
 		\includegraphics[width=1\linewidth]{Figures/results_4}
 		\caption{Various snapshots from the Chameleon system.
 			As the camera position changes, the discriminability between protein types is optimized.
-			The color palette widget at the bottom left allows us to visualize the distribution of the groups along the hue ring.}
+			The color palette widget at the bottom left allows us to visualize the distribution of the groups along the hue ring. The hue ring is not intended to be directly interpreted. It is a technical complement to support intuitive understanding.}
 		\label{fig:results_1}
 	\end{figure*}
 	
@@ -1064,7 +1069,7 @@
 		\item one methionine amino acid within the alpha helix.
 	\end{enumerate}
 	Mind that the last item was not included in the expert's task description, but was added as a representative task on the amino acid and atom level, respectively. 
-	Since we did not color-code the amino acid level explicitly, users were given the hint to identify methionine based on the sulfur atom. 
+	Since we did not color-code the amino acid level explicitly, users were given the hint to identify methionine based on the coloring of its sulfur atom. 
 	To assess the performance in the structure identification task, we recorded whether users were able to correctly identify the above listed structures. 
 	In the subsequent \emph{free exploration task}, users could freely navigate through the visualization, while thinking aloud. 
 	All reported insights were noted. 
@@ -1080,7 +1085,7 @@
 	
 	
 	%After a pilot study with two researchers (28 and 25, one female) in the field of biochemistry and proteomics, respectively, we improved the navigation controls of our system (\textbf{HOW??}), since we observed a strong negative impact on the ability to explore the scene. 
-	We will report observations, questionnaire results, and feedback from five experts or students in the field of molecular biology (2 PhD students, one Post-Doc, one pharmacist, and one master student; one female, aged 24 to 31, all with normal or corrected-to-normal vision). 
+	We  report observations, questionnaire results, and feedback from five experts or students in the field of molecular biology (2 PhD students, one Post-Doc, one pharmacist, and one master student; one female, aged 24 to 31, all with normal or corrected-to-normal vision). 
 	While the method is also aimed at the general audience, no such users were involved in the study. 
 	The task description for such users would have to be extremely long and detailed, leading likely to issues with text comprehension or revealing too much information. 
 	
@@ -1171,7 +1176,7 @@ In the future, it will be important to explore combinations of semantic zooming 
 User feedback indicates that the dynamic color changes introduced by our system do not interfere with the users' workflows. 
 While protein domains and secondary structures were mainly referred to by their color, only few users noticed the color changes (apart from the atomic level) and none found them overly confusing. 
 All users found the visualization highly appealing and useful for presentation and education purposes. 
-We therefore conclude that Chameleon is a valuable extension to multi-scale molecular visualization, which causes no notable distraction, but allows for efficient and visually pleasing visual encoding of protein sub-structures. 
+We therefore conclude that Chameleon is a valuable extension to multi-scale molecular visualization, which causes no notable distraction, but allows for efficient and pleasing visual encoding of protein sub-structures. 
 
 	
 %	We conducted a user study with domain experts in biology in order to evaluate our visualization and to improve it based on the feedback.
@@ -1476,21 +1481,29 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	
 	
 	\section{Conclusion and Future Work}
-	The work presented here is a method that is capable of rendering a hierarchical, cell-like structure on different levels in a coherent and cohesive manner using color. 
+	The work presented here is a method that is capable of visualizing a hierarchical, cell-like structure on different levels in a coherent and cohesive manner using color. 
 	The hierarchical structure of the coloring technique, along with the visibility based variation in color allows users to navigate and inspect parts of the visualization without getting disorientated, while being subtle.
 	Altering the color based on semantic zooming changes the meaning of color coding.
 	Instead of discriminability for any situation, semantic color changes allow structures to be clustered or seperated as necessary.
 	This is achieved while maintaining the connection between structures on different levels in a logical manner via the hierarchical nature of the coloring.
 	Furthermore the coloring scheme is capable of showing structures on each level in a visually distinct manner. 
 	The user study performed with our research prototype shows that users can find information in an HIV dataset on each level, while not being distracted by the dynamic color mapping. 
-	
 	%\subsection{future work}
-	There are several points that can be addressed in the future. 
-	First, we want to investigate mixing categorical and quantitative color coding on different zoom levels. 
-	A user may be interested not only in structural information, but also in attributes like polarity or hydrophobicity at certain zoom levels. 
-	This means there can be alternative paths in the color space when zooming in. 
-	Second, our study has shown limitations of structure identification tasks at certain zoom levels, where domain experts are used to different representations, such as the cartoon representation. 
-	A future challenge therefore is to find meaningful semantic zooming strategies that comprise both, the color and the structural representation. 
+	While out method works for molecular data, it may not be generalizable to all types.
+	Our data is limited to 5 different zoom levels. 
+	No tests with an arbitrary number of levels has been conducted. 
+	Another point is the switch in coloring type from a force-based layout (Section~\ref{sec:dynamic}) to hierarchical coloring (Section~\ref{sec:hierarchy}). 
+	As such, the search for a completely generalized method is still open.
+	Second is the visualization of different zoom levels at the same time. 
+	We encoded lower levels through luminance modulation. 
+	However, it might be possible to encode more information without running the risk of creating salt and pepper noise.
+%	There are several points that can be addressed in the future. 
+%	First, we want to investigate mixing categorical and quantitative color coding on different zoom levels. 
+%	A user may be interested not only in structural information, but also in attributes like polarity or hydrophobicity at certain zoom levels. 
+%	This means there can be alternative paths in the color space when zooming in. 
+%	Second, our study has shown limitations of structure identification tasks at certain zoom levels, where domain experts are used to different representations, such as the cartoon representation. 
+%	A future challenge therefore is to find meaningful semantic zooming strategies that comprise both, the color and the structural representation. 
+	
 %	The most obvious is to overcome the limitations mentioned above. 
 %	The users also expressed interest in interacting with the visualization. 
 %	Structures such as the capsid consist out of numerous proteins. 
