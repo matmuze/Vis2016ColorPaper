@@ -142,22 +142,24 @@
 	Illustrators carefully select color assignments for each detail level of their illustrations. 
 	In Figure~\ref{fig:motivation}, the illustrator depicts different protein types by color in the overview on the right. 
 	In the close-up on the left, he uses different shades of blue to distinguish between the protein domains, which are not indicated in the overview. 
-	In interactively zoomable visualizations, such a static single-scale color assignment will either lead to a loss of excess of information. 
+	In interactively zoomable visualizations, such a static single-scale color assignment will either lead to a loss or excess of information. 
 	%Usually the color assignment is static.
 	%At best, users can select their preferred color scheme. 
 	%Unfortunately, single-scale color mapping will lead either to a loss or an excess of information.
-	For example, if we apply categorical color coding to proteins, then proteins can be easily discriminated, but secondary structures or atoms are not visually depicted.
-	On the other hand, when color-coding individual atoms, the visualization is prone to salt-and-pepper noise in the overview levels.
+	For example, if we apply categorical color coding to proteins, then proteins can be easily discriminated, but secondary structures or atoms are not visually depicted (Figure~\ref{fig:NoiseDifference}, left).
+	On the other hand, when color-coding individual atoms, the visualization is prone to salt-and-pepper noise in the overview levels (Figure~\ref{fig:NoiseDifference}, right).
+	
 	\begin{figure}
 		\centering
-		\includegraphics[width=1\linewidth]{Figures/all3}
-		\caption{Comparison image of HIV with coloring based on compartment (left), secondary structures (middle), and atoms (right).}
+		\includegraphics[width=1\linewidth]{Figures/motivation}
+		\caption{Multi-scale illustration of HIV \cite{RCSBPDB2011}: overview of the virus on the right and close-up on the envelope protein on the left. In the close-up different shades of blue are used to discriminate between protein domains, and carbon atoms are slightly darker. }
 		%		\caption{Motivation: Multi-scale illustration of HIV from David Goodsell. 
 		%			The left part shows a close up on the protein which is indicated on the right part via the black line.
 		%			In the close-up the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
 		%			Differentiation is also made between carbon atoms and the remaining ones by slightly shifting the luminance.}
-		\label{fig:NoiseDifference}
-	\end{figure} 
+		\label{fig:motivation}
+	\end{figure}
+	
 	%In zoomable visualizations, this will either lead to information loss when zooming in, or salt and pepper noise when zooming out.
 		
 	%A naive visualization that defines color maps for each level and blends them may at first glance seem sufficient.
@@ -169,12 +171,12 @@
 	Second, there is a loss of hierarchy information when transitioning from one level to the next. 
 	For example, when looking at two neighboring compartments and zooming in, it may be hard to maintain an overview which compartment certain proteins belong to. 
 	%For example, if a user is looking at two neighboring compartments and zooms in where they meet, then he can not tell where one ends and the other begins, as the compartment level color coding is blended away. 
-	This may cause orientation problems due to the inherent hierarchy of the data.
+%	This may cause orientation problems due to the inherent hierarchy of the data.
 	%An atom belongs to an amino acid, which in turn belongs to a domain of a protein, all the way to the top.
 	To take the data hierarchy into account, Tennekes and de Jonge~\cite{tennekes2014tree} proposed a color space for hierarchical visualizations. 
 	Their approach was targeted towards static visualizations and therefore assigns unique hues to each child node in a tree. 
 	However, this leads to poor scalability with respect to color discriminability. 
-	The HIV, shown in Figure \ref{teaserImage} and Figure \ref{fig:motivation}, consists of 46 protein types, each divided further into multiple protein domains, secondary structures, amino acids, and atoms. 
+	The HIV consists of 46 protein types, each divided further into multiple protein domains, secondary structures, amino acids, and atoms. 
 	However, this scalability issues can be resolved by exploiting the interactive navigation capabilities -- and thereby caused dynamic visibility changes -- of our system. 
 	
 	
@@ -242,14 +244,14 @@
 	
 	\begin{figure}
 		\centering
-		\includegraphics[width=1\linewidth]{Figures/motivation}
-				\caption{Multi-scale illustration of HIV \cite{RCSBPDB2011}: overview of the virus on the right and close-up on the envelope protein on the left. In the close-up different shades of blue are used to discriminate between protein domains, and carbon atoms are slightly darker. }
-%		\caption{Motivation: Multi-scale illustration of HIV from David Goodsell. 
-%			The left part shows a close up on the protein which is indicated on the right part via the black line.
-%			In the close-up the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
-%			Differentiation is also made between carbon atoms and the remaining ones by slightly shifting the luminance.}
-		\label{fig:motivation}
-	\end{figure}
+		\includegraphics[width=1\linewidth]{Figures/all3}
+		\caption{Comparison image of HIV with coloring based on compartment (left), secondary structures (middle), and atoms (right).}
+		%		\caption{Motivation: Multi-scale illustration of HIV from David Goodsell. 
+		%			The left part shows a close up on the protein which is indicated on the right part via the black line.
+		%			In the close-up the illustrator used several shades of blue to distinguish between the different parts of the proteins which are not distinguishable in the wide view on the right side.
+		%			Differentiation is also made between carbon atoms and the remaining ones by slightly shifting the luminance.}
+		\label{fig:NoiseDifference}
+	\end{figure} 
 	
 	
 	
@@ -551,8 +553,8 @@
 	%	
 	%\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
 	
-	
-	\begin{figure}
+		
+	\begin{figure}[t]
 		\centering
 		\includegraphics[width=0.75\linewidth]{Figures/hslvshcl}
 		\caption{Comparison between two color palettes with varying hues and constant saturation/lightness using HSL (left), and constant chroma/luminance using HCL (right). 
@@ -562,13 +564,13 @@
 		\label{fig:hslvshcl}
 	\end{figure}
 	
-		\begin{figure*}[t]
-			\centering
-			\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
-			\caption{Overview of Chameleon's dynamic and hierarchical hue selection scheme for (a) an exemplary two-level hierarchy of four protein groups (A,B,C,D) and a total number of 20 different protein types: For the current viewport (b), visibility information is extracted (c) and the color palette is updated. Zooming further towards protein type 10 splits up the protein type hue to three different domain colors (x,y,z).}
-%			\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) Shows the first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with an overall number of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom in on a protein of type 10, which features 3 different domains (x,y,z).}
-			\label{fig:coloroverview}
-		\end{figure*}
+	
+	
+		
+		
+		
+		
+	
 	
 	\section{Dynamic Hue Palette}
 	\label{sec:hue}
@@ -584,12 +586,7 @@
 %	\textbf{tbd: remove this comment. Removed better visibile for iso-luminant}
 	Mind how the structural properties are better visible in the iso-luminant pastel color palette on the right. 
 	
-	\begin{figure}
-\centering
-\includegraphics[width=0.3\linewidth]{Figures/hueWheel.png}
-\caption{Iso-luminant hue ring with 21 distinct colors, with luminance 75 and chroma 40 in HCL color space.}
-\label{fig:hueWheel}
-\end{figure}
+	
 
 			
 %	Due to aesthetic reasons, as well as the use of luminance and chroma as described in Section~\ref{Overview}, we opted to choose only saturated and iso-luminant colors, resulting in a pastel color palette. 
@@ -621,7 +618,7 @@
 	We discovered that roughly 5 jnd steps (11.5) were needed to allow for easy discernibility. 
 	%In the hue ring in Figure \ref{fig:hueWheel}, we chose a distance $d$ between neighboring colors of 11.5, which corresponds to five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}. 
 	With this setting and a chroma radius of $C^*=40$, $\alpha_{opt}$ is 16.7$^{\circ}$, which allows for a maximum of 21 distinct hues. 
-	With a lower $d$, we found that individual color dots could not be properly distinguished any more. 
+	%With a lower $d$, we found that individual color dots could not be properly distinguished any more. 
 %	The hue ring in Figure \ref{fig:hueWheel} shows 21 distinct colors, where the distance $d$ between neighboring colors is around 12, which corresponds to approximately five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}, and the spacing $s$ is set to zero.  
 %	We choose this $d$ of 12 as our optimal color distance. 
 	However, in the HIV, we have 46 distinct protein types $\sum_{i} m_i$ distributed to five compartments $n$. 
@@ -638,7 +635,20 @@
 	In the overview zoom level, this effect is actually desirable to avoid salt and pepper noise. 
 	However, as we zoom in, we want increasing discriminability. 
 	We therefore introduce a view-dependent color adaptation approach to increase $\alpha$ dynamically, based on the current visibility.  %over which the user can manually set some parameters if he so desires. (???)
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=0.3\linewidth]{Figures/hueWheel.png}
+		\caption{Iso-luminant hue ring with 21 distinct colors, with luminance 75 and chroma 40 in HCL color space.}
+		\label{fig:hueWheel}
+	\end{figure}
 	
+	\begin{figure*}[t]
+		\centering
+		\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
+		\caption{Overview of Chameleon's dynamic and hierarchical hue selection scheme for (a) an exemplary two-level hierarchy of four protein groups (A,B,C,D) and a total number of 20 different protein types: For the current viewport (b), visibility information is extracted (c) and the color palette is updated. Zooming further towards protein type 10 splits up the protein type hue to three different domain colors (x,y,z).}
+		%			\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) Shows the first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with an overall number of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom in on a protein of type 10, which features 3 different domains (x,y,z).}
+		\label{fig:coloroverview}
+	\end{figure*}
 	%\textbf{MWA END: my suggestion is to remove the next paragraph}
 	\subsection{View-Dependent Color Adjustment}
 	\label{sec:dynamic}
@@ -718,7 +728,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.85\linewidth]{"Figures/force-based layout"}
-		\caption{The force-based hue assignment mechanism, the red arrows indicate the default hue for the centroid of a group. a) The groups are positioned with a naive and non-iterative approach, the black arrows represent the forces that we apply to reposition the groups, b) the groups are attracted towards their default hue value, until the system reaches a state of equilibrium.}
+		\caption{Force-based hue assignment: Initial wedge placement (a) and resulting force-based placement (b). Red Arrows indicate the default hues for the wedge centroids, and black arrows represent the forces. }
 		\label{fig:force-basedlayout}
 	\end{figure}
 	
@@ -837,11 +847,8 @@
 	Then, from the world position of each pixel, we compute the world space distance to the camera.
 	From the camera distance we are able to compute the current degree of transition between the closest levels, as well as the hue values associated with the two closest zoom levels.	
 	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the two levels the user is between, based on the degree of transition, as illustrated in Figure \ref{fig:zoom_continuum}, top and middle line.
-	The user determines the camera distances at which the levels are displayed for two reasons:
-	%At what camera distances which levels are displayed is determined by the user for two reasons.
-	One, depending on the visualization complexity and item size, the desired distance may vary.
-	Two, the same object in two different visualizations may have different world space sizes. 
-	This means the object may have different sizes for the same camera distance in different visualizations.
+	In our current implementation, users have to define the camera distances for the zoom Levels manually. 
+	In the future, we plan to investigate automatic camera distance settings, based on the screen size of the structures associated with the zoom Levels.
 	
 	
 		\begin{figure}
@@ -1138,12 +1145,7 @@
 	 All those users verbally referred to the domains by color. 
 	 Two users also referred to the alpha helices by color. 
 	 
-	 \begin{figure}
-\centering
-\includegraphics[width=1.0\linewidth]{Figures/questionnaires.pdf}
-\caption{Average and standard error of responses on five-point Likert scale for questions concerning the ease of identification of structures (blue), as well as color changes and visual appeal (orange).}
-\label{fig:questionnaire}
-\end{figure}
+	
 
 In the free exploration task, all except for user 3 explored the virus. 
 On average, they spent 10 minutes for exploration. 
@@ -1159,7 +1161,12 @@ In the post-experiment interview, they explained that they considered the tool u
 However, they also had suggestions for improvement, such as adding text labels, visually marking the termini of the protein domains, and providing a cartoon representation for secondary structures. 
 
 \subsection{Summary and Discussion of Results}
-
+ \begin{figure}
+ 	\centering
+ 	\includegraphics[width=1.0\linewidth]{Figures/questionnaires.pdf}
+ 	\caption{Average and standard error of responses on five-point Likert scale for questions concerning the ease of identification of structures (blue), as well as color changes and visual appeal (orange).}
+ 	\label{fig:questionnaire}
+ \end{figure}
 The performance and feedback of the molecular biologists in our study indicate that Chameleon supports users in identifying molecular structures on multiple scales. 
 Users were equally successful identifying one of the capsid proteins forming a pentamer, and identifying the two domains of the capsid protein. 
 The pentamer capsid protein differed only in shape from the more frequent hexamer capsid proteins, while the two different domains of the capsid proteins were solely encoded by color. 
