@@ -60,8 +60,8 @@
 
 % for anonymous conference submission please enter your SUBMISSION ID
 % instead of the author's name (and leave the affiliation blank) !!
-\author[authors]
-{Nicholas Waldin$^{1}$, Mathieu Le Muzic$^{1}$, Maneula Waldner$^{1}$, Eduard Gröller$^{1,2}$, David Goodsell$^{3}$, Autin Ludovic$^{3}$, Ivan Viola$^{1}$ 
+\author[Waldin et al.]
+{Nicholas Waldin$^{1}$, Mathieu Le Muzic$^{1}$, Maneula Waldner$^{1}$, Eduard Gr\"oller$^{1,2}$, David Goodsell$^{3}$, Autin Ludovic$^{3}$, Ivan Viola$^{1}$ 
 %	and auth2$^{2}$
 	%        S. Spencer$^2$\thanks{Chairman Siggraph Publications Board}
 	\\
@@ -115,7 +115,7 @@
 		We present a novel technology which adaptively, based on the current scale level, adjusts the color scheme to depict or distinguish the currently best visible structural information. 
 		We treat the color as a visual resource that is distributed given a particular demand. 
 		The changes of the color scheme are seamlessly interpolated between the color scheme from the previous views into a given new one. 
-		With such dynamic multi-scale color mapping we ensure that the viewer is able to distinguish structural detail that is shown to her on any given scale. 
+		With such dynamic multi-scale color mapping we ensure that the viewer is able to distinguish structural detail that is shown on any given scale. 
 		This technique has been tested by users with an expertise in structural biology and has been overall well received.
 		
 		\begin{classification} % according to http://www.acm.org/class/1998/
@@ -553,17 +553,14 @@
 	%\textbf{We perform color smooth color interpolation between the current color of the atoms and their terminal colors. } \\
 	%	
 	%\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
-	
-		
 	\begin{figure}[t]
 		\centering
-		\includegraphics[width=0.75\linewidth]{Figures/hslvshcl}
-		\caption{Comparison between two color palettes with varying hues and constant saturation/lightness using HSL (left), and constant chroma/luminance using HCL (right). 
-		Unlike HSL, the HCL color space provides true isoluminant colors when varying the hue with constant chroma/luminance values.
-		 %Mind how the dark blue colors, inside the virus and next to the membrane, make it hard to distinguish individual proteins in a lit environment.
-		 }
-		\label{fig:hslvshcl}
+		\includegraphics[width=0.3\linewidth]{Figures/hueWheel.png}
+		\caption{Iso-luminant hue ring with 21 distinct colors, with luminance 75 and chroma 40 in HCL color space.}
+		\label{fig:hueWheel}
 	\end{figure}
+		
+	
 	
 	
 	
@@ -576,7 +573,7 @@
 	\section{Dynamic Hue Palette}
 	\label{sec:hue}
 	
-	In the highest hierarchy level (compartment, as illustrated in Figure \ref{teaserImage}a), our task is to find colors for each individual protein type that allow users to discriminate the proteins, but also understand their hierarchical grouping into the compartments. 
+	At the highest hierarchy level (compartment, as illustrated in Figure \ref{teaserImage}a), our task is to find colors for each individual protein type that allow users to discriminate the proteins, but also understand their hierarchical grouping into the compartments. 
 	%Also, aesthetics are important, as we target our work at interested users from a broader audience. 
 	%Since chroma and luminance as used for focus+context visualization and smoothing transitions, 
 	To visually categorize the protein types, we initially assign each protein type within each compartment a unique hue value. 
@@ -614,9 +611,18 @@
 	\alpha_{opt} = arcsin\frac{d}{C^*}. %
 	\end{equation}%
 	%
-	In CIELab color space the ''just noticeable difference'' (jnd) is equal to 2.3\cite{lee2013perceptually}.
+	In CIELab color space the ''just noticeable difference'' (jnd) is assumed to be 2.3\cite{lee2013perceptually}.
 	Using the jnd would of course lead to poor discernibility. 
-	We discovered that roughly 5 jnd steps (11.5) were needed to allow for easy discernibility. 
+	We discovered that roughly 5 jnd steps were needed to allow for easy discernibility. 
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=0.75\linewidth]{Figures/hslvshcl}
+		\caption{Comparison between two color palettes with varying hues and constant saturation/lightness using HSL (left), and constant chroma/luminance using HCL (right). 
+			Unlike HSL, the HCL color space provides true isoluminant colors when varying the hue with constant chroma/luminance values.
+			%Mind how the dark blue colors, inside the virus and next to the membrane, make it hard to distinguish individual proteins in a lit environment.
+		}
+		\label{fig:hslvshcl}
+	\end{figure}
 	%In the hue ring in Figure \ref{fig:hueWheel}, we chose a distance $d$ between neighboring colors of 11.5, which corresponds to five \textit{``just noticeably different''} steps of 2.3 in CIELab color space \cite{lee2013perceptually}. 
 	With this setting and a chroma radius of $C^*=40$, $\alpha_{opt}$ is 16.7$^{\circ}$, which allows for a maximum of 21 distinct hues. 
 	%With a lower $d$, we found that individual color dots could not be properly distinguished any more. 
@@ -636,12 +642,7 @@
 	In the overview zoom level, this effect is actually desirable to avoid salt and pepper noise. 
 	However, as we zoom in, we want increasing discriminability. 
 	We therefore introduce a view-dependent color adaptation approach to increase $\alpha$ dynamically, based on the current visibility.  %over which the user can manually set some parameters if he so desires. (???)
-	\begin{figure}[t]
-		\centering
-		\includegraphics[width=0.3\linewidth]{Figures/hueWheel.png}
-		\caption{Iso-luminant hue ring with 21 distinct colors, with luminance 75 and chroma 40 in HCL color space.}
-		\label{fig:hueWheel}
-	\end{figure}
+	
 	
 	\begin{figure*}[t]
 		\centering
@@ -662,8 +663,8 @@
 	
 	
 	To determine which protein groups occupy unnecessary space in the color palette, we extract visibility information by analyzing the previously rendered frame.
-	For each protein group $i$, we determine the number of visible protein types $m_i$. 
-	A protein type is visible, if at least one screen pixel is occupied by a protein of type $j$. 
+	For each protein group, we determine the number of visible protein types $m_i$. 
+	A protein type is visible, if at least one screen pixel is occupied by a protein of type $i$. 
 	According to Equation \ref{eq:wedge}, the angular distance $\alpha$ between the hues increases as the number of visible protein types across all protein groups $\sum_{i} m_i$ decreases. 
 	
 %	For each protein group, we derive a group visibility coefficient to scale their corresponding wedge on the hue ring. 
@@ -786,7 +787,7 @@
 	
 	As we zoom further into the details of the proteins, we begin to reveal the colors corresponding to the following levels (domains, secondary structures, atoms). 
 	To ensure logical transitions between levels and to maintain hierarchical information, we introduce a hierarchical hue picking method. 
-	For each protein type, the hue ring is further sub-divided into wedges to color-code protein domains, and individual protein-domain hues can further be sub-divided to secondary-structure wedges, as illustrated in Figure \ref{fig:overlap}. 
+	For each protein type, the hue ring is further sub-divided into wedges to color-code protein domains, and individual protein-domain hues can further be sub-divided to secondary-structure wedges. 
 	
 	To select hues for $m$ protein domains, the angular distances $\gamma$ between the domain hues are calculated as follows: 
 	%
@@ -804,7 +805,7 @@
 	%Figure \ref{fig:overlap} illustrates the construction of the coloring of the protein domains, as well as the overlap that can occur.
 	This is another major difference to the hierarchical coloring technique introduced by Tennekes and de Jonge \cite{tennekes2014tree}, who assigned unique, yet hardly distinguishable colors on all zoom levels for static tree visualizations. 
 	In our case, being able to clearly distinguish domains is an important task in structural biology, which is difficult without clearly distinguishable colors. 
-	To overcome misinterpretation caused by overlapping hue wedges between proteins, we added context-de-saturation on demand, as explained in Section \ref{sec:chroma}. 
+	To overcome misinterpretation caused by overlapping hue wedges between proteins, we added context-de-saturation on demand. 
 	%facilitated by structural properties as well. 
 	
 	
@@ -846,7 +847,7 @@
 	We also use the previously rendered depth texture to retrieve the world-space position of a pixel in the shader.
 	Then, from the world position of each pixel, we compute the world space distance to the camera.
 	From the camera distance we are able to compute the current degree of transition between the closest levels, as well as the hue values associated with the two closest zoom levels.	
-	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the two levels the user is between, as illustrated in Figure \ref{fig:zoom_continuum}.
+	Finally, the hue of a fragment is computed by performing a linear interpolation of the hue value of the two levels, as illustrated in Figure \ref{fig:zoom_continuum}.
 	
 	In our current implementation, users have to define the camera distances for the zoom levels manually. 
 	In the future, we plan to investigate automatic camera-distance settings, based on the screen size of the structures associated with the zoom levels.
@@ -913,7 +914,7 @@
 %	Based on the size of the protein and its location, we define a spherical region in 3D which constitute the focus region.
 	Outside this region, we progressively decrease the chroma value down to 0 as we zoom towards the focused protein, to ensure optimal color discriminability of the focus protein's colors with respect to all other colors in the scene, as can be seen in Figure~\ref{fig:results_3}. 
 %	The zoom levels distances between which the desaturation effect begins and ends are arbitrarily defined.
-	When selecting a new focus protein, we interpolate the focus-region centroid and radius between the previously and currently focused protein to avoid flickering artifacts. 
+
 	%	Figure \ref{fig:focusContext} shows a single focus protein with XX domains. 
 
 	
@@ -965,9 +966,7 @@
 	With this small modulation, the luminance channel serves only as a subtle indication of lower-level structural properties, to avoid extensive visual clutter and not to interfere with shading cues.  
 	
 	Like the hue, the luminance value is defined by the distance of the camera to the respective structures. 
-	Given an interpolation factor derived from the zooming distance to the pre-defined zoom levels (see Figure \ref{fig:zoom_continuum}), luminance values are interpolated linearly between two neighboring levels. 
-	%Given pre-defined distances for distinct hierarchy levels, the colors are interpolated linearly between two neighboring levels. 
-	However, unlike the hue, we do not interpolate between the two closest hierarchy levels, but interpolate between the next two hierarchy levels with the current interpolation factor instead, as illustrated in Figure \ref{fig:zoom_continuum}, bottom line. 
+	Given an interpolation factor derived from the zooming distance to the pre-defined zoom levels (see Figure \ref{fig:zoom_continuum}), luminance values are interpolated between the next two hierarchy levels with the current interpolation factor, as illustrated in Figure \ref{fig:zoom_continuum}, bottom line. 
 	This way, the hue and the luminance encode different hierarchy levels and thereby generate an effect similar as shown in the close up in Figure \ref{fig:motivation}. 
 	%Yet, both color channels are seamlessly interpolated for smooth transitions. 
 				
@@ -1001,9 +1000,9 @@
 	The protein types are grouped together based on their location.
 	There are 6 different protein groups in the dataset; the blood plasma proteins (18 types), the lipids (2 types), the envelope surface (5 types) and interior proteins (15 types), the capsid surface (1 type) and proteins inside the capsid (5 types).
 	Figure \ref{teaserImage} shows progressive zooming from the entire virus to single atoms.	
-	Initially the blood plasma proteins in green, and the matrix protein in purple, dominate the color palette because they have more protein types than other compartments, like the orange capsid proteins.	
-	As we get closer to the capsid proteins in orange, we observe that the colors become more distinguishable.	
-	To visualize the results of the view-dependent color-palette optimization more precisely, we also developed a palette widget, shown in Figure~\ref{fig:results_1}.
+	Initially, the blood plasma proteins in green, and the matrix protein in purple, dominate the color palette because they have more protein types than other compartments, like the orange capsid proteins.	
+	As we get closer to the capsid proteins, we observe that the colors become more distinguishable.	
+	To visualize the results of the view-dependent color-palette optimization more precisely, we also developed a palette widget, shown in Figure~\ref{fig:results_1}, bottom left.
 %	Figure~\ref{fig:results_2} shows all the sequential steps we take to progressively reveal the protein properties as we zoom in.
 	
 	%The second dataset, shown in Figure \ref{fig:nofig} is a model of an immature HIV which contains 1081 instances of 13 different protein types, and one bi-lipid membrane. \\	
@@ -1056,16 +1055,16 @@
 	
 	\section{User Study}
 	\label{sec:study}
-	Since interactively explorable multi-scale visualizations of biology models have only become available very recently, there is no comparable approach how to represent biological structures across scales. 
-	Dynamic visual discrimination, apart from geometric levels of detail \cite{parulek}, have not been studied so far in the biological field. We therefore conducted a qualitative user study to answer two research questions: 
+	Since interactively explorable multi-scale visualizations of biology models have only become available very recently, there is no comparable approach how to represent biological structures across multiple scales. 
+	Dynamic visual discrimination, apart from geometric levels of detail \cite{parulek2014continuous}, have not been studied so far in the biological field. We therefore decided for a qualitative evaluation since there is no clear baseline for a comparative lab experiment, in order to answer two research questions: 
 	\begin{enumerate}
-		\item Does Chameleon color mapping allow discrimination of structures on multiple scales? 
+		\item Does Chameleon color mapping support discrimination of structures on multiple scales? 
 		\item Are the dynamic color changes by Chameleon distracting / unpleasant in the exploration process? 
 	\end{enumerate}
 	
 	To answer these two research questions, we asked five students and professionals in the field of biology to perform two tasks. 
 	In the first task (\emph{structure identification task}), users were asked to identify structures on multiple levels of detail.
-	The task description was provided by the molecular biologist and illustrator David Goodsell and resembles a publicly available description of the HIV capsid at PDB-101 \cite{goodsell2016}.
+	We based our task description on the a previous publicly available description of the HIV capsid at PDB-101~\cite{goodsell2016}
 	Based on this description of the HIV capsid, users were asked to identify the following structures: 
 	\begin{enumerate}
 		\itemsep0em 
@@ -1087,7 +1086,7 @@
 	While our color mapping provided the necessary discrimination of individual structures in the respective zoom levels, the identification of the structures was only possible through their structural properties.
 	Through the free exploration task, our goal was to assess whether users would notice and be distracted by our dynamic color mapping. 
 	%Although our system is targeted towards a broader audience, the knowledge of our users allowed us to assess whether the structural information is sufficiently distinct without adding textual information. 
-	We decided for a qualitative evaluation since there is no clear baseline for a comparative lab experiment. 
+	
 	Mind that structural information alone is not sufficient to identify structures below the protein level, as shown in Figure \ref{fig:comparison}. 
 	In addition, performance measures of such complex tasks are rather hard to compare with only a small number of expert users performing the study. 
 	
@@ -1095,7 +1094,7 @@
 	%After a pilot study with two researchers (28 and 25, one female) in the field of biochemistry and proteomics, respectively, we improved the navigation controls of our system (\textbf{HOW??}), since we observed a strong negative impact on the ability to explore the scene. 
 	We  report observations, questionnaire results, and feedback from five experts or students in the field of molecular biology (2 PhD students, one Post-Doc, one pharmacist, and one master student; one female, aged 24 to 31, all with normal or corrected-to-normal vision). 
 	While the method is also aimed at the general audience, no such users were involved in the study. 
-	The task description for such users would have to be rater long and detailed, leading likely to issues with text comprehension or revealing too much information. 
+	The task description for such users would have to be rather long and detailed, leading likely to issues with text comprehension or revealing too much information. 
 	
 	\subsection{Results}
 	
@@ -1140,12 +1139,12 @@
 	 		\toprule
 	 		Task \textbackslash User & 1 & 2 & 3 & 4 & 5 \\
 	 		\midrule
-	 		Pentamer       & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (90\%) 	& \textbf{\color{ci}i} (70\%) 	& \textbf{\color{cc}c} (5) 		& \textbf{\color{cc}c} (5)\\
-	 		C-terminal     & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (70\%) 	& \textbf{\color{ci}i} (10\%) 		& \textbf{\color{cc}c} (4) 	& \textbf{\color{cc}c} (4) \\
-	 		N-terminal     & \textbf{\color{cc}c} (100\%) 	& \textbf{\color{cc}c} (70\%) 	& \textbf{\color{ci}i} (10\%) 		& \textbf{\color{cc}c} (2) 	& \textbf{\color{cc}c} (4)\\
-	 		$\alpha$-helix & \textbf{\color{cc}c} (guess) 	& \textbf{\color{cc}c} (50\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cc}c} (4) 	& \textbf{\color{cc}c} (2) \\
-	 		Binding site   & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cc}c} (85\%) 	& \textbf{\color{cc}c} (90\%) 	& \textbf{\color{cc}c} (5) 		& \textbf{\color{cc}c} (4) \\
-	 		Methionine      & \textbf{\color{cc}c} (1\%) 	& \textbf{\color{cp}p} (90\%) 	& \textbf{\color{cn}n} 		& \textbf{\color{cp}p (1)} 			& \textbf{\color{cn}n}  \\
+	 		Pentamer       & \textbf{\color{cc}c} (5) 	& \textbf{\color{cc}c} (5) 	& \textbf{\color{ci}i} (4) 	& \textbf{\color{cc}c} (5) 		& \textbf{\color{cc}c} (5)\\
+	 		C-terminal     & \textbf{\color{cc}c} (5) 	& \textbf{\color{cc}c} (4) 	& \textbf{\color{ci}i} (1) 		& \textbf{\color{cc}c} (4) 	& \textbf{\color{cc}c} (4) \\
+	 		N-terminal     & \textbf{\color{cc}c} (5) 	& \textbf{\color{cc}c} (4) 	& \textbf{\color{ci}i} (1) 		& \textbf{\color{cc}c} (2) 	& \textbf{\color{cc}c} (4)\\
+	 		$\alpha$-helix & \textbf{\color{cc}c} (1) 	& \textbf{\color{cc}c} (3) 	& \textbf{\color{cn}n} 		& \textbf{\color{cc}c} (4) 	& \textbf{\color{cc}c} (2) \\
+	 		Binding site   & \textbf{\color{cc}c} (1) 	& \textbf{\color{cc}c} (5) 	& \textbf{\color{cc}c} (5) 	& \textbf{\color{cc}c} (5) 		& \textbf{\color{cc}c} (4) \\
+	 		Methionine      & \textbf{\color{cc}c} (1) 	& \textbf{\color{cp}p} (5) 	& \textbf{\color{cn}n} 		& \textbf{\color{cp}p (1)} 			& \textbf{\color{cn}n}  \\
 	 		\bottomrule
 	 	\end{tabular}}
 	 	
@@ -1167,7 +1166,7 @@ On average, they spent 10 minutes for exploration.
 Some users reported that they learned something new when exploring the visualization, such as that \textit{``HIV uses [the] host membrane''} and \textit{``how crowded everything is''}. 
 The four users focused on different parts of the virus during their free exploration, such as the membrane (user 1 and 5), the proteins in the matrix (user 1 and 4), and the amino acids of the Cyclophilin A binding site (user 2). 
 
-In the questionnaire, most users indicated that they noticed this effect (see Figure \ref{fig:questionnaire}), but the confusion caused by these color changes were rated fairly low. 
+In the questionnaire, most users indicated that they the color change (see Figure \ref{fig:questionnaire}), but the confusion caused by these color changes were rated fairly low. 
 When asked about the changing colors in the post-experiment interview, all users reported that they noticed changing colors when zooming to the atomic level. 
 However, only one user noticed it on all levels, while a second one thought \textit{``something odd''} was occurring on the secondary structure level. 
 
@@ -1190,7 +1189,7 @@ This is an indication that identification by structure is easier than identifica
 
 On the secondary structures level, the identification rate was similarly high, but users were quite uncertain about their findings and reported a high task difficulty. 
 On this level, alpha helices and beta sheets were discriminated by color, similar to Figure \ref{fig:results_2}. 
-However, the particular alpha helix mentioned in the task description could only be identified as a helix by shape, though the colors marked it distinctly. 
+However, the particular alpha helix mentioned in the task description could only be identified as a helix by shape.
 The request for an alternative cartoon representation for identifying structures on this level shows the limits of multi-scale color mapping without adapting the structural representation. 
 In the future, it will be important to explore combinations of semantic zooming comprising both, structural and color information. 
 
@@ -1537,10 +1536,11 @@ We therefore conclude that Chameleon is a valuable extension to multi-scale mole
 	
 	%% if specified like this the section will be committed in review mode
 	\section*{Acknowledgments}
-	The first and second authors contributed equally.
+	The first two authors contributed equally.
 		This project has been funded by the Vienna Science and Technology Fund
-		(WWTF) through project VRG11-010 and also supported by EC Marie Curie
-		Career Integration Grant through project PCIG13-GA-2013-618680.
+		(WWTF) through project VRG11-010 and supported by EC Marie Curie
+		Career Integration Grant through project PCIG13-GA-2013-618680 and the 
+		Austrian Science Fund FWF trough project T 752-N30.
 	
 	\bibliographystyle{eg-alpha}
 %	\bibliographystyle{eg-alpha-doi}
