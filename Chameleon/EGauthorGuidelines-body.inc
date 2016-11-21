@@ -3,20 +3,21 @@
 % D.Fellner, v1.17, Sep 23, 2010
 
 
-\title[Chameleon]%
-      {\title{------------ Chameleon ------------ \\ Dynamic Color Mapping	for Multi-Scale Structural Biology Models}}
+\title[EG \LaTeX\ Author Guidelines]%
+      {\LaTeX\ Author Guidelines for EUROGRAPHICS Proceedings Manuscripts}
 
 % for anonymous conference submission please enter your SUBMISSION ID
 % instead of the author's name (and leave the affiliation blank) !!
-\author[placeholder]
-       {placeholder}$^{place,place}$
-        and place$^{2}$
-%        place$^2$
+\author[D. Fellner \& S. Behnke]
+       {D.\,W. Fellner\thanks{Chairman Eurographics Publications Board}$^{1,2}$
+        and S. Behnke$^{2}$
+%        S. Spencer$^2$\thanks{Chairman Siggraph Publications Board}
         \\
 % For Computer Graphics Forum: Please use the abbreviation of your first name.
-         $^1$place\\
-         $^2$anotherplace
-%        $^2$ ohlookaplaceholder
+         $^1$TU Darmstadt \& Fraunhofer IGD, Germany\\
+         $^2$Institut f{\"u}r ComputerGraphik \& Wissensvisualisierung, TU Graz, Austria
+%        $^2$ Another Department to illustrate the use in papers from authors
+%             with different affiliations
        }
 
 % ------------------------------------------------------------------------
@@ -32,36 +33,30 @@
 %-------------------------------------------------------------------------
 \begin{document}
 
-\teaser{
-	\centering
-	\includegraphics[width=1\linewidth]{Figures/teaser_new}
-	\caption{Multi-scale visualization of HIV in real-time, using cellVIEW~\cite{muzic2015cellview} for rendering, together with the presented technique "Chameleon" for dynamic color coding of protein and atom properties.
-		The series of vignettes represent, from left to right, a zooming operation from the entire virus down to single atoms.
-		Along the way, we modulate the colors to provide relevant information based on the current zoom level.
-		(a) At the highest zoom level the orange proteins located inside the capsid are hardly distinguishable, as surrounding compartments which contain more various protein types (green, and purple) are prioritized on the color palette. 
-		(b) As we zoom in on the capsid proteins, other compartments become less visible, which allows the capsid protein ensemble to occupy more space in the color palette.
-		(c) As we continue zooming, we reveal the domains of the protein by shifting the hue value progressively. Simultaneously, we also shift the luminance to show the presence of underlying structures in the next levels.
-		(d) The secondary structures are differentiated by hue, and the atom types by luminance, analogous to the previous levels.
-		At the same time we progressively desaturate the context proteins to reduce the number of colors and improve clarity.
-		(e) The atom colors are progressively shown as we reach the final zoom level.}
-		
-	\label{teaserImage}
-}
+% \teaser{
+%  \includegraphics[width=\linewidth]{eg_new}
+%  \centering
+%   \caption{New EG Logo}
+% \label{fig:teaser}
+% }
 
 \maketitle
 
 \begin{abstract}
-   Visualization of structural biology data uses color to categorize or separate dense structures into particular semantic units. 
-	In multiscale models of viruses or bacteria, there are atoms on the finest level of detail, then amino-acids, secondary structures, macromolecules, up to the compartment level and, in all these levels, elements can be visually distinguished by color.
-	However, currently only a single scale coloring schemes are utilized that show information for one particular scale only. 
-	We present a novel technology which adaptively, based on the current scale level, adjusts the color scheme to depict or distinguish the currently best visible structural information. 
-	We treat the color as a visual resource that is distributed given a particular demand. 
-	The changes of the color scheme are seamlessly interpolated between the color scheme from the previous views into a given new one. 
-	With such dynamic multi-scale color mapping we ensure that the viewer is able to distinguish structural detail that is shown to her on any given scale. 
-	This technique has been tested by users with an expertise in structural biology and has been overall well received.
+   The ABSTRACT is to be in fully-justified italicized text, 
+   between two horizontal lines,
+   in one-column format, 
+   below the author and affiliation information. 
+   Use the word ``Abstract'' as the title, in 9-point Times, boldface type, 
+   left-aligned to the text, initially capitalized. 
+   The abstract is to be in 9-point, single-spaced type.
+   The abstract may be up to 3 inches (7.62 cm) long. \\
+   Leave one blank line after the abstract, 
+   then add the subject categories according to the ACM Classification Index 
+   (see http://www.acm.org/class/1998/).
 
 \begin{classification} % according to http://www.acm.org/class/1998/
-\CCScat{tbd}{tbd}{tbd}{tbd}
+\CCScat{Computer Graphics}{I.3.3}{Picture/Image Generation}{Line and curve generation}
 \end{classification}
 
 \end{abstract}

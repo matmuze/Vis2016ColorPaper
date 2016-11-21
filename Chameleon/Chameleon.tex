@@ -17,8 +17,8 @@
 % \JournalPaper         % uncomment for final version of Journal Paper
 %
 % --- for  EG Workshop Proceedings
-\WsSubmission    % uncomment for submission to EG Workshop
-% \WsPaper         % uncomment for final version of EG Workshop contribution
+% \WsSubmission    % uncomment for submission to EG Workshop
+\WsPaper         % uncomment for final version of EG Workshop contribution
 %
 \electronicVersion % can be used both for the printed and electronic version
 
@@ -27,12 +27,13 @@
 % ------------------------------------------------------------------------
 
 % for including postscript figures
-% mind: package option 'draft' will replace PS figure by a filname within a frame
+% mind: package option 'draft' will replace PS figure by a filename within a frame
 \ifpdf \usepackage[pdftex]{graphicx} \pdfcompresslevel=9
 \else \usepackage[dvips]{graphicx} \fi
 
 \PrintedOrElectronic
-
+\usepackage{subcaption}
+\usepackage{xcolor}
 % prepare for electronic version of your document
 \usepackage{t1enc,dfadobe}
 
@@ -40,6 +41,7 @@
 \usepackage{cite}
 \usepackage{amsmath}
 \usepackage{booktabs}
+
 % For backwards compatibility to old LaTeX type font selection.
 % Uncomment if your document adheres to LaTeX2e recommendations.
 % \let\rm=\rmfamily    \let\sf=\sffamily    \let\tt=\ttfamily
@@ -61,7 +63,7 @@
 % for anonymous conference submission please enter your SUBMISSION ID
 % instead of the author's name (and leave the affiliation blank) !!
 \author[Waldin et al.]
-{Nicholas Waldin$^{1}$, Mathieu Le Muzic$^{1}$, Maneula Waldner$^{1}$, Eduard Gr\"oller$^{1,2}$, David Goodsell$^{3}$, Autin Ludovic$^{3}$, Ivan Viola$^{1}$ 
+{Nicholas Waldin$^{1}$, Mathieu Le Muzic$^{1}$, Manuela Waldner$^{1}$, Eduard Gr\"oller$^{1,2}$, David Goodsell$^{3}$, Autin Ludovic$^{3}$, Ivan Viola$^{1}$ 
 %	and auth2$^{2}$
 	%        S. Spencer$^2$\thanks{Chairman Siggraph Publications Board}
 	\\
@@ -88,10 +90,34 @@
 	
 	\teaser{
 		\centering
-		\includegraphics[width=0.975\linewidth]{Figures/teaser_new}
+		\begin{subfigure}[b]{0.195\linewidth}
+			\centering
+			\includegraphics[width=1\linewidth]{"Figures/teaser_newa"}
+			\caption{\label{fig:teasera}}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.195\linewidth}
+			\centering
+			\includegraphics[width=1\linewidth]{"Figures/teaser_newb"}
+			\caption{\label{fig:teaserb}}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.195\linewidth}
+			\centering
+			\includegraphics[width=1\linewidth]{"Figures/teaser_newc"}
+			\caption{\label{fig:teaserc}}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.195\linewidth}
+			\centering
+			\includegraphics[width=1\linewidth]{"Figures/teaser_newd"}
+			\caption{\label{fig:teaserd}}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.195\linewidth}
+			\centering
+			\includegraphics[width=1\linewidth]{"Figures/teaser_newe"}
+			\caption{\label{fig:teasere}}
+		\end{subfigure}
 				\caption{Interactive multi-scale visualization of HIV using ``Chameleon'' for dynamic color coding of protein and atom properties: 
-					Zooming from an overview of the entire virus (a) to the capsid (b), the capsid interior (c), a single integrase protein in the capsid (d), and its atomic structure (e). 
-					Mind how protein colors become more differentiated as we zoom in (a-b), and how protein domains (c), secondary structures (d), and individual atoms (e) are being progressively revealed through dynamic color adaptations.  }
+					Zooming from an overview of the entire virus (\subref{fig:teasera}) to the capsid (\subref{fig:teaserb}), the capsid interior (\subref{fig:teaserc}), a single integrase protein in the capsid (\subref{fig:teaserd}), and its atomic structure~(\subref{fig:teasere}). 
+					Mind how protein colors become more differentiated as we zoom in (\subref{fig:teasera}-\subref{fig:teaserb}), and how protein domains (\subref{fig:teaserc}), secondary structures (\subref{fig:teaserd}), and individual atoms (\subref{fig:teasere}) are being progressively revealed through dynamic color adaptations.}
 				
 %		\caption{Multi-scale visualization of HIV in real-time, using cellVIEW~\cite{muzic2015cellview} for rendering, together with the presented technique "Chameleon" for dynamic color coding of protein and atom properties.
 %			The series of vignettes represent, from left to right, a zooming operation from the entire virus down to single atoms.
@@ -170,7 +196,7 @@
 	This may not only cause disorientation when zooming due to considerable color changes, but may also cause artificial hues or grayed out colors when blending between levels \cite{chuang2009hue}.  
 	%This will not only affect understanding how two levels are connected, but also comprehension if the user is between levels.
 	Second, there is a loss of hierarchy information when transitioning from one level to the next. 
-	For example, when looking at two neighboring compartments and zooming in, it may be hard to maintain an overview which compartment certain proteins belong to. 
+	For example, when looking at two neighboring compartments and zooming in, it may be hard to maintain an overview of which compartment certain proteins belong to. 
 	%For example, if a user is looking at two neighboring compartments and zooms in where they meet, then he can not tell where one ends and the other begins, as the compartment level color coding is blended away. 
 %	This may cause orientation problems due to the inherent hierarchy of the data.
 	%An atom belongs to an amino acid, which in turn belongs to a domain of a protein, all the way to the top.
@@ -206,8 +232,8 @@
 	Our contributions are: 
 	\begin{enumerate}
 		\item A view-dependent, hierarchical hue palette for expressive color mapping of multi-scale structural biology models, 
-		\item usage of chroma and luminance to minimize visual clutter and encode structural properties across multiple zoom levels, and 
-		\item results from a small expert user study, showing that users can distinguish structures on multiple scales through dynamic color mapping, while rating the visualization as highly appealing. 
+		\item Usage of chroma and luminance to minimize visual clutter and encode structural properties across multiple zoom levels, and 
+		\item Results from a small expert user study, showing that users can distinguish structures on multiple scales through dynamic color mapping, while rating the visualization as highly appealing. 
 	\end{enumerate}
 %	In the HIV as shown in Figure~\ref{teaserImage}, the user initially sees the different compartments. 
 %	As the user zooms in, the proteins receive more distinct colors based on their compartment. 
@@ -294,7 +320,7 @@
 	
 	While there has been intense research on color mapping in visualization in the past, there have been only very few works related to multiscale visualization.
 	Tree Colors use a tree-based method~\cite{tennekes2014tree} that attempts to overcome the above issues in the case of hierarchical structures. 
-	The tree method uses HCL space (a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance) and gives each cluster a different hue. 
+	The tree method uses HCL space (a cylindrical coordinate version of CIELab with Hue , Chroma (Saturation), and Luminance and gives each cluster a different hue. 
 	The root of the tree has no saturation, i.e. grey, and the hue is divided up into different wedges. A hue wedge is assigned to each branch, with some space cut out between branches, in order for there to be a jump in color from one wedge to another. 
 	As the tree spreads out, the saturation of the nodes increases, and each level gets its own smaller wedge. 
 	Essentially, each level has its own hue ring with a defined chroma. 
@@ -553,12 +579,7 @@
 	%\textbf{We perform color smooth color interpolation between the current color of the atoms and their terminal colors. } \\
 	%	
 	%\textbf{To improve the bla-bla, we use the interpolation technique by Manu which constists of bla-bla-bla} \\
-	\begin{figure}[t]
-		\centering
-		\includegraphics[width=0.3\linewidth]{Figures/hueWheel.png}
-		\caption{Iso-luminant hue ring with 21 distinct colors, with luminance 75 and chroma 40 in HCL color space.}
-		\label{fig:hueWheel}
-	\end{figure}
+	
 		
 	
 	
@@ -572,8 +593,13 @@
 	
 	\section{Dynamic Hue Palette}
 	\label{sec:hue}
-	
-	At the highest hierarchy level (compartment, as illustrated in Figure \ref{teaserImage}a), our task is to find colors for each individual protein type that allow users to discriminate the proteins, but also understand their hierarchical grouping into the compartments. 
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=0.3\linewidth]{Figures/hueWheel.png}
+		\caption{Iso-luminant hue ring with 21 distinct colors, with luminance 75 and chroma 40 in HCL color space.}
+		\label{fig:hueWheel}
+	\end{figure}
+	At the highest hierarchy level (compartment, as illustrated in Figure \ref{teaserImage}\subref{fig:teasera}), our task is to find colors for each individual protein type that allow users to discriminate the proteins, but also understand their hierarchical grouping into the compartments. 
 	%Also, aesthetics are important, as we target our work at interested users from a broader audience. 
 	%Since chroma and luminance as used for focus+context visualization and smoothing transitions, 
 	To visually categorize the protein types, we initially assign each protein type within each compartment a unique hue value. 
@@ -647,7 +673,7 @@
 	\begin{figure*}[t]
 		\centering
 		\includegraphics[width=0.95\linewidth]{Figures/coloroverview}
-		\caption{Overview of Chameleon's dynamic and hierarchical hue selection scheme for (a) an exemplary two-level hierarchy of four protein groups (A,B,C,D) and a total number of 20 different protein types: For the current viewport (b), visibility information is extracted (c) and the color palette is updated. Zooming further towards protein type 10 splits up the protein type hue to three different domain colors (x,y,z).}
+		\caption{Overview of Chameleon's dynamic and hierarchical hue selection scheme for (\textcolor{blue}{a}) an exemplary two-level hierarchy of four protein groups (A,B,C,D) and a total number of 20 different protein types: For the current viewport (\textcolor{blue}{b}), visibility information is extracted (\textcolor{blue}{c}) and the color palette is updated. Zooming further towards protein type 10 splits up the protein type hue to three different domain colors (x,y,z).}
 		%			\caption{Overview of our dynamic and hierarchical hue selection scheme. (a) Shows the first two levels of the hierarchy, in this demonstration case there are four groups of protein types (A,B,C,D) with an overall number of 20 different protein types, (b) Shows the current viewport, wide view on the top and close-up on the bottom, where the red square represents the actually viewport, (c) The visibility information is extracted from the current viewport and analysed, (d) The color palette is updated to include visible elements only, (e) The following levels of the hierarchy (domains only in this case) are revealed as we zoom in on a protein of type 10, which features 3 different domains (x,y,z).}
 		\label{fig:coloroverview}
 	\end{figure*}
@@ -656,7 +682,7 @@
 	\label{sec:dynamic}
 	
 	%In the initial state, we first generate a color palette assuming that all the compartments are visible.
-	As the user zooms in and explores the scene, large parts of the scene may not actually be visible in the current viewport, as is illustrated in the lower row of Figure~\ref{fig:coloroverview}(a-c).
+	As the user zooms in and explores the scene, large parts of the scene may not actually be visible in the current viewport, as is illustrated in the lower row of Figure~\ref{fig:coloroverview}(\textcolor{blue}{a}-\textcolor{blue}{c}).
 	In this configuration the color palette becomes underexploited. %, and can be improved to increase discriminability. 
 	We therefore re-compute and optimize the color palette on-the-fly as proteins appear and disappear.
 	An overview of the mechanism is illustrated in Figure~\ref{fig:coloroverview}.
@@ -699,7 +725,7 @@
 %	where $q$ is a scaling factor which is proportional to \textbf{the total number of proteins.}%the number of protein types in that group. 
 %	\textbf{TODO: again, is this correct? a scaling factor proportional to the total number of protein types in a group multiplied by the visible protein types -- could this be just the ratio visible by total? But this would not fit to Figure 4. My guess would be that simply $m_i$ of the previous section is set, and the smaller $m_i$, the bigger the possible angular distance between the hues. Please clarify!}
 
-	As visualized in Figure \ref{fig:coloroverview}d, the hue ring is divided proportionally to the protein groups' numbers of visible proteins. 
+	As visualized in Figure \ref{fig:coloroverview}\textcolor{blue}{d}, the hue ring is divided proportionally to the protein groups' numbers of visible proteins. 
 	As the number of visible protein types can be potentially small, we allow the user to determine a maximum angular distance of a protein group to avoid excessive color changes while panning. 
 	%In our HIV showcase, we use 110$^{\circ}$. 
 	%, which in our case is can be reached if the user is looking at the secondary structure level of only one compartment. 
@@ -729,8 +755,17 @@
 	
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.85\linewidth]{"Figures/force-based layout"}
-		\caption{Force-based hue assignment: Initial wedge placement (a) and resulting force-based placement (b). Red arrows indicate the default hues for the wedge centroids, and black arrows represent the forces. }
+		\begin{subfigure}[b]{0.49\linewidth}
+			\centering
+			\includegraphics[width=0.85\linewidth]{"Figures/force-basedLayoutSplitA"}
+			\caption{\label{fig:figforce1}}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.49\linewidth}
+			\centering
+			\includegraphics[width=0.85\linewidth]{"Figures/force-basedLayoutSplitB"}
+			\caption{\label{fig:figforce2}}
+		\end{subfigure}
+		\caption{Force-based hue assignment: Initial wedge placement (\subref{fig:figforce1}) and resulting force-based placement (\subref{fig:figforce2}). Red arrows indicate the default hues for the wedge centroids, and black arrows represent the forces. }
 		\label{fig:force-basedlayout}
 	\end{figure}
 	
@@ -745,9 +780,9 @@
 	%we modulate the size of the groups on the hue ring.
 	%Upon modulation of the group sizes, we must also reposition the group centroids on the ring.
 	%A naive and non-iterative approach would be to 
-	We start by positioning a first wedge on the circle, and then place the remaining wedges subsequently on the circle, as illustrated in Figure \ref{fig:force-basedlayout}a.
+	We start by positioning a first wedge on the circle, and then place the remaining wedges subsequently on the circle, as illustrated in Figure \ref{fig:force-basedlayout}\subref{fig:figforce1}.
 	While the position of the first wedge on the hue ring can be arbitrarily defined with this approach, the other wedges are not guaranteed to be located as near as possible to their default centroid (i.e., the initially assigned wedge centroid with all visible protein types).
-	This could lead to unnecessarily large hue shifts for some protein groups while navigating, as shown in Figure~\ref{fig:force-basedlayout}a.
+	This could lead to unnecessarily large hue shifts for some protein groups while navigating, as shown in Figure~\ref{fig:force-basedlayout}\subref{fig:figforce1}.
 	
 	To avoid this issue, we use a force-based layout for the positioning of the group centroids on the hue ring.
 	The forces are applied in a single dimension, i.e, along the hue ring, and include distance constraints between the groups as well as attraction forces between groups and their default positions.
@@ -868,7 +903,7 @@
 	\subsubsection{Pre-Defined Color Palettes}
 	
 	In some cases, it can be desirable to use pre-defined color palettes instead of automatically calculated categorical colors. 
-	In our HIV showcase, we use pre-defined atom color codes for the highest zoom level (see Figure \ref{teaserImage}e), to support domain knowledge, such as CPK coloring for atoms. 
+	In our HIV showcase, we use pre-defined atom color codes for the highest zoom level (see Figure \ref{teaserImage}\subref{fig:teasere}), to support domain knowledge, such as CPK coloring for atoms. 
 	In this case, Chameleon simply blends to those pre-defined colors when zooming to the atomic level. 
 	
 	%\textbf{MWa rewrite END -- remove next paragraph in case of acceptance}
@@ -892,9 +927,18 @@
 		
 		
 		\begin{figure}[t]
-			\centering	
-			\includegraphics[width=0.9\linewidth]{Figures/desaturated}
-			\caption{Without (a) and with (b) desaturated peripheral colors.}
+			\centering
+			\begin{subfigure}[b]{0.49\linewidth}
+				\centering
+				\includegraphics[width=0.85\linewidth]{"Figures/desaturateda"}
+				\caption{\label{fig:sata}}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.49\linewidth}
+				\centering
+				\includegraphics[width=0.85\linewidth]{"Figures/desaturatedb"}
+				\caption{\label{fig:satb}}
+			\end{subfigure}
+			\caption{Without (\subref{fig:sata}) and with (\subref{fig:satb}) desaturated peripheral colors.}
 			\label{fig:results_3}
 		\end{figure}
 	
@@ -972,7 +1016,26 @@
 				
 	\begin{figure}[t]
 		\centering
-		\includegraphics[width=0.9\linewidth]{Figures/huemodulation2x2}
+		\begin{subfigure}[b]{0.49\linewidth}
+			\centering
+			\includegraphics[width=0.85\linewidth]{"Figures/2x2a"}
+			\caption{\label{fig:fig2x2a}}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.49\linewidth}
+			\centering
+			\includegraphics[width=0.85\linewidth]{"Figures/2x2b"}
+			\caption{\label{fig:fig2x2b}}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.49\linewidth}
+			\centering
+			\includegraphics[width=0.85\linewidth]{"Figures/2x2c"}
+			\caption{\label{fig:fig2x2c}}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.49\linewidth}
+			\centering
+			\includegraphics[width=0.85\linewidth]{"Figures/2x2d"}
+			\caption{\label{fig:fig2x2d}}
+		\end{subfigure}
 		\caption{Comparison of domain level (top) and secondary structures level (bottom) without (left column) and with (right column) luminance modulation.}
 		\label{fig:results_2}
 	\end{figure}
@@ -1134,7 +1197,7 @@
 \begin{table}
 	 	
 	 	\centering
-	 	\caption{Structure identification task: \textbf{\color{cc}c} identified correct item, \textbf{\color{cp}p} partially correctly identified item, \textbf{\color{ci}i} identified incorrect item, \textbf{\color{cn}n} nothing found. User-reported certainty of correctness in brackets. First three were asked in percentage, the second two responded from high to low, which is shown in the table as 5 (highest) to 1 (lowest).}
+	 	\caption{Structure identification task: \textbf{\color{cc}c} identified correct item, \textbf{\color{cp}p} partially correctly identified item, \textbf{\color{ci}i} identified incorrect item, \textbf{\color{cn}n} nothing found. User-reported certainty shown on a scale of 1 (lowest) to 5 (highest).}
 	 	{\scriptsize \begin{tabular}{ l l l l l l }
 	 		\toprule
 	 		Task \textbackslash User & 1 & 2 & 3 & 4 & 5 \\
